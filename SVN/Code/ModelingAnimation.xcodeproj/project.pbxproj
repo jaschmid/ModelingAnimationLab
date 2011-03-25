@@ -1,0 +1,493 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D40615D00DC28529001EA9E1 /* Trackball.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D40615CE0DC28529001EA9E1 /* Trackball.cpp */; };
+		D4368E7A0FA89A3900FF156F /* HalfEdgeMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4368E630FA89A3900FF156F /* HalfEdgeMesh.cpp */; };
+		D4368E7E0FA89A3900FF156F /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4368E6D0FA89A3900FF156F /* Mesh.cpp */; };
+		D4368E810FA89A3900FF156F /* SimpleMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4368E730FA89A3900FF156F /* SimpleMesh.cpp */; };
+		D462C7E00D88838B00B01FCB /* IsoContourColorMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D462C7DF0D88838B00B01FCB /* IsoContourColorMap.cpp */; };
+		D491A7580D8FB0E000469485 /* ColorMapFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D491A7560D8FB0E000469485 /* ColorMapFactory.cpp */; };
+		D492F07F0DDDEF82005AFACF /* GLObjectPlayback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D492F07D0DDDEF82005AFACF /* GLObjectPlayback.cpp */; };
+		D4A660320D5C910F007DE0D2 /* GLObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4A660310D5C910F007DE0D2 /* GLObject.cpp */; };
+		D4A660650D5C965F007DE0D2 /* GLAxis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4A660620D5C965F007DE0D2 /* GLAxis.cpp */; };
+		D4A660660D5C965F007DE0D2 /* GLGridPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4A660630D5C965F007DE0D2 /* GLGridPlane.cpp */; };
+		D4AE42AA0D5356FB007E34DE /* GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE42530D5356FB007E34DE /* GUI.cpp */; };
+		D4AE42B50D5356FB007E34DE /* TrilinearInterpolator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE42750D5356FB007E34DE /* TrilinearInterpolator.cpp */; };
+		D4AE42BC0D5356FB007E34DE /* ColorMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE42870D5356FB007E34DE /* ColorMap.cpp */; };
+		D4AE42BD0D5356FB007E34DE /* Heap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE428A0D5356FB007E34DE /* Heap.cpp */; };
+		D4AE42BF0D5356FB007E34DE /* ObjIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE428E0D5356FB007E34DE /* ObjIO.cpp */; };
+		D4AE42C00D5356FB007E34DE /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE42910D5356FB007E34DE /* Util.cpp */; };
+		D4AE42E60D53594C007E34DE /* GLViewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE42E50D53594C007E34DE /* GLViewer.cpp */; };
+		D4AE42F10D535DEE007E34DE /* FrameMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE42EF0D535DEE007E34DE /* FrameMain.cpp */; };
+		D4AE42F40D535E1F007E34DE /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE42F30D535E1F007E34DE /* main.cpp */; };
+		D4F123730D657D4200B21321 /* MarchingCubes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4F123700D657D4200B21321 /* MarchingCubes.cpp */; };
+		D4F1239B0D657DF800B21321 /* HotColorMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4F123900D657DF800B21321 /* HotColorMap.cpp */; };
+		D4F1239C0D657DF800B21321 /* HSVColorMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4F123920D657DF800B21321 /* HSVColorMap.cpp */; };
+		D4F1239D0D657DF800B21321 /* JetColorMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4F123950D657DF800B21321 /* JetColorMap.cpp */; };
+		D4F1239E0D657DF800B21321 /* BlackWhiteColorMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4F123970D657DF800B21321 /* BlackWhiteColorMap.cpp */; };
+		D4F1239F0D657DF800B21321 /* GreenRedColorMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4F123990D657DF800B21321 /* GreenRedColorMap.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		D40615CE0DC28529001EA9E1 /* Trackball.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Trackball.cpp; sourceTree = "<group>"; };
+		D40615CF0DC28529001EA9E1 /* Trackball.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trackball.h; sourceTree = "<group>"; };
+		D4368E620FA89A3900FF156F /* Geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Geometry.h; sourceTree = "<group>"; };
+		D4368E630FA89A3900FF156F /* HalfEdgeMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HalfEdgeMesh.cpp; sourceTree = "<group>"; };
+		D4368E640FA89A3900FF156F /* HalfEdgeMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HalfEdgeMesh.h; sourceTree = "<group>"; };
+		D4368E6D0FA89A3900FF156F /* Mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
+		D4368E6E0FA89A3900FF156F /* Mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mesh.h; sourceTree = "<group>"; };
+		D4368E730FA89A3900FF156F /* SimpleMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleMesh.cpp; sourceTree = "<group>"; };
+		D4368E740FA89A3900FF156F /* SimpleMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleMesh.h; sourceTree = "<group>"; };
+		D462C7DF0D88838B00B01FCB /* IsoContourColorMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IsoContourColorMap.cpp; sourceTree = "<group>"; };
+		D491A7560D8FB0E000469485 /* ColorMapFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorMapFactory.cpp; sourceTree = "<group>"; };
+		D491A7570D8FB0E000469485 /* ColorMapFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMapFactory.h; sourceTree = "<group>"; };
+		D492F07D0DDDEF82005AFACF /* GLObjectPlayback.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLObjectPlayback.cpp; sourceTree = "<group>"; };
+		D492F07E0DDDEF82005AFACF /* GLObjectPlayback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLObjectPlayback.h; sourceTree = "<group>"; };
+		D4A660300D5C910F007DE0D2 /* GLObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLObject.h; sourceTree = "<group>"; };
+		D4A660310D5C910F007DE0D2 /* GLObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLObject.cpp; sourceTree = "<group>"; };
+		D4A660610D5C965F007DE0D2 /* GLAxis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLAxis.h; sourceTree = "<group>"; };
+		D4A660620D5C965F007DE0D2 /* GLAxis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLAxis.cpp; sourceTree = "<group>"; };
+		D4A660630D5C965F007DE0D2 /* GLGridPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLGridPlane.cpp; sourceTree = "<group>"; };
+		D4A660640D5C965F007DE0D2 /* GLGridPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLGridPlane.h; sourceTree = "<group>"; };
+		D4AE42530D5356FB007E34DE /* GUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUI.cpp; sourceTree = "<group>"; };
+		D4AE42540D5356FB007E34DE /* GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUI.h; sourceTree = "<group>"; };
+		D4AE42690D5356FB007E34DE /* ConjugateGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConjugateGradient.h; sourceTree = "<group>"; };
+		D4AE426A0D5356FB007E34DE /* ConstantVectorField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConstantVectorField.h; sourceTree = "<group>"; };
+		D4AE426D0D5356FB007E34DE /* Function3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Function3D.h; sourceTree = "<group>"; };
+		D4AE42700D5356FB007E34DE /* Interpolator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Interpolator.h; sourceTree = "<group>"; };
+		D4AE42710D5356FB007E34DE /* Matrix4x4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix4x4.h; sourceTree = "<group>"; };
+		D4AE42720D5356FB007E34DE /* Matrix4x4_Impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix4x4_Impl.h; sourceTree = "<group>"; };
+		D4AE42750D5356FB007E34DE /* TrilinearInterpolator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TrilinearInterpolator.cpp; sourceTree = "<group>"; };
+		D4AE42760D5356FB007E34DE /* TrilinearInterpolator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrilinearInterpolator.h; sourceTree = "<group>"; };
+		D4AE42770D5356FB007E34DE /* Vector3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector3.h; sourceTree = "<group>"; };
+		D4AE42780D5356FB007E34DE /* Vector4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector4.h; sourceTree = "<group>"; };
+		D4AE42790D5356FB007E34DE /* Volume.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Volume.h; sourceTree = "<group>"; };
+		D4AE427A0D5356FB007E34DE /* VortexVectorField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VortexVectorField.h; sourceTree = "<group>"; };
+		D4AE42860D5356FB007E34DE /* BitMask3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitMask3D.h; sourceTree = "<group>"; };
+		D4AE42870D5356FB007E34DE /* ColorMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorMap.cpp; sourceTree = "<group>"; };
+		D4AE42880D5356FB007E34DE /* ColorMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMap.h; sourceTree = "<group>"; };
+		D4AE428A0D5356FB007E34DE /* Heap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Heap.cpp; sourceTree = "<group>"; };
+		D4AE428B0D5356FB007E34DE /* Heap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Heap.h; sourceTree = "<group>"; };
+		D4AE428C0D5356FB007E34DE /* Heap_Test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Heap_Test.cpp; sourceTree = "<group>"; };
+		D4AE428E0D5356FB007E34DE /* ObjIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjIO.cpp; sourceTree = "<group>"; };
+		D4AE428F0D5356FB007E34DE /* ObjIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjIO.h; sourceTree = "<group>"; };
+		D4AE42900D5356FB007E34DE /* Stopwatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stopwatch.h; sourceTree = "<group>"; };
+		D4AE42910D5356FB007E34DE /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Util.cpp; sourceTree = "<group>"; };
+		D4AE42920D5356FB007E34DE /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
+		D4AE42C80D535741007E34DE /* Modeling & Animation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Modeling & Animation.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4AE42E40D53594C007E34DE /* GLViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLViewer.h; sourceTree = "<group>"; };
+		D4AE42E50D53594C007E34DE /* GLViewer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLViewer.cpp; sourceTree = "<group>"; };
+		D4AE42E70D5359A7007E34DE /* GLCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLCamera.h; sourceTree = "<group>"; };
+		D4AE42EF0D535DEE007E34DE /* FrameMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FrameMain.cpp; sourceTree = "<group>"; wrapsLines = 1; };
+		D4AE42F00D535DEE007E34DE /* FrameMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrameMain.h; sourceTree = "<group>"; };
+		D4AE42F30D535E1F007E34DE /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		D4AE44420D5367F8007E34DE /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D4BDD9E70DD908BE00B9BD50 /* CoordMatrix_Impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoordMatrix_Impl.h; sourceTree = "<group>"; };
+		D4BDD9E80DD908BE00B9BD50 /* CoordMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoordMatrix.h; sourceTree = "<group>"; };
+		D4CFD5B00DA1980E00CF03AD /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Image.h; sourceTree = "<group>"; };
+		D4CFD5B10DA1980E00CF03AD /* Image_Impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Image_Impl.h; sourceTree = "<group>"; };
+		D4F123700D657D4200B21321 /* MarchingCubes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MarchingCubes.cpp; sourceTree = "<group>"; };
+		D4F123710D657D4200B21321 /* MarchingCubes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarchingCubes.h; sourceTree = "<group>"; };
+		D4F123720D657D4200B21321 /* MarchingCubesTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarchingCubesTable.h; sourceTree = "<group>"; };
+		D4F123900D657DF800B21321 /* HotColorMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HotColorMap.cpp; sourceTree = "<group>"; };
+		D4F123910D657DF800B21321 /* HotColorMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotColorMap.h; sourceTree = "<group>"; };
+		D4F123920D657DF800B21321 /* HSVColorMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HSVColorMap.cpp; sourceTree = "<group>"; };
+		D4F123930D657DF800B21321 /* HSVColorMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSVColorMap.h; sourceTree = "<group>"; };
+		D4F123940D657DF800B21321 /* IsoContourColorMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IsoContourColorMap.h; sourceTree = "<group>"; };
+		D4F123950D657DF800B21321 /* JetColorMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JetColorMap.cpp; sourceTree = "<group>"; };
+		D4F123960D657DF800B21321 /* JetColorMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JetColorMap.h; sourceTree = "<group>"; };
+		D4F123970D657DF800B21321 /* BlackWhiteColorMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlackWhiteColorMap.cpp; sourceTree = "<group>"; };
+		D4F123980D657DF800B21321 /* BlackWhiteColorMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackWhiteColorMap.h; sourceTree = "<group>"; };
+		D4F123990D657DF800B21321 /* GreenRedColorMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GreenRedColorMap.cpp; sourceTree = "<group>"; };
+		D4F1239A0D657DF800B21321 /* GreenRedColorMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GreenRedColorMap.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D4AE42220D5356C2007E34DE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* Modeling & Animation */ = {
+			isa = PBXGroup;
+			children = (
+				D4AE44420D5367F8007E34DE /* Makefile */,
+				D4368E5D0FA89A3900FF156F /* Geometry */,
+				D4AE42F30D535E1F007E34DE /* main.cpp */,
+				D4AE42510D5356FB007E34DE /* GUI */,
+				D4AE42680D5356FB007E34DE /* Math */,
+				D4AE42850D5356FB007E34DE /* Util */,
+				D4AE42250D5356C2007E34DE /* Products */,
+			);
+			name = "Modeling & Animation";
+			sourceTree = "<group>";
+		};
+		D4368E5D0FA89A3900FF156F /* Geometry */ = {
+			isa = PBXGroup;
+			children = (
+				D4368E620FA89A3900FF156F /* Geometry.h */,
+				D4368E630FA89A3900FF156F /* HalfEdgeMesh.cpp */,
+				D4368E640FA89A3900FF156F /* HalfEdgeMesh.h */,
+				D4368E6D0FA89A3900FF156F /* Mesh.cpp */,
+				D4368E6E0FA89A3900FF156F /* Mesh.h */,
+				D4368E730FA89A3900FF156F /* SimpleMesh.cpp */,
+				D4368E740FA89A3900FF156F /* SimpleMesh.h */,
+			);
+			path = Geometry;
+			sourceTree = "<group>";
+		};
+		D4AE42250D5356C2007E34DE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D4AE42C80D535741007E34DE /* Modeling & Animation.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D4AE42510D5356FB007E34DE /* GUI */ = {
+			isa = PBXGroup;
+			children = (
+				D4A660610D5C965F007DE0D2 /* GLAxis.h */,
+				D4A660620D5C965F007DE0D2 /* GLAxis.cpp */,
+				D4A660630D5C965F007DE0D2 /* GLGridPlane.cpp */,
+				D4A660640D5C965F007DE0D2 /* GLGridPlane.h */,
+				D4A660300D5C910F007DE0D2 /* GLObject.h */,
+				D4A660310D5C910F007DE0D2 /* GLObject.cpp */,
+				D4AE42EF0D535DEE007E34DE /* FrameMain.cpp */,
+				D4AE42F00D535DEE007E34DE /* FrameMain.h */,
+				D4AE42E70D5359A7007E34DE /* GLCamera.h */,
+				D4AE42E40D53594C007E34DE /* GLViewer.h */,
+				D4AE42E50D53594C007E34DE /* GLViewer.cpp */,
+				D4AE42530D5356FB007E34DE /* GUI.cpp */,
+				D4AE42540D5356FB007E34DE /* GUI.h */,
+			);
+			path = GUI;
+			sourceTree = "<group>";
+		};
+		D4AE42680D5356FB007E34DE /* Math */ = {
+			isa = PBXGroup;
+			children = (
+				D4AE42690D5356FB007E34DE /* ConjugateGradient.h */,
+				D4AE426A0D5356FB007E34DE /* ConstantVectorField.h */,
+				D4AE427A0D5356FB007E34DE /* VortexVectorField.h */,
+				D4BDD9E70DD908BE00B9BD50 /* CoordMatrix_Impl.h */,
+				D4BDD9E80DD908BE00B9BD50 /* CoordMatrix.h */,
+				D4AE426D0D5356FB007E34DE /* Function3D.h */,
+				D4AE42700D5356FB007E34DE /* Interpolator.h */,
+				D4AE42710D5356FB007E34DE /* Matrix4x4.h */,
+				D4AE42720D5356FB007E34DE /* Matrix4x4_Impl.h */,
+				D4AE42750D5356FB007E34DE /* TrilinearInterpolator.cpp */,
+				D4AE42760D5356FB007E34DE /* TrilinearInterpolator.h */,
+				D4AE42770D5356FB007E34DE /* Vector3.h */,
+				D4AE42780D5356FB007E34DE /* Vector4.h */,
+				D4AE42790D5356FB007E34DE /* Volume.h */,
+			);
+			path = Math;
+			sourceTree = "<group>";
+		};
+		D4AE42850D5356FB007E34DE /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				D40615CE0DC28529001EA9E1 /* Trackball.cpp */,
+				D40615CF0DC28529001EA9E1 /* Trackball.h */,
+				D4CFD5B00DA1980E00CF03AD /* Image.h */,
+				D4CFD5B10DA1980E00CF03AD /* Image_Impl.h */,
+				D4F123900D657DF800B21321 /* HotColorMap.cpp */,
+				D4F123910D657DF800B21321 /* HotColorMap.h */,
+				D4F123920D657DF800B21321 /* HSVColorMap.cpp */,
+				D4F123930D657DF800B21321 /* HSVColorMap.h */,
+				D462C7DF0D88838B00B01FCB /* IsoContourColorMap.cpp */,
+				D4F123940D657DF800B21321 /* IsoContourColorMap.h */,
+				D4F123950D657DF800B21321 /* JetColorMap.cpp */,
+				D492F07D0DDDEF82005AFACF /* GLObjectPlayback.cpp */,
+				D492F07E0DDDEF82005AFACF /* GLObjectPlayback.h */,
+				D4F123960D657DF800B21321 /* JetColorMap.h */,
+				D4F123970D657DF800B21321 /* BlackWhiteColorMap.cpp */,
+				D4F123980D657DF800B21321 /* BlackWhiteColorMap.h */,
+				D4F123990D657DF800B21321 /* GreenRedColorMap.cpp */,
+				D4F1239A0D657DF800B21321 /* GreenRedColorMap.h */,
+				D4F123700D657D4200B21321 /* MarchingCubes.cpp */,
+				D4F123710D657D4200B21321 /* MarchingCubes.h */,
+				D4F123720D657D4200B21321 /* MarchingCubesTable.h */,
+				D4AE42860D5356FB007E34DE /* BitMask3D.h */,
+				D4AE42870D5356FB007E34DE /* ColorMap.cpp */,
+				D4AE42880D5356FB007E34DE /* ColorMap.h */,
+				D491A7560D8FB0E000469485 /* ColorMapFactory.cpp */,
+				D491A7570D8FB0E000469485 /* ColorMapFactory.h */,
+				D4AE428A0D5356FB007E34DE /* Heap.cpp */,
+				D4AE428B0D5356FB007E34DE /* Heap.h */,
+				D4AE428C0D5356FB007E34DE /* Heap_Test.cpp */,
+				D4AE428E0D5356FB007E34DE /* ObjIO.cpp */,
+				D4AE428F0D5356FB007E34DE /* ObjIO.h */,
+				D4AE42900D5356FB007E34DE /* Stopwatch.h */,
+				D4AE42910D5356FB007E34DE /* Util.cpp */,
+				D4AE42920D5356FB007E34DE /* Util.h */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D4AE42230D5356C2007E34DE /* Modeling & Animation */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D4AE422A0D5356C2007E34DE /* Build configuration list for PBXNativeTarget "Modeling & Animation" */;
+			buildPhases = (
+				D4AE42200D5356C2007E34DE /* Resources */,
+				D4AE42210D5356C2007E34DE /* Sources */,
+				D4AE42220D5356C2007E34DE /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Modeling & Animation";
+			productName = "Modeling & Animation";
+			productReference = D4AE42C80D535741007E34DE /* Modeling & Animation.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "ModelingAnimation" */;
+			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 08FB7794FE84155DC02AAC07 /* Modeling & Animation */;
+			productRefGroup = D4AE42250D5356C2007E34DE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D4AE42230D5356C2007E34DE /* Modeling & Animation */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D4AE42200D5356C2007E34DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D4AE42210D5356C2007E34DE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4AE42AA0D5356FB007E34DE /* GUI.cpp in Sources */,
+				D4AE42B50D5356FB007E34DE /* TrilinearInterpolator.cpp in Sources */,
+				D4AE42BC0D5356FB007E34DE /* ColorMap.cpp in Sources */,
+				D4AE42BD0D5356FB007E34DE /* Heap.cpp in Sources */,
+				D4AE42BF0D5356FB007E34DE /* ObjIO.cpp in Sources */,
+				D4AE42C00D5356FB007E34DE /* Util.cpp in Sources */,
+				D4AE42E60D53594C007E34DE /* GLViewer.cpp in Sources */,
+				D4AE42F10D535DEE007E34DE /* FrameMain.cpp in Sources */,
+				D4AE42F40D535E1F007E34DE /* main.cpp in Sources */,
+				D4A660320D5C910F007DE0D2 /* GLObject.cpp in Sources */,
+				D4A660650D5C965F007DE0D2 /* GLAxis.cpp in Sources */,
+				D4A660660D5C965F007DE0D2 /* GLGridPlane.cpp in Sources */,
+				D4F123730D657D4200B21321 /* MarchingCubes.cpp in Sources */,
+				D4F1239B0D657DF800B21321 /* HotColorMap.cpp in Sources */,
+				D4F1239C0D657DF800B21321 /* HSVColorMap.cpp in Sources */,
+				D4F1239D0D657DF800B21321 /* JetColorMap.cpp in Sources */,
+				D4F1239E0D657DF800B21321 /* BlackWhiteColorMap.cpp in Sources */,
+				D4F1239F0D657DF800B21321 /* GreenRedColorMap.cpp in Sources */,
+				D462C7E00D88838B00B01FCB /* IsoContourColorMap.cpp in Sources */,
+				D491A7580D8FB0E000469485 /* ColorMapFactory.cpp in Sources */,
+				D40615D00DC28529001EA9E1 /* Trackball.cpp in Sources */,
+				D492F07F0DDDEF82005AFACF /* GLObjectPlayback.cpp in Sources */,
+				D4368E7A0FA89A3900FF156F /* HalfEdgeMesh.cpp in Sources */,
+				D4368E7E0FA89A3900FF156F /* Mesh.cpp in Sources */,
+				D4368E810FA89A3900FF156F /* SimpleMesh.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB923608733DC60010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Debug;
+		};
+		1DEB923708733DC60010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Release;
+		};
+		D4AE42280D5356C2007E34DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				HEADER_SEARCH_PATHS = (
+					"/usr/local/include/wx-2.8",
+					"/usr/local/lib/wx/include/mac-ansi-release-2.8",
+					.,
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_CFLAGS = (
+					"-D_FILE_OFFSET_BITS=64",
+					"-D_LARGE_FILES",
+					"-D__WXMAC__",
+				);
+				OTHER_LDFLAGS = (
+					"-L/usr/local/lib",
+					"-framework",
+					IOKit,
+					"-framework",
+					Carbon,
+					"-framework",
+					Cocoa,
+					"-framework",
+					System,
+					"-framework",
+					QuickTime,
+					"-framework",
+					OpenGL,
+					"-framework",
+					GLUT,
+					"-lwx_mac_richtext-2.8",
+					"-lwx_mac_aui-2.8",
+					"-lwx_mac_xrc-2.8",
+					"-lwx_mac_qa-2.8",
+					"-lwx_mac_html-2.8",
+					"-lwx_mac_adv-2.8",
+					"-lwx_mac_core-2.8",
+					"-lwx_base_carbon_xml-2.8",
+					"-lwx_base_carbon_net-2.8",
+					"-lwx_base_carbon-2.8",
+					"-lwx_mac_gl-2.8",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "Modeling & Animation";
+				SDKROOT = "";
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		D4AE42290D5356C2007E34DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				HEADER_SEARCH_PATHS = (
+					"/usr/local/include/wx-2.8",
+					"/usr/local/lib/wx/include/mac-ansi-release-2.8",
+					.,
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_CFLAGS = (
+					"-D_FILE_OFFSET_BITS=64",
+					"-D_LARGE_FILES",
+					"-D__WXMAC__",
+					"-DNDEBUG",
+				);
+				OTHER_LDFLAGS = (
+					"-L/usr/local/lib",
+					"-framework",
+					IOKit,
+					"-framework",
+					Carbon,
+					"-framework",
+					Cocoa,
+					"-framework",
+					System,
+					"-framework",
+					QuickTime,
+					"-framework",
+					OpenGL,
+					"-framework",
+					GLUT,
+					"-lwx_mac_richtext-2.8",
+					"-lwx_mac_aui-2.8",
+					"-lwx_mac_xrc-2.8",
+					"-lwx_mac_qa-2.8",
+					"-lwx_mac_html-2.8",
+					"-lwx_mac_adv-2.8",
+					"-lwx_mac_core-2.8",
+					"-lwx_base_carbon_xml-2.8",
+					"-lwx_base_carbon_net-2.8",
+					"-lwx_base_carbon-2.8",
+					"-lwx_mac_gl-2.8",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "Modeling & Animation";
+				SDKROOT = "";
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "ModelingAnimation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB923608733DC60010E9CD /* Debug */,
+				1DEB923708733DC60010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D4AE422A0D5356C2007E34DE /* Build configuration list for PBXNativeTarget "Modeling & Animation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D4AE42280D5356C2007E34DE /* Debug */,
+				D4AE42290D5356C2007E34DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}
