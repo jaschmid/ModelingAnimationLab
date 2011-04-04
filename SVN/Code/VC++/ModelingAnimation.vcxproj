@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{48034F1E-5A4D-43A5-9B94-335046DDA318}</ProjectGuid>
+    <RootNamespace>ModelingAnimation</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..;include;include/msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>FREEGLUT_STATIC;_USE_MATH_DEFINES;WIN32;WINVER=0x0400;__WXMSW__;_WINDOWS;wxUSE_GUI=1;_UNICODE;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>comctl32.lib;rpcrt4.lib;winmm.lib;advapi32.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>lib; lib/vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..; include; include/msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>FREEGLUT_STATIC;_USE_MATH_DEFINES;WIN32;WINVER=0x0400;__WXMSW__;_WINDOWS;wxUSE_GUI=1;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>comctl32.lib;rpcrt4.lib;winmm.lib;advapi32.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>lib; lib/vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\geometry\Geometry.h" />
+    <ClInclude Include="..\geometry\HalfEdgeMesh.h" />
+    <ClInclude Include="..\geometry\Mesh.h" />
+    <ClInclude Include="..\geometry\SimpleMesh.h" />
+    <ClInclude Include="..\gui\FrameMain.h" />
+    <ClInclude Include="..\gui\GLAxis.h" />
+    <ClInclude Include="..\gui\GLCamera.h" />
+    <ClInclude Include="..\gui\GLGridPlane.h" />
+    <ClInclude Include="..\gui\GLObject.h" />
+    <ClInclude Include="..\gui\GLViewer.h" />
+    <ClInclude Include="..\gui\GUI.h" />
+    <ClInclude Include="..\math\ConjugateGradient.h" />
+    <ClInclude Include="..\math\ConstantVectorField.h" />
+    <ClInclude Include="..\math\Function3D.h" />
+    <ClInclude Include="..\math\Image.h" />
+    <ClInclude Include="..\math\Image_Impl.h" />
+    <ClInclude Include="..\math\Interpolator.h" />
+    <ClInclude Include="..\math\Matrix4x4.h" />
+    <ClInclude Include="..\math\Matrix4x4_Impl.h" />
+    <ClInclude Include="..\math\TrilinearInterpolator.h" />
+    <ClInclude Include="..\math\Vector3.h" />
+    <ClInclude Include="..\math\Vector4.h" />
+    <ClInclude Include="..\math\Volume.h" />
+    <ClInclude Include="..\math\VortexVectorField.h" />
+    <ClInclude Include="..\util\BitMask3D.h" />
+    <ClInclude Include="..\util\BlackWhiteColorMap.h" />
+    <ClInclude Include="..\util\ColorMap.h" />
+    <ClInclude Include="..\util\ColorMapFactory.h" />
+    <ClInclude Include="..\Util\Console.h" />
+    <ClInclude Include="..\util\glext.h" />
+    <ClInclude Include="..\Util\GLObjectPlayback.h" />
+    <ClInclude Include="..\util\GreenRedColorMap.h" />
+    <ClInclude Include="..\util\Heap.h" />
+    <ClInclude Include="..\util\HotColorMap.h" />
+    <ClInclude Include="..\util\HSVColorMap.h" />
+    <ClInclude Include="..\util\IsoContourColorMap.h" />
+    <ClInclude Include="..\util\JetColorMap.h" />
+    <ClInclude Include="..\util\MarchingCubes.h" />
+    <ClInclude Include="..\util\MarchingCubesTable.h" />
+    <ClInclude Include="..\util\ObjIO.h" />
+    <ClInclude Include="..\util\Stopwatch.h" />
+    <ClInclude Include="..\Util\trackball.h" />
+    <ClInclude Include="..\util\Util.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\geometry\HalfEdgeMesh.cpp" />
+    <ClCompile Include="..\geometry\Mesh.cpp" />
+    <ClCompile Include="..\geometry\SimpleMesh.cpp" />
+    <ClCompile Include="..\gui\FrameMain.cpp" />
+    <ClCompile Include="..\gui\GLAxis.cpp" />
+    <ClCompile Include="..\gui\GLGridPlane.cpp" />
+    <ClCompile Include="..\gui\GLObject.cpp" />
+    <ClCompile Include="..\gui\GLViewer.cpp" />
+    <ClCompile Include="..\gui\GUI.cpp" />
+    <ClCompile Include="..\math\TrilinearInterpolator.cpp" />
+    <ClCompile Include="..\util\BlackWhiteColorMap.cpp" />
+    <ClCompile Include="..\util\ColorMap.cpp" />
+    <ClCompile Include="..\util\ColorMapFactory.cpp" />
+    <ClCompile Include="..\Util\Console.cpp" />
+    <ClCompile Include="..\Util\GLObjectPlayback.cpp" />
+    <ClCompile Include="..\util\GreenRedColorMap.cpp" />
+    <ClCompile Include="..\util\Heap.cpp" />
+    <ClCompile Include="..\util\HotColorMap.cpp" />
+    <ClCompile Include="..\util\HSVColorMap.cpp" />
+    <ClCompile Include="..\util\IsoContourColorMap.cpp" />
+    <ClCompile Include="..\util\JetColorMap.cpp" />
+    <ClCompile Include="..\util\MarchingCubes.cpp" />
+    <ClCompile Include="..\util\ObjIO.cpp" />
+    <ClCompile Include="..\Util\trackball.cpp" />
+    <ClCompile Include="..\util\Util.cpp" />
+    <ClCompile Include="..\main.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
