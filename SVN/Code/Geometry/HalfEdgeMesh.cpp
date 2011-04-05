@@ -28,9 +28,18 @@ HalfEdgeMesh::~HalfEdgeMesh()
  * \param[in] v2 vertex 2, Vector3<float>
  * \param[in] v3 vertex 3, Vector3<float>
  */
-bool HalfEdgeMesh::AddFace(const std::vector<Vector3<float> > &verts){
+bool HalfEdgeMesh::AddFace(const std::vector<::Vector3<float> > &verts){
   // Add your code here
-  std::cerr << "ADD TRIANGLE NOT IMPLEMENTED. ";
+
+	Vertex v1 = mMeshData.InsertVertex();
+	mMeshData.GetVertexData(v1).Position = ToLocal(verts[0]);
+	Vertex v2 = mMeshData.InsertVertex();
+	mMeshData.GetVertexData(v2).Position = ToLocal(verts[1]);
+	Vertex v3 = mMeshData.InsertVertex();
+	mMeshData.GetVertexData(v3).Position = ToLocal(verts[2]);
+	
+
+	mMeshData.InsertFace(mMeshData.MakeTriple(v1,v2,v3));
 
   // Add the vertices of the face/triangle
 
@@ -48,90 +57,12 @@ bool HalfEdgeMesh::AddFace(const std::vector<Vector3<float> > &verts){
 }
 
 
-/*!
- * \param [in] v the vertex to add, Vector3<float>
- * \param [out] indx  the index to the vertex, unsigned int
- * \return a bool indicating whether the HalfEdgeMesh::Vertex was successfully inserted (true) or already existed (false)
- */
-bool HalfEdgeMesh::AddVertex(const Vector3<float> & v, unsigned int &indx){
-  std::map<Vector3<float>,unsigned int>::iterator it = mUniqueVerts.find(v);
-  if (it != mUniqueVerts.end()){
-    indx = (*it).second; // get the index of the already existing vertex
-    return false;
-  }
 
-  mUniqueVerts[v] = indx = GetNumVerts(); // op. [ ] constructs a new entry in map
-  Vertex vert;
-  vert.pos = v;
-  mVerts.push_back(vert); // add it to the vertex list
-
-  return true;
-}
-
-/*!
- * Inserts a half edge pair between HalfEdgeMesh::Vertex pointed to by v1 and v2. The first HalfEdgeMesh::HalfEdge (v1->v2) is the inner one, and the second (v2->v1) is the outer.
- * \param [in] v1 vertex 1, Vector3<float>
- * \param [in] v2 vertex 2, Vector3<float>
- * \param [out] indx1  the index to the half-edge from v1 to v2, unsigned int
- * \param [out] indx2  the index to the half-edge from v2 to v1, unsigned int
- * \return a bool indicating whether the half-edge pair was successfully inserted (true) or already existed (false)
- */
-bool HalfEdgeMesh::AddHalfEdgePair(unsigned int v1, unsigned int v2, unsigned int &indx1, unsigned int &indx2)
+bool HalfEdgeMesh::AddVertex(const ::Vector3<float>& v, unsigned int &indx)
 {
-   std::map<OrderedPair, unsigned int>::iterator it = mUniqueEdgePairs.find(OrderedPair(v1, v2));
-  if (it != mUniqueEdgePairs.end()){
-    indx1 = it->second;
-    indx2 = e(it->second).pair;
-    if(v1 != e(indx1).vert ){
-      std::swap(indx1, indx2); // sort correctly
-    }
-    return false;
-  }
-
-  // If not found, calculate both half-edges indices
-  indx1 = mEdges.size();
-  indx2 = indx1+1;
-
-  // Create edges and set pair index
-  HalfEdge edge1, edge2;
-  edge1.pair = indx2;
-  edge2.pair = indx1;
-
-  // Connect the edges to the verts
-  edge1.vert = v1;
-  edge2.vert = v2;
-
-  // Connect the verts to the edges
-  v(v1).edge = indx1;
-  v(v2).edge = indx2;
-
-  // Store the edges in mEdges
-  mEdges.push_back(edge1);
-  mEdges.push_back(edge2);
-
-  // Store the first edge in the map as an OrderedPair
-  OrderedPair op(v1, v2);
-  mUniqueEdgePairs[op] = indx1; // op. [ ] constructs a new entry in map, ordering not important
-  // sorting done when retrieving
-
-  return true;
+	return false;
 }
 
-/*! \lab1 HalfEdgeMesh Implement the MergeAdjacentBoundaryEdge */
-/*!
- * Merges the outer UNINITIALIZED/BORDER to an already set inner half-edge.
- * \param [in] indx the index of the INNER half-edge, unsigned int
- */
-void HalfEdgeMesh::MergeOuterBoundaryEdge(unsigned int innerEdge)
-{
-  // Add your code here
-  // 1. Merge first loop (around innerEdge->vert)
-  // 2. Find leftmost edge, last edge counter clock-wise
-  // 3. Test if there's anything to merge
-    // 3a. If so merge the gap
-    // 3b. And set border flags
-  // 4. Merge second loop (around innerEdge->pair->vert)
-}
 
 /*! Proceeds to check if the mesh is valid. All indices are inspected and
  * checked to see that they are initialized. The method checks: mEdges, mFaces and mVerts.
@@ -139,6 +70,9 @@ void HalfEdgeMesh::MergeOuterBoundaryEdge(unsigned int innerEdge)
  */
 void HalfEdgeMesh::Validate()
 {
+	mMeshData.DebugValidateMesh();
+	
+	/*
   std::vector<HalfEdge>::iterator iterEdge = mEdges.begin();
   std::vector<HalfEdge>::iterator iterEdgeEnd = mEdges.end();
   while (iterEdge != iterEdgeEnd) {
@@ -196,7 +130,7 @@ void HalfEdgeMesh::Validate()
     std::copy(problemVerts.begin(), problemVerts.end(), std::ostream_iterator<unsigned int>(std::cerr, ", "));
     std::cerr << "\n";
   }
-  std::cerr << std::endl << "The mesh has genus " << Genus() << ", and consists of " << Shells() << " shells.\n";
+  std::cerr << std::endl << "The mesh has genus " << Genus() << ", and consists of " << Shells() << " shells.\n";*/
 }
 
 /*! \lab1 Implement the FindNeighborVertices */
@@ -236,37 +170,46 @@ float HalfEdgeMesh::VertexCurvature(unsigned int vertexIndex) const
 float HalfEdgeMesh::FaceCurvature(unsigned int faceIndex) const
 {
   // NB Assumes vertex curvature already computed
-  unsigned int indx = f(faceIndex).edge;
-  const EdgeIterator it = GetEdgeIterator(indx);
 
-  const Vertex& v1 = v(it.GetEdgeVertexIndex());
-  const Vertex &v2 = v(it.Next().GetEdgeVertexIndex());
-  const Vertex &v3 = v(it.Next().GetEdgeVertexIndex());
+	HageMesh::VertexTriple vertices = mMeshData.GetFaceVertices(mMeshData.GetFace(faceIndex));
 
-  return (v1.curvature + v2.curvature + v3.curvature) / 3.f;
+
+  return (vertices[0]->Curvature + vertices[1]->Curvature + vertices[2]->Curvature) / 3.f;
 }
 
 Vector3<float> HalfEdgeMesh::FaceNormal(unsigned int faceIndex) const
 {
-  unsigned int indx = f(faceIndex).edge;
-  const EdgeIterator it = GetEdgeIterator(indx);
 
-  const Vector3<float> &p1 = v(it.GetEdgeVertexIndex()).pos;
-  const Vector3<float> &p2 = v(it.Next().GetEdgeVertexIndex()).pos;
-  const Vector3<float> &p3 = v(it.Next().GetEdgeVertexIndex()).pos;
+	HageMesh::VertexTriple vertices = mMeshData.GetFaceVertices(mMeshData.GetFace(faceIndex));
 
-  const Vector3<float> e1 = p2-p1;
-  const Vector3<float> e2 = p3-p1;
-  return Cross(e1, e2).Normalize();
+  const Vector3 &p1 = vertices[0]->Position;
+  const Vector3 &p2 = vertices[1]->Position;
+  const Vector3 &p3 = vertices[2]->Position;
+
+  const Vector3 e1 = p2-p1;
+  const Vector3 e2 = p3-p1;
+
+  return ToGlobal((e1%e2).normalize());
 }
 
 Vector3<float> HalfEdgeMesh::VertexNormal(unsigned int vertexIndex) const
 {
 
-  Vector3<float> n(0,0,0);
+	Face current = mMeshData.GetFirstVertexFace(mMeshData.GetVertex(vertexIndex));
 
+	float fNumNormals = 0.0f;
+	Vector3 NormalSum(0.0f,0.0f,0.0f);
+
+	while(current != HageMesh::nullFace)
+	{
+		NormalSum += current->Normal;
+		fNumNormals+=1.0f;
+		current = mMeshData.GetNextVertexFace(mMeshData.GetVertex(vertexIndex),current);
+	}
+
+	assert(fNumNormals != 0.0f);
   // Add your code here
-  return n;
+  return ToGlobal(NormalSum * (1.0f/fNumNormals));
 }
 
 
@@ -277,27 +220,28 @@ void HalfEdgeMesh::Initialize() {
 
 
 void HalfEdgeMesh::Update() {
+	
   // Calculate and store all differentials and area
 
   // First update all face normals and triangle areas
-  for(unsigned int i = 0; i < GetNumFaces(); i++){
-    f(i).normal = FaceNormal(i);
+	for(unsigned int i = 0; i < mMeshData.GetNumFaceIndices(); i++){
+	  mMeshData.GetFace(i)->Normal = ToLocal(FaceNormal(i));
   }
   // Then update all vertex normals and curvature
-  for(unsigned int i = 0; i < GetNumVerts(); i++){
+  for(unsigned int i = 0; i < mMeshData.GetNumVertexIndices(); i++){
     // Vertex normals are just weighted averages
-    mVerts.at(i).normal = VertexNormal(i);
+    mMeshData.GetVertex(i)->Normal = ToLocal(VertexNormal(i));
   }
 
   // Then update vertex curvature
-  for(unsigned int i = 0; i < GetNumVerts(); i++){
-    mVerts.at(i).curvature = VertexCurvature(i);
+  for(unsigned int i = 0; i < mMeshData.GetNumVertexIndices(); i++){
+    mMeshData.GetVertex(i)->Curvature = VertexCurvature(i);
     //    std::cerr <<   mVerts.at(i).curvature << "\n";
   }
 
   // Finally update face curvature
-  for(unsigned int i = 0; i < GetNumFaces(); i++){
-    f(i).curvature = FaceCurvature(i);
+  for(unsigned int i = 0; i < mMeshData.GetNumFaceIndices(); i++){
+	  mMeshData.GetFace(i)->Curvature = FaceCurvature(i);
   }
 
   std::cerr << "Area: " << Area() << ".\n";
@@ -305,40 +249,41 @@ void HalfEdgeMesh::Update() {
 
   // Update vertex and face colors
   if (mVisualizationMode == CurvatureVertex) {
-    std::vector<Vertex>::iterator iter = mVerts.begin();
-    std::vector<Vertex>::iterator iend = mVerts.end();
+
+	  
     float minCurvature = (std::numeric_limits<float>::max)();
-    float maxCurvature = -(std::numeric_limits<float>::max)();
-    while (iter != iend) {
-      if (minCurvature > (*iter).curvature)  minCurvature = (*iter).curvature;
-      if (maxCurvature < (*iter).curvature)  maxCurvature = (*iter).curvature;
-      iter++;
-    }
+	float maxCurvature = -(std::numeric_limits<float>::max)();
+
+	for(unsigned int i = 0; i < mMeshData.GetNumVertexIndices(); i++){
+		if (minCurvature > mMeshData.GetVertex(i)->Curvature)  minCurvature = mMeshData.GetVertex(i)->Curvature;
+		if (maxCurvature < mMeshData.GetVertex(i)->Curvature)  maxCurvature = mMeshData.GetVertex(i)->Curvature;
+	}
+
+
     std::cerr << "Mapping color based on vertex curvature with range [" << minCurvature << "," << maxCurvature << "]" << std::endl;
-    iter = mVerts.begin();
-    while (iter != iend) {
-      (*iter).color = mColorMap->Map((*iter).curvature, minCurvature, maxCurvature);
-      iter++;
-    }
+    
+	for(unsigned int i = 0; i < mMeshData.GetNumVertexIndices(); i++){
+		mMeshData.GetVertex(i)->Color = ToLocal(mColorMap->Map(mMeshData.GetVertex(i)->Curvature, minCurvature, maxCurvature));
+	}
   }
   else if (mVisualizationMode == CurvatureFace) {
-    std::vector<Face>::iterator iter = mFaces.begin();
-    std::vector<Face>::iterator iend = mFaces.end();
-    float minCurvature = (std::numeric_limits<float>::max)();
-    float maxCurvature = -(std::numeric_limits<float>::max)();
-    while (iter != iend) {
-      if (minCurvature > (*iter).curvature)  minCurvature = (*iter).curvature;
-      if (maxCurvature < (*iter).curvature)  maxCurvature = (*iter).curvature;
-      iter++;
-    }
-    std::cerr << "Mapping color based on face curvature with range [" << minCurvature << "," << maxCurvature << "]" << std::endl;
-    iter = mFaces.begin();
-    while (iter != iend) {
-      (*iter).color = mColorMap->Map((*iter).curvature, minCurvature, maxCurvature);
-      iter++;
-    }
-  }
 
+	  
+    float minCurvature = (std::numeric_limits<float>::max)();
+	float maxCurvature = -(std::numeric_limits<float>::max)();
+
+	for(unsigned int i = 0; i < mMeshData.GetNumFaceIndices(); i++){
+		if (minCurvature > mMeshData.GetFace(i)->Curvature)  minCurvature = mMeshData.GetFace(i)->Curvature;
+		if (maxCurvature < mMeshData.GetFace(i)->Curvature)  maxCurvature = mMeshData.GetFace(i)->Curvature;
+	}
+
+
+    std::cerr << "Mapping color based on vertex curvature with range [" << minCurvature << "," << maxCurvature << "]" << std::endl;
+    
+	for(unsigned int i = 0; i < mMeshData.GetNumFaceIndices(); i++){
+		mMeshData.GetFace(i)->Color = ToLocal(mColorMap->Map(mMeshData.GetFace(i)->Curvature, minCurvature, maxCurvature));
+	}
+  }
 }
 
 
@@ -391,41 +336,29 @@ void HalfEdgeMesh::Render()
 
   // Draw geometry
   glBegin(GL_TRIANGLES);
-  const int numTriangles = GetNumFaces();
+  const int numTriangles = mMeshData.GetNumFaces();
   for (int i = 0; i < numTriangles; i++){
 
-    Face & face = f(i);
+	Face face = mMeshData.GetFace(i);
 
-    HalfEdge* edge = &e(face.edge);
-
-    Vertex & v1 = v(edge->vert);
-    edge = &e(edge->next);
-
-    Vertex & v2 = v(edge->vert);
-    edge = &e(edge->next);
-
-    Vertex & v3 = v(edge->vert);
+	HageMesh::VertexTriple vt = mMeshData.GetFaceVertices(face);
 
     if (mVisualizationMode == CurvatureVertex) {
-      glColor3fv(v1.color.GetArrayPtr());
-      glNormal3fv(v1.normal.GetArrayPtr());
-      glVertex3fv(v1.pos.GetArrayPtr());
-
-      glColor3fv(v2.color.GetArrayPtr());
-      glNormal3fv(v2.normal.GetArrayPtr());
-      glVertex3fv(v2.pos.GetArrayPtr());
-
-      glColor3fv(v3.color.GetArrayPtr());
-      glNormal3fv(v3.normal.GetArrayPtr());
-      glVertex3fv(v3.pos.GetArrayPtr());
+		for(int v=0;v<3;v++)
+		{
+		  glColor3fv(vt[v]->Color.c);
+		  glNormal3fv(vt[v]->Normal.c);
+		  glVertex3fv(vt[v]->Position.c);
+		}
     }
     else {
-      glColor3fv(face.color.GetArrayPtr());
-      glNormal3fv(face.normal.GetArrayPtr());
+      glColor3fv(face->Color.c);
+      glNormal3fv(face->Color.c);
 
-      glVertex3fv(v1.pos.GetArrayPtr());
-      glVertex3fv(v2.pos.GetArrayPtr());
-      glVertex3fv(v3.pos.GetArrayPtr());
+		for(int v=0;v<3;v++)
+		{
+		  glVertex3fv(vt[v]->Position.c);
+		}
     }
 
   }
@@ -436,35 +369,28 @@ void HalfEdgeMesh::Render()
   {
     glDisable(GL_LIGHTING);
     glBegin(GL_LINES);
-    const int numTriangles = GetNumFaces();
+    const int numTriangles = mMeshData.GetNumFaces();
     for (int i = 0; i < numTriangles; i++){
 
-      Face & face = f(i);
+     
+	Face face = mMeshData.GetFace(i);
+	HageMesh::VertexTriple vt = mMeshData.GetFaceVertices(face);
 
-      HalfEdge* edge = &e(face.edge);
 
-      Vertex & v1 = v(edge->vert);
-      edge = &e(edge->next);
-
-      Vertex & v2 = v(edge->vert);
-      edge = &e(edge->next);
-
-      Vertex & v3 = v(edge->vert);
-
-      Vector3<float> faceStart = (v1.pos + v2.pos + v3.pos) / 3.0f;
-      Vector3<float> faceEnd = faceStart + face.normal*0.1;
+	Vector3 faceStart = (vt[0]->Position + vt[1]->Position + vt[2]->Position) / 3.0f;
+      Vector3 faceEnd = faceStart + face->Normal*0.1;
 
       glColor3f(1,0,0); // Red for face normal
-      glVertex3fv(faceStart.GetArrayPtr());
-      glVertex3fv(faceEnd.GetArrayPtr());
+      glVertex3fv(faceStart.c);
+      glVertex3fv(faceEnd.c);
 
       glColor3f(0,1,0); // Vertex normals in Green
-      glVertex3fv(v1.pos.GetArrayPtr());
-      glVertex3fv((v1.pos + v1.normal*0.1).GetArrayPtr());
-      glVertex3fv(v2.pos.GetArrayPtr());
-      glVertex3fv((v2.pos + v2.normal*0.1).GetArrayPtr());
-      glVertex3fv(v3.pos.GetArrayPtr());
-      glVertex3fv((v3.pos + v3.normal*0.1).GetArrayPtr());
+	  
+		for(int v=0;v<3;v++)
+		{
+		  glVertex3fv(vt[v]->Position.c);
+		  glVertex3fv((vt[v]->Position + vt[v]->Normal*0.1f).c);
+		}
     }
     glEnd();
     glEnable(GL_LIGHTING);

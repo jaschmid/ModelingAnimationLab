@@ -12,6 +12,25 @@
 #ifndef __HALF_EDGE_H__
 #define __HALF_EDGE_H__
 
+#ifdef S_OK
+#undef S_OK
+#endif
+
+#ifdef E_FAIL
+#undef E_FAIL
+#endif
+
+#ifdef Message
+#undef Message
+#endif
+
+#ifdef MessageHelper
+#undef MessageHelper
+#endif
+
+#define HAGE_NO_MEMORY_ALLOC_REPLACEMENT
+#include <HAGE.h>
+
 #include "Geometry/Mesh.h"
 #include "Util/ObjIO.h"
 #include <map>
@@ -23,42 +42,16 @@
  * A mesh data structure with fast access to neighborhood entities.
  * The neighborhood links are stored through indices.
  */
+
 class HalfEdgeMesh : public Mesh {
+private:
+
 public:
   HalfEdgeMesh();
   ~HalfEdgeMesh();
   virtual void Update();
   virtual void Initialize();
-
-  class EdgeIterator{
-    friend class HalfEdgeMesh; // why friend?
-  protected:
-    // should not change what mesh the pointer points to, can change mesh though
-    HalfEdgeMesh const * mHem;
-    mutable unsigned int mIndex;
-    EdgeIterator(HalfEdgeMesh const * he, unsigned int index){
-      mHem = he;
-      // Guard against outside access
-      assert(index < mHem->GetNumEdges());
-      mIndex = index;
-    }
-  public:
-    EdgeIterator& Next(){ mIndex = mHem->e(mIndex).next; return *this; }
-    EdgeIterator& Prev(){ mIndex = mHem->e(mIndex).prev; return *this; }
-    EdgeIterator& Pair(){ mIndex = mHem->e(mIndex).pair; return *this; }
-    const EdgeIterator& Next() const { mIndex = mHem->e(mIndex).next; return *this; }
-    const EdgeIterator& Prev() const{ mIndex = mHem->e(mIndex).prev; return *this; }
-    const EdgeIterator& Pair() const{ mIndex = mHem->e(mIndex).pair; return *this; }
-    unsigned int GetEdgeIndex() const { return mIndex; }
-    unsigned int GetEdgeVertexIndex() const { return mHem->e(mIndex).vert; }
-    unsigned int GetEdgeFaceIndex() const { return mHem->e(mIndex).face; }
-    const bool operator ==(const EdgeIterator & eit){ return this->mIndex == eit.mIndex; }
-    const bool operator !=(const EdgeIterator & eit){ return this->mIndex != eit.mIndex; }
-  };
-
-  EdgeIterator GetEdgeIterator(unsigned int i) { return EdgeIterator(this, i); }
-  const EdgeIterator GetEdgeIterator(unsigned int i) const { return EdgeIterator(this, i); }
-
+  
   //! Adds a triangle to the mesh.
   virtual bool AddFace(const std::vector<Vector3<float> > &verts);
 
@@ -91,7 +84,11 @@ public:
 
   virtual void Render();
 
-protected:
+private:
+	
+  //! Adds a vertex to the mesh
+  virtual bool AddVertex(const Vector3<float>& v, unsigned int &indx) ;
+
 
   //! Denotes a reference to a border, only for face pointers
   const static unsigned int BORDER;
@@ -101,6 +98,51 @@ protected:
   /*! \brief The core half-edge struct
    *  Implements the linked data structure edge type
    */
+
+  typedef HAGE::Vector3<> Vector3;
+
+  struct VertexData
+  {
+	  Vector3 Normal;
+	  Vector3 Position;
+	  Vector3 Color;
+	  float Curvature;
+  };
+
+  struct FaceData
+  {
+	  Vector3 Normal;
+	  Vector3 Color;
+	  float Curvature;
+  };
+
+  ::Vector3<float> ToGlobal(const Vector3& v) const
+  {
+	  return ::Vector3<float>(v.x,v.y,v.z);
+  }
+
+  Vector3 ToLocal(const ::Vector3<float>& v) const
+  {
+	  return Vector3(v[0],v[1],v[2]);
+  }
+
+  typedef HAGE::CEditableMesh<VertexData,FaceData,void> HageMesh;
+  typedef HageMesh::Vertex Vertex;
+  typedef HageMesh::Face Face;
+  typedef HageMesh::Edge Edge;
+
+  HageMesh mMeshData;
+  
+  unsigned int GetNumEdges() const { return mMeshData.GetNumEdgeIndices(); }
+  
+  
+  //! Finds all triangles that includes a given vertex.
+  virtual std::vector<unsigned int> FindNeighborFaces(unsigned int vertexIndex) const;
+
+  //! Finds all vertices that includes a given vertex.
+  virtual std::vector<unsigned int> FindNeighborVertices(unsigned int vertexIndex) const;
+
+  /*
   struct HalfEdge {
     HalfEdge() : vert(UNINITIALIZED), face(UNINITIALIZED), next(UNINITIALIZED), prev(UNINITIALIZED), pair(UNINITIALIZED) { }
     unsigned int vert;  //!< index into mVerts (the origin vertex)
@@ -108,33 +150,23 @@ protected:
     unsigned int next;  //!< index into mEdges
     unsigned int prev;  //!< index into mEdges
     unsigned int pair;  //!< index into mEdges
-  };
+  };*/
 
   /*! \brief A vertex is a point and an edge index
-   */
+   *//*
   struct Vertex : public Mesh::Vertex {
     Vertex() : edge(UNINITIALIZED) { }
     unsigned int edge;     //!< index into mEdges
   };
-
+  */
   /*! \brief A face has a normal and an index to an edge
-   */
+   *//*
   struct Face : public Mesh::Face {
     Face() : edge(UNINITIALIZED) { }
     unsigned int edge; //!< index into mEdges
   };
 
-  //! The edges of the mesh
-  std::vector<HalfEdge> mEdges;
-  //! The vertices in the mesh
-  std::vector<Vertex> mVerts;
-  //! The faces in the mesh
-  std::vector<Face> mFaces;
-
-  //! A utility data structure to speed up removal of redundant vertices
-  std::map<Vector3<float>, unsigned int> mUniqueVerts;
-
-  struct OrderedPair{
+   struct OrderedPair{
     unsigned int p1, p2;
     OrderedPair(unsigned int i1, unsigned int i2) {
       p1 = std::min(i1, i2);
@@ -151,23 +183,6 @@ protected:
       return false;
     }
   };
-  //! A utility data structure to speed up removal of redundant edges
-  std::map<OrderedPair, unsigned int> mUniqueEdgePairs;
-
-  //! Adds a vertex to the mesh
-  virtual bool AddVertex(const Vector3<float>& v, unsigned int &indx);
-
-  //! Adds a half edge pair, from vertex 1 to vertex 2, to the mesh
-  bool AddHalfEdgePair(unsigned int v1, unsigned int v2, unsigned int &indx1, unsigned int &indx2);
-
-  //! Merges the outer (uninitialized) edge for a newly created triangle
-  void MergeOuterBoundaryEdge(unsigned int innerEdge);
-
-  //! Finds all triangles that includes a given vertex.
-  virtual std::vector<unsigned int> FindNeighborFaces(unsigned int vertexIndex) const;
-
-  //! Finds all vertices that includes a given vertex.
-  virtual std::vector<unsigned int> FindNeighborVertices(unsigned int vertexIndex) const;
 
   //! Return the edge at index i
   HalfEdge& e(unsigned int i) { return mEdges.at(i); }
@@ -184,19 +199,19 @@ protected:
   unsigned int GetNumFaces() const { return mFaces.size(); }
   //! Return number of edges
   unsigned int GetNumEdges() const { return mEdges.size(); }
-
+  */
   virtual bool save(std::ostream &os){
     os << "# HalfEdgeMesh obj streamer\n# M&A 2008\n\n";
     os << "# Vertices\n";
-    for(unsigned int i=0; i<GetNumVerts(); i++){
-      os << "v " << v(i).pos[0] << " " <<  v(i).pos[1] << " " <<  v(i).pos[2] << "\n";
+	for(unsigned int i=0; i<mMeshData.GetNumVertexIndices(); i++){
+		os << "v " << ToGlobal(mMeshData.GetVertex(i)->Position) << " " <<  ToGlobal(mMeshData.GetVertex(i)->Position) << " " <<  ToGlobal(mMeshData.GetVertex(i)->Position) << "\n";
     }
     os << "\n# Faces\n";
-    for(unsigned int i=0; i<GetNumFaces(); i++){
-      EdgeIterator it = GetEdgeIterator(f(i).edge);
-      os << "f " << it.GetEdgeVertexIndex()+1 << " "
-         << it.Next().GetEdgeVertexIndex()+1
-         << " " <<  it.Next().GetEdgeVertexIndex()+1 << "\n";
+    for(unsigned int i=0; i<mMeshData.GetNumFaceIndices(); i++){
+		HageMesh::VertexTriple vt = mMeshData.GetFaceVertices(mMeshData.GetFace(i));
+      os << "f " << mMeshData.GetIndex(vt[0])+1 << " "
+         << mMeshData.GetIndex(vt[1])+1
+         << " " <<  mMeshData.GetIndex(vt[2])+1 << "\n";
     }
     return os.good();
   }
