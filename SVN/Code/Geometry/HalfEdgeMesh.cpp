@@ -143,6 +143,21 @@ std::vector<unsigned int> HalfEdgeMesh::FindNeighborVertices(unsigned int vertex
   std::vector<unsigned int> oneRing;
   // Add your code here
 
+  Vertex v = mMeshData.GetVertex(vertexIndex);
+
+  Edge e = mMeshData.GetFirstVertexEdge(v);
+
+  while( e != HageMesh::nullEdge )
+  {
+	  Vertex neighbor = mMeshData.GetVertex(v,e);
+
+	  oneRing.push_back( mMeshData.GetIndex(neighbor) );
+
+	  assert( mMeshData.GetEdge(mMeshData.MakePair(v,neighbor)) != HageMesh::nullEdge);
+
+	  e = mMeshData.GetNextVertexEdge(v,e);
+  }
+
   return oneRing;
 }
 
@@ -164,7 +179,33 @@ std::vector<unsigned int> HalfEdgeMesh::FindNeighborFaces(unsigned int vertexInd
 float HalfEdgeMesh::VertexCurvature(unsigned int vertexIndex) const
 {
   // Copy code from SimpleMesh or compute more accurate estimate
-  return 0;
+    std::vector<unsigned int> oneRing = FindNeighborVertices(vertexIndex);
+  assert(oneRing.size() != 0);
+
+  unsigned int curr, next;
+  const Vector3 &vi = mMeshData.GetVertex(vertexIndex)->Position;
+  float angleSum = 0;
+  float area = 0;
+  for(unsigned int i=0; i<oneRing.size(); i++){
+    // connections
+    curr = oneRing.at(i);
+    if(i < oneRing.size() - 1 )
+      next = oneRing.at(i+1);
+    else
+      next = oneRing.front();
+
+    // find vertices in 1-ring according to figure 5 in lab text
+    // next - beta
+    const Vector3 &nextPos = mMeshData.GetVertex(next)->Position;
+    const Vector3 &vj = mMeshData.GetVertex(curr)->Position;
+
+    angleSum +=  acos( (vj-vi)*(nextPos-vi) / ( (vj-vi).length()*(nextPos-vi).length() ) );
+
+    // compute areas
+    area += ((vj-vi) % (nextPos-vi)).length()*.5;
+  }
+
+  return ( 2*M_PI - angleSum ) / area;
 }
 
 float HalfEdgeMesh::FaceCurvature(unsigned int faceIndex) const
@@ -213,7 +254,78 @@ Vector3<float> HalfEdgeMesh::VertexNormal(unsigned int vertexIndex) const
 }
 
 
+
+void HalfEdgeMesh::mergeMeshVertices()
+{
+	Vector3 first = mMeshData.GetVertexData(mMeshData.GetVertex(0)).Position;
+	Vector3 min=first,max=first;
+	for(int i = 1; i < mMeshData.GetNumVertexIndices(); ++i)
+	{
+		Vector3 v = mMeshData.GetVertexData(mMeshData.GetVertex(i)).Position;
+		if(v.x < min.x)
+			min.x = v.x;
+		if(v.x > max.x)
+			max.x = v.x;
+		if(v.y < min.y)
+			min.y = v.y;
+		if(v.y > max.y)
+			max.y = v.y;
+		if(v.z < min.z)
+			min.z = v.z;
+		if(v.z > max.z)
+			max.z = v.z;
+	}
+
+	typedef HAGE::SpatialTree<HageMesh::Vertex> myTree;
+
+	myTree tree(myTree::SplitterType(min,max));
+
+	for(int i = 0; i < mMeshData.GetNumVertexIndices(); ++i)
+	{
+		HageMesh::Vertex v = mMeshData.GetVertex(i);
+		if(v!=HageMesh::nullVertex)
+			tree.Insert(v);
+	}
+
+	const myTree::TreeNode* cur = tree.TopNode();
+	while(cur)
+	{
+		if(cur->IsLeaf())
+		{
+			auto elements = cur->LeafElements();
+			for(size_t i = 0; i < elements.size(); ++i)
+				for(size_t i2 = i+1; i2 < elements.size(); ++i2)
+				{
+					HageMesh::Vertex v1 = elements[i];
+					HageMesh::Vertex v2 = elements[i2];
+					if(v1 != HageMesh::nullVertex && v2 != HageMesh::nullVertex)
+					{
+						Vector3 pos1 = mMeshData.GetVertexData(v1).Position;
+						Vector3 pos2 = mMeshData.GetVertexData(v2).Position;
+						float distance_sq = !( pos1 - pos2);
+						if(distance_sq < 0.000001f)
+						{
+							assert(mMeshData.MergeVertex(mMeshData.MakePair(v1,v2)));
+							break;
+						}
+					}
+				}
+		}
+		cur = cur->GetNextNode();
+	}
+	
+	std::cerr << "Num Vertices pre Merge:" << mMeshData.GetNumVertexIndices();
+
+	mMeshData.Compact();
+
+	std::cerr << "Num Vertices post Merge:" << mMeshData.GetNumVertexIndices();
+}
+
+
 void HalfEdgeMesh::Initialize() {
+
+	//Merge Vertices
+	mergeMeshVertices();
   Validate();
   Update();
 }
@@ -353,7 +465,7 @@ void HalfEdgeMesh::Render()
     }
     else {
       glColor3fv(face->Color.c);
-      glNormal3fv(face->Color.c);
+      glNormal3fv(face->Normal.c);
 
 		for(int v=0;v<3;v++)
 		{

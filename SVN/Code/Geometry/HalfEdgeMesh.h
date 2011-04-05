@@ -89,6 +89,7 @@ private:
   //! Adds a vertex to the mesh
   virtual bool AddVertex(const Vector3<float>& v, unsigned int &indx) ;
 
+  void mergeMeshVertices();
 
   //! Denotes a reference to a border, only for face pointers
   const static unsigned int BORDER;
@@ -100,6 +101,7 @@ private:
    */
 
   typedef HAGE::Vector3<> Vector3;
+  
 
   struct VertexData
   {
@@ -107,6 +109,16 @@ private:
 	  Vector3 Position;
 	  Vector3 Color;
 	  float Curvature;
+
+	  
+	operator Vector3&()
+	{
+		return Position;
+	}
+	operator const Vector3&() const
+	{
+		return Position;
+	}
   };
 
   struct FaceData
