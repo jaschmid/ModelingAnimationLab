@@ -145,6 +145,8 @@ private:
 
   HageMesh mMeshData;
   
+
+  float FaceArea(HageMesh::IndexType i) const;
   unsigned int GetNumEdges() const { return (unsigned int)mMeshData.GetNumEdgeIndices(); }
   
   

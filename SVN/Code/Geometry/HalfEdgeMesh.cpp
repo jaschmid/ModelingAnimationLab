@@ -223,6 +223,27 @@ float HalfEdgeMesh::VertexCurvature(unsigned int vertexIndex) const
   const Vector3 &vi = mMeshData.GetVertex(vertexIndex)->Position;
   float angleSum = 0;
   float area = 0;
+
+  Vector3 H = Vector3(0.0f,0.0f,0.0f);
+  float A = 0.0f;
+	Vector3 normal = mMeshData.GetVertex(vertexIndex)->Normal;
+  
+	for(unsigned int i=0; i<oneRing.size(); i++)
+	{
+
+		Vector3 vj = mMeshData.GetVertex(oneRing[i])->Position;
+		Vector3 vjn = mMeshData.GetVertex(oneRing[(i+1)%oneRing.size()])->Position;
+		Vector3 vjp = mMeshData.GetVertex(oneRing[(i-1+oneRing.size())%oneRing.size()])->Position;
+
+		float cotP = Cotangent(ToGlobal(vj),ToGlobal(vjp),ToGlobal(vi));
+		float cotN= Cotangent(ToGlobal(vi),ToGlobal(vjn),ToGlobal(vj));
+		
+		H+= (vi-vj)*(cotP+cotN);
+		A+= (cotP+cotN)*(vi-vj).sqLength();
+
+	}
+	return 2.0 / A * (H *  normal);
+  /*
   for(unsigned int i=0; i<oneRing.size(); i++){
     // connections
     curr = oneRing.at(i);
@@ -241,8 +262,8 @@ float HalfEdgeMesh::VertexCurvature(unsigned int vertexIndex) const
     // compute areas
     area += ((vj-vi) % (nextPos-vi)).length()*.5;
   }
-
-  return ( 2*M_PI - angleSum ) / area;
+  */
+  //return ( 2*M_PI - angleSum ) / area;
 }
 
 float HalfEdgeMesh::FaceCurvature(unsigned int faceIndex) const
@@ -449,8 +470,18 @@ float HalfEdgeMesh::Area() const
 {
   float area = 0;
   // Add code here
-  std::cerr << "Area calculation not implemented for half-edge mesh!\n";
+
+  for(HageMesh::IndexType i = 0; i!= mMeshData.GetNumFaceIndices(); ++i)
+	  area += FaceArea(i);
+
   return area;
+}
+
+float HalfEdgeMesh::FaceArea(HalfEdgeMesh::HageMesh::IndexType i) const
+{
+	HageMesh::VertexTriple vt = mMeshData.GetFaceVertices(mMeshData.GetFace(i));
+
+	return ((vt[1]->Position - vt[0]->Position) % (vt[2]->Position - vt[0]->Position)).length() * 0.5f;
 }
 
 /*! \lab1 Implement the volume */
@@ -458,7 +489,16 @@ float HalfEdgeMesh::Volume() const
 {
   float volume = 0;
   // Add code here
-  std::cerr << "Volume calculation not implemented for half-edge mesh!\n";
+  
+  for(HageMesh::IndexType i = 0; i!= mMeshData.GetNumFaceIndices(); ++i)
+  {
+	  Face f = mMeshData.GetFace(i);
+	  HageMesh::VertexTriple vt = mMeshData.GetFaceVertices(f);
+	  Vector3 c = (vt[0]->Position + vt[1]->Position + vt[2]->Position) * (1.0f/3.0f);
+	  Vector3 normal = f->Normal;
+	  volume += c*normal*FaceArea(i)/3.0f;
+  }
+
   return volume;
 }
 
