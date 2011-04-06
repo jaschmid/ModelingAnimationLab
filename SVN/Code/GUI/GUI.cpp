@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Apr 16 2008)
+// C++ code generated with wxFormBuilder (version Sep  8 2010)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -29,6 +29,14 @@ BaseFrameMain::BaseFrameMain( wxWindow* parent, wxWindowID id, const wxString& t
 	wxMenuItem* mAddObjectHalfEdgeMesh;
 	mAddObjectHalfEdgeMesh = new wxMenuItem( mMenuAddObject, wxID_ANY, wxString( wxT("Half-edge mesh") ) , wxEmptyString, wxITEM_NORMAL );
 	mMenuAddObject->Append( mAddObjectHalfEdgeMesh );
+
+	wxMenuItem* mAddObjectSimpleDecimationMesh;
+	mAddObjectSimpleDecimationMesh = new wxMenuItem( mMenuAddObject, wxID_ANY, wxString( wxT("Simple decimation mesh") ) , wxEmptyString, wxITEM_NORMAL );
+	mMenuAddObject->Append( mAddObjectSimpleDecimationMesh );
+
+	wxMenuItem* mAddObjectQuadricDecimationMesh;
+	mAddObjectQuadricDecimationMesh = new wxMenuItem( mMenuAddObject, wxID_ANY, wxString( wxT("Quadric decimation mesh") ) , wxEmptyString, wxITEM_NORMAL );
+	mMenuAddObject->Append( mAddObjectQuadricDecimationMesh );
 
 	m_menubar2->Append( mMenuAddObject, wxT("Add object") );
 
@@ -88,6 +96,8 @@ BaseFrameMain::BaseFrameMain( wxWindow* parent, wxWindowID id, const wxString& t
 	bSizer2->Add( mPanelObjects, 0, wxEXPAND | wxALL, 5 );
 
 	mPanelFluid = new wxPanel( mPanelSideBar, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	mPanelFluid->Hide();
+
 	wxStaticBoxSizer* sbSizer8;
 	sbSizer8 = new wxStaticBoxSizer( new wxStaticBox( mPanelFluid, wxID_ANY, wxT("Fluid solver") ), wxVERTICAL );
 
@@ -128,7 +138,6 @@ BaseFrameMain::BaseFrameMain( wxWindow* parent, wxWindowID id, const wxString& t
 	bSizer17 = new wxBoxSizer( wxHORIZONTAL );
 
 	mFluidRecord = new wxCheckBox( mPanelFluid, wxID_ANY, wxT("Record"), wxDefaultPosition, wxDefaultSize, 0 );
-
 	bSizer17->Add( mFluidRecord, 0, wxALL, 5 );
 
 	mFluidSlider = new wxSlider( mPanelFluid, wxID_ANY, 0, 0, 0, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
@@ -160,6 +169,8 @@ BaseFrameMain::BaseFrameMain( wxWindow* parent, wxWindowID id, const wxString& t
 	bSizer2->Add( mPanelFluid, 0, wxEXPAND | wxALL, 5 );
 
 	mPanelDecimation = new wxPanel( mPanelSideBar, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	mPanelDecimation->Hide();
+
 	wxStaticBoxSizer* sbSizer7;
 	sbSizer7 = new wxStaticBoxSizer( new wxStaticBox( mPanelDecimation, wxID_ANY, wxT("Decimation") ), wxHORIZONTAL );
 
@@ -175,6 +186,8 @@ BaseFrameMain::BaseFrameMain( wxWindow* parent, wxWindowID id, const wxString& t
 	bSizer2->Add( mPanelDecimation, 0, wxEXPAND | wxALL, 5 );
 
 	mPanelSubdivision = new wxPanel( mPanelSideBar, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	mPanelSubdivision->Hide();
+
 	wxStaticBoxSizer* sbSizer71;
 	sbSizer71 = new wxStaticBoxSizer( new wxStaticBox( mPanelSubdivision, wxID_ANY, wxT("Subdivision") ), wxHORIZONTAL );
 
@@ -187,11 +200,13 @@ BaseFrameMain::BaseFrameMain( wxWindow* parent, wxWindowID id, const wxString& t
 	bSizer2->Add( mPanelSubdivision, 0, wxEXPAND | wxALL, 5 );
 
 	mPanelLevelset = new wxPanel( mPanelSideBar, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	mPanelLevelset->Hide();
+
 	wxStaticBoxSizer* sbSizer5;
 	sbSizer5 = new wxStaticBoxSizer( new wxStaticBox( mPanelLevelset, wxID_ANY, wxT("Levelset") ), wxVERTICAL );
 
 	wxGridSizer* gSizer1;
-	gSizer1 = new wxGridSizer( 2, 2, 0, 0 );
+	gSizer1 = new wxGridSizer( 3, 2, 0, 0 );
 
 	m_button7 = new wxButton( mPanelLevelset, wxID_ANY, wxT("Reinitialize"), wxDefaultPosition, wxDefaultSize, 0 );
 	gSizer1->Add( m_button7, 0, wxALL, 5 );
@@ -214,7 +229,6 @@ BaseFrameMain::BaseFrameMain( wxWindow* parent, wxWindowID id, const wxString& t
 	sbSizer5->Add( gSizer1, 1, wxEXPAND, 5 );
 
 	mReinitializeFastMarching = new wxCheckBox( mPanelLevelset, wxID_ANY, wxT("Fast marching reinitialization"), wxDefaultPosition, wxDefaultSize, 0 );
-
 	sbSizer5->Add( mReinitializeFastMarching, 0, wxALL, 5 );
 
 	wxBoxSizer* bSizer8;
@@ -257,6 +271,8 @@ BaseFrameMain::BaseFrameMain( wxWindow* parent, wxWindowID id, const wxString& t
 	bSizer2->Add( mPanelLevelset, 0, wxEXPAND | wxALL, 5 );
 
 	mPanelImplicit = new wxPanel( mPanelSideBar, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	mPanelImplicit->Hide();
+
 	wxStaticBoxSizer* sbSizer72;
 	sbSizer72 = new wxStaticBoxSizer( new wxStaticBox( mPanelImplicit, wxID_ANY, wxT("Implicit") ), wxVERTICAL );
 
@@ -296,7 +312,6 @@ BaseFrameMain::BaseFrameMain( wxWindow* parent, wxWindowID id, const wxString& t
 	bSizer7 = new wxBoxSizer( wxVERTICAL );
 
 	mBlend = new wxCheckBox( mPanelImplicit, wxID_ANY, wxT("Blended CSG"), wxDefaultPosition, wxDefaultSize, 0 );
-
 	bSizer7->Add( mBlend, 0, wxALL, 5 );
 
 	wxBoxSizer* bSizer51;
@@ -325,15 +340,15 @@ BaseFrameMain::BaseFrameMain( wxWindow* parent, wxWindowID id, const wxString& t
 	bSizer2->Add( mPanelImplicit, 0, wxEXPAND | wxALL, 5 );
 
 	mPanelVisualization = new wxPanel( mPanelSideBar, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	mPanelVisualization->Hide();
+
 	wxStaticBoxSizer* sbSizer51;
 	sbSizer51 = new wxStaticBoxSizer( new wxStaticBox( mPanelVisualization, wxID_ANY, wxT("Visualization") ), wxVERTICAL );
 
 	mVisualizeWireframe = new wxCheckBox( mPanelVisualization, wxID_ANY, wxT("Wireframe"), wxDefaultPosition, wxDefaultSize, 0 );
-
 	sbSizer51->Add( mVisualizeWireframe, 0, wxALL, 5 );
 
 	mVisualizeMeshNormals = new wxCheckBox( mPanelVisualization, wxID_ANY, wxT("Visualize mesh normals"), wxDefaultPosition, wxDefaultSize, 0 );
-
 	sbSizer51->Add( mVisualizeMeshNormals, 0, wxALL, 5 );
 
 	wxBoxSizer* bSizer4;
@@ -383,7 +398,6 @@ BaseFrameMain::BaseFrameMain( wxWindow* parent, wxWindowID id, const wxString& t
 
 	mAutoMinMax = new wxCheckBox( mPanelVisualization, wxID_ANY, wxT("Automatic min/max"), wxDefaultPosition, wxDefaultSize, 0 );
 	mAutoMinMax->SetValue(true);
-
 	sbSizer51->Add( mAutoMinMax, 0, wxALL, 5 );
 
 	wxString mVisualizationModeChoiceChoices[] = { wxT("Choose visualization mode...") };
@@ -469,11 +483,36 @@ BaseFrameMain::BaseFrameMain( wxWindow* parent, wxWindowID id, const wxString& t
 
 	mUniformScaling = new wxCheckBox( mPanelTransform, wxID_ANY, wxT("Uniform scaling"), wxDefaultPosition, wxDefaultSize, 0 );
 	mUniformScaling->SetValue(true);
-
 	sbSizer1->Add( mUniformScaling, 0, wxALIGN_RIGHT|wxALL, 5 );
 
 	mButtonTransform = new wxButton( mPanelTransform, wxID_ANY, wxT("Transform"), wxDefaultPosition, wxDefaultSize, 0 );
 	sbSizer1->Add( mButtonTransform, 0, wxALIGN_RIGHT|wxALL, 5 );
+
+	wxBoxSizer* bSizer16;
+	bSizer16 = new wxBoxSizer( wxHORIZONTAL );
+
+	mDilate = new wxButton( mPanelTransform, wxID_ANY, wxT("Dilate"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer16->Add( mDilate, 0, wxALL, 5 );
+
+	mErode = new wxButton( mPanelTransform, wxID_ANY, wxT("Erode"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer16->Add( mErode, 0, wxALL, 5 );
+
+	m_button27 = new wxButton( mPanelTransform, wxID_ANY, wxT("Smooth"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer16->Add( m_button27, 0, wxALL, 5 );
+
+	sbSizer1->Add( bSizer16, 0, 0, 5 );
+
+	wxBoxSizer* bSizer171;
+	bSizer171 = new wxBoxSizer( wxHORIZONTAL );
+
+	m_staticText19 = new wxStaticText( mPanelTransform, wxID_ANY, wxT("Amount"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText19->Wrap( -1 );
+	bSizer171->Add( m_staticText19, 0, wxALL, 5 );
+
+	mAmount = new wxTextCtrl( mPanelTransform, wxID_ANY, wxT("0.1"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer171->Add( mAmount, 0, wxALL, 5 );
+
+	sbSizer1->Add( bSizer171, 0, 0, 5 );
 
 	mPanelTransform->SetSizer( sbSizer1 );
 	mPanelTransform->Layout();
@@ -497,6 +536,8 @@ BaseFrameMain::BaseFrameMain( wxWindow* parent, wxWindowID id, const wxString& t
 	this->Connect( m_menuItem10->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::SaveSelected ) );
 	this->Connect( mAddObjectSimpleMesh->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectSimpleMesh ) );
 	this->Connect( mAddObjectHalfEdgeMesh->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectHalfEdgeMesh ) );
+	this->Connect( mAddObjectSimpleDecimationMesh->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectSimpleDecimationMesh ) );
+	this->Connect( mAddObjectQuadricDecimationMesh->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectQuadricDecimationMesh ) );
 	this->Connect( m_menuItem14->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::CaptureScreen ) );
 	this->Connect( m_menuItem26->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::SaveMesh ) );
 	mObjectList->Connect( wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler( BaseFrameMain::SelectObjects ), NULL, this );
@@ -562,6 +603,9 @@ BaseFrameMain::BaseFrameMain( wxWindow* parent, wxWindowID id, const wxString& t
 	mRotateZ->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( BaseFrameMain::TextCtrlFocus ), NULL, this );
 	mUniformScaling->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( BaseFrameMain::ToggleUniformScaling ), NULL, this );
 	mButtonTransform->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BaseFrameMain::TransformObjects ), NULL, this );
+	mDilate->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BaseFrameMain::Dilate ), NULL, this );
+	mErode->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BaseFrameMain::Erode ), NULL, this );
+	m_button27->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BaseFrameMain::Smooth ), NULL, this );
 }
 
 BaseFrameMain::~BaseFrameMain()
@@ -657,4 +701,8 @@ BaseFrameMain::~BaseFrameMain()
 	mRotateZ->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( BaseFrameMain::TextCtrlFocus ), NULL, this );
 	mUniformScaling->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( BaseFrameMain::ToggleUniformScaling ), NULL, this );
 	mButtonTransform->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BaseFrameMain::TransformObjects ), NULL, this );
+	mDilate->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BaseFrameMain::Dilate ), NULL, this );
+	mErode->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BaseFrameMain::Erode ), NULL, this );
+	m_button27->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BaseFrameMain::Smooth ), NULL, this );
+
 }

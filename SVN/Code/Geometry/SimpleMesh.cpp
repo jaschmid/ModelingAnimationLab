@@ -101,12 +101,10 @@ float SimpleMesh::VertexCurvature(unsigned int vertexIndex) const{
     const Vector3<float> &nextPos = mVerts.at(next).pos;
     const Vector3<float> &vj = mVerts.at(curr).pos;
 
+    // compute angle and area
     angleSum +=  acos( (vj-vi)*(nextPos-vi) / ( (vj-vi).Length()*(nextPos-vi).Length() ) );
-
-    // compute areas
-    area += Cross((vj-vi), (nextPos-vi)).Length()*.5;
+    area += Cross((vi-vj), (nextPos-vj)).Length()*.5;
   }
-
   return ( 2*M_PI - angleSum ) / area;
 }
 
@@ -296,12 +294,12 @@ int SimpleMesh::Genus() const {
 }
 
 
-void SimpleMesh::Dilate(float epsilon)
+void SimpleMesh::Dilate(float amount)
 {
   std::vector<Vertex>::iterator iter = mVerts.begin();
   std::vector<Vertex>::iterator iend = mVerts.end();
   while (iter != iend) {
-    (*iter).pos += epsilon*(*iter).normal;
+    (*iter).pos += amount*(*iter).normal;
     iter++;
   }
 
@@ -309,6 +307,31 @@ void SimpleMesh::Dilate(float epsilon)
   Update();
 }
 
+void SimpleMesh::Erode(float amount)
+{
+  std::vector<Vertex>::iterator iter = mVerts.begin();
+  std::vector<Vertex>::iterator iend = mVerts.end();
+  while (iter != iend) {
+    (*iter).pos -= amount*(*iter).normal;
+    iter++;
+  }
+
+  Initialize();
+  Update();
+}
+
+void SimpleMesh::Smooth(float amount)
+{
+  std::vector<Vertex>::iterator iter = mVerts.begin();
+  std::vector<Vertex>::iterator iend = mVerts.end();
+  while (iter != iend) {
+    (*iter).pos -= amount*(*iter).normal * (*iter).curvature;
+    iter++;
+  }
+
+  Initialize();
+  Update();
+}
 
 void SimpleMesh::Render()
 {

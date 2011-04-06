@@ -84,7 +84,7 @@ public:
 
   virtual void Render();
 
-private:
+protected:
 	
   //! Adds a vertex to the mesh
   virtual bool AddVertex(const Vector3<float>& v, unsigned int &indx) ;
@@ -158,7 +158,8 @@ private:
 
   /*
   struct HalfEdge {
-    HalfEdge() : vert(UNINITIALIZED), face(UNINITIALIZED), next(UNINITIALIZED), prev(UNINITIALIZED), pair(UNINITIALIZED) { }
+    HalfEdge() : vert(UNINITIALIZED), face(UNINITIALIZED), next(UNINITIALIZED),
+                 prev(UNINITIALIZED), pair(UNINITIALIZED) { }
     unsigned int vert;  //!< index into mVerts (the origin vertex)
     unsigned int face;  //!< index into mFaces
     unsigned int next;  //!< index into mEdges
@@ -214,6 +215,10 @@ private:
   //! Return number of edges
   unsigned int GetNumEdges() const { return mEdges.size(); }
   */
+  virtual void Dilate(float amount);
+  virtual void Erode(float amount);
+  virtual void Smooth(float amount);
+
   virtual bool save(std::ostream &os){
     os << "# HalfEdgeMesh obj streamer\n# M&A 2008\n\n";
     os << "# Vertices\n";

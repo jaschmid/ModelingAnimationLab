@@ -61,11 +61,11 @@ void GLViewer::InitGL()
   GLfloat lightModelAmbient[] = { 0.1, 0.1, 0.1, 1.0 };
   glShadeModel(GL_SMOOTH);
 
-  glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
-  glMaterialfv(GL_FRONT, GL_SHININESS, matShininess);
+  //glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
+  //glMaterialfv(GL_FRONT, GL_SHININESS, matShininess);
   glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
   glLightfv(GL_LIGHT0, GL_DIFFUSE, whiteLight);
-  glLightfv(GL_LIGHT0, GL_SPECULAR, whiteLight);
+  //glLightfv(GL_LIGHT0, GL_SPECULAR, whiteLight);
   glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lightModelAmbient);
 
   glEnable(GL_LIGHTING);
@@ -82,7 +82,7 @@ void GLViewer::InitGL()
   glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
   glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, true);
 
-  glEnable(GL_RESCALE_NORMAL);
+  glEnable(GL_NORMALIZE);
 
   glSelectBuffer(512, mSelectBuffer);
 }

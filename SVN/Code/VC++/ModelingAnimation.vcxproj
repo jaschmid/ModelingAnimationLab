@@ -94,6 +94,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\decimation\DecimationInterface.h" />
+    <ClInclude Include="..\decimation\DecimationMesh.h" />
+    <ClInclude Include="..\decimation\QuadricDecimationMesh.h" />
+    <ClInclude Include="..\decimation\SimpleDecimationMesh.h" />
     <ClInclude Include="..\geometry\Geometry.h" />
     <ClInclude Include="..\geometry\HalfEdgeMesh.h" />
     <ClInclude Include="..\geometry\Mesh.h" />
@@ -139,6 +143,9 @@
     <ClInclude Include="..\util\Util.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\decimation\DecimationMesh.cpp" />
+    <ClCompile Include="..\decimation\QuadricDecimationMesh.cpp" />
+    <ClCompile Include="..\decimation\SimpleDecimationMesh.cpp" />
     <ClCompile Include="..\geometry\HalfEdgeMesh.cpp" />
     <ClCompile Include="..\geometry\Mesh.cpp" />
     <ClCompile Include="..\geometry\SimpleMesh.cpp" />

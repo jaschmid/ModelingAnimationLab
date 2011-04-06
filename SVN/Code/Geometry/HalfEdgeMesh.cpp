@@ -516,6 +516,77 @@ int HalfEdgeMesh::Genus() const
   return 0;
 }
 
+void HalfEdgeMesh::Dilate(float amount)
+{
+	
+	for(HageMesh::IndexType i = 0; i < mMeshData.GetNumVertexIndices(); ++i)
+	{
+		Vertex v = mMeshData.GetVertex(i);
+		v->Position += v->Normal * amount;
+	}
+
+	
+  Initialize();
+  Update();
+	/*
+  std::vector<Vertex>::iterator iter = mVerts.begin();
+  std::vector<Vertex>::iterator iend = mVerts.end();
+  while (iter != iend) {
+    (*iter).pos += amount*(*iter).normal;
+    iter++;
+  }
+
+  Initialize();
+  Update();*/
+}
+
+void HalfEdgeMesh::Erode(float amount)
+{
+	
+	
+	for(HageMesh::IndexType i = 0; i < mMeshData.GetNumVertexIndices(); ++i)
+	{
+		Vertex v = mMeshData.GetVertex(i);
+		v->Position -= v->Normal * amount;
+	}
+	
+  Initialize();
+  Update();
+	/*
+  std::vector<Vertex>::iterator iter = mVerts.begin();
+  std::vector<Vertex>::iterator iend = mVerts.end();
+  while (iter != iend) {
+    (*iter).pos -= amount*(*iter).normal;
+    iter++;
+  }
+
+  Initialize();
+  Update();*/
+}
+
+void HalfEdgeMesh::Smooth(float amount)
+{
+	
+	for(HageMesh::IndexType i = 0; i < mMeshData.GetNumVertexIndices(); ++i)
+	{
+		Vertex v = mMeshData.GetVertex(i);
+		v->Position -= v->Normal * amount * v->Curvature;
+	}
+	
+  Initialize();
+  Update();
+	/*
+  std::vector<Vertex>::iterator iter = mVerts.begin();
+  std::vector<Vertex>::iterator iend = mVerts.end();
+  while (iter != iend) {
+    (*iter).pos -= amount*(*iter).normal * (*iter).curvature;
+    iter++;
+  }
+
+  Initialize();
+  Update();*/
+}
+
 void HalfEdgeMesh::Render()
 {
   glEnable(GL_LIGHTING);

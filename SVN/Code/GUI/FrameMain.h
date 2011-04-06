@@ -14,6 +14,12 @@
 #include "Geometry/SimpleMesh.h"
 #include "Geometry/HalfEdgeMesh.h"
 
+#include "Decimation/SimpleDecimationMesh.h"
+#include "Decimation/QuadricDecimationMesh.h"
+
+#include "Math/ConstantVectorField.h"
+#include "Math/VortexVectorField.h"
+
 #include "Util/ObjIO.h"
 #include "Util/ColorMapFactory.h"
 #include "Util/GLObjectPlayback.h"
@@ -54,6 +60,8 @@ protected :
 
   void AddObjectSimpleMesh( wxCommandEvent& event );
   void AddObjectHalfEdgeMesh( wxCommandEvent& event );
+  void AddObjectSimpleDecimationMesh( wxCommandEvent& event );
+  void AddObjectQuadricDecimationMesh( wxCommandEvent& event );
 
   void DeleteObjects( wxCommandEvent& event );
   void SelectObjects( wxCommandEvent& event );
@@ -66,11 +74,15 @@ protected :
   void OpacityChanged( wxScrollEvent& event );
   void SetColormap( wxCommandEvent& event );
   void SetVisualizationMode( wxCommandEvent& event );
+  void DecimateObjects( wxCommandEvent& event );
   void ScaleChanged( wxCommandEvent& event );
   void ToggleUniformScaling( wxCommandEvent& event );
   void ToggleAutoMinMax( wxCommandEvent& event );
   void ObjectSelected(wxCommandEvent & event);
   void CaptureScreen( wxCommandEvent& event );
+	void Dilate( wxCommandEvent& event );
+	void Erode( wxCommandEvent& event );
+	void Smooth( wxCommandEvent& event );
 
   // Window close in MSW_XP (both VS2005/2008) is not working without this
 #ifdef WIN32
@@ -80,6 +92,7 @@ protected :
 
   void HideAllPanels();
   void UpdatePanels();
+  double GetAmount();
 
   template <class MeshType>
   MeshType * AddMesh(const wxString & path);
@@ -116,6 +129,5 @@ MeshType * FrameMain::AddMesh(const wxString & path)
 
   return NULL;
 }
-
 
 #endif // __FrameMain__

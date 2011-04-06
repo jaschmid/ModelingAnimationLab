@@ -15,6 +15,9 @@ FrameMain::FrameMain( wxWindow* parent ) : BaseFrameMain( parent )
   // Add the panels to show for all corresponding types of GLObjects
   mPanelSwitches[typeid(Mesh).name()].push_back(mPanelTransform);
   mPanelSwitches[typeid(Mesh).name()].push_back(mPanelVisualization);
+  mPanelSwitches[typeid(DecimationMesh).name()].push_back(mPanelTransform);
+  mPanelSwitches[typeid(DecimationMesh).name()].push_back(mPanelVisualization);
+  mPanelSwitches[typeid(DecimationMesh).name()].push_back(mPanelDecimation);
 
   // Add all available color maps
   std::list<std::string> maps = ColorMapFactory::GetColorMaps();
@@ -47,7 +50,7 @@ void FrameMain::SaveSelected( wxCommandEvent& event )
     std::ofstream out( path.mb_str() );
 
     Mesh * m = dynamic_cast<Mesh *>(objects.front());
-    if(m != NULL){
+   if(m != NULL){
       m->save(out);
     }
 
@@ -102,6 +105,27 @@ void FrameMain::AddObjectHalfEdgeMesh( wxCommandEvent& event )
   mGLViewer->Render();
 }
 
+void FrameMain::AddObjectSimpleDecimationMesh( wxCommandEvent& event )
+{
+  wxFileDialog * dialog = new wxFileDialog(this);
+  if (dialog->ShowModal() == wxID_OK) {
+    wxString path = dialog->GetPath();
+    AddMesh<SimpleDecimationMesh>(path);
+  }
+  delete dialog;
+  mGLViewer->Render();
+}
+
+void FrameMain::AddObjectQuadricDecimationMesh( wxCommandEvent& event )
+{
+  wxFileDialog * dialog = new wxFileDialog(this);
+  if (dialog->ShowModal() == wxID_OK) {
+    wxString path = dialog->GetPath();
+    AddMesh<QuadricDecimationMesh>(path);
+  }
+  delete dialog;
+  mGLViewer->Render();
+}
 
 void FrameMain::CaptureScreen( wxCommandEvent& event )
 {
@@ -194,8 +218,17 @@ void FrameMain::MoveObjectsUp( wxCommandEvent& event )
   std::list<GLObject *>::iterator iend = objects.end();
   while (iter != iend) {
     mGLViewer->MoveObject((*iter)->GetName(), -1);
+
+    wxString name((*iter)->GetName().c_str(), wxConvUTF8);
+    int i = mObjectList->FindString(name);
+    if (i > 0) {
+      mObjectList->Delete(i);
+      mObjectList->Insert(name, i-1);
+    }
+
     iter++;
   }
+  ObjectSelected(event);
 }
 
 void FrameMain::MoveObjecsDown( wxCommandEvent& event )
@@ -205,8 +238,17 @@ void FrameMain::MoveObjecsDown( wxCommandEvent& event )
   std::list<GLObject *>::iterator iend = objects.end();
   while (iter != iend) {
     mGLViewer->MoveObject((*iter)->GetName(), 1);
+
+    wxString name((*iter)->GetName().c_str(), wxConvUTF8);
+    int i = mObjectList->FindString(name);
+    if (i < mObjectList->GetCount()-1) {
+      mObjectList->Delete(i);
+      mObjectList->Insert(name, i+1);
+    }
+
     iter++;
   }
+  ObjectSelected(event);
 }
 
 
@@ -239,6 +281,63 @@ void FrameMain::TransformObjects(wxCommandEvent& event)
       object->Scale(scaleX, scaleY, scaleZ);
       object->Translate(translateX, translateY, translateZ);
       object->Rotate(rotateX*M_PI/180.0, rotateY*M_PI/180.0, rotateY*M_PI/180.0);
+      UpdateDependentObjects(object);
+    }
+    iter++;
+  }
+
+  mGLViewer->Render();
+}
+
+void FrameMain::Dilate( wxCommandEvent& event )
+{
+  std::list<GLObject *> objects = mGLViewer->GetSelectedObjects();
+  std::list<GLObject *>::iterator iter = objects.begin();
+  std::list<GLObject *>::iterator iend = objects.end();
+  while (iter != iend) {
+    Geometry * object = dynamic_cast<Geometry *>(*iter);
+    if (object == NULL) {
+      std::cerr << "Warning: Object '" << (*iter)->GetName() << "' is not a geometry - can't be transformed" << std::endl;
+    } else {
+      object->Dilate(GetAmount());
+      UpdateDependentObjects(object);
+    }
+    iter++;
+  }
+
+  mGLViewer->Render();
+}
+
+void FrameMain::Erode( wxCommandEvent& event )
+{
+  std::list<GLObject *> objects = mGLViewer->GetSelectedObjects();
+  std::list<GLObject *>::iterator iter = objects.begin();
+  std::list<GLObject *>::iterator iend = objects.end();
+  while (iter != iend) {
+    Geometry * object = dynamic_cast<Geometry *>(*iter);
+    if (object == NULL) {
+      std::cerr << "Warning: Object '" << (*iter)->GetName() << "' is not a geometry - can't be transformed" << std::endl;
+    } else {
+      object->Erode(GetAmount());
+      UpdateDependentObjects(object);
+    }
+    iter++;
+  }
+
+  mGLViewer->Render();
+}
+
+void FrameMain::Smooth( wxCommandEvent& event )
+{
+  std::list<GLObject *> objects = mGLViewer->GetSelectedObjects();
+  std::list<GLObject *>::iterator iter = objects.begin();
+  std::list<GLObject *>::iterator iend = objects.end();
+  while (iter != iend) {
+    Geometry * object = dynamic_cast<Geometry *>(*iter);
+    if (object == NULL) {
+      std::cerr << "Warning: Object '" << (*iter)->GetName() << "' is not a geometry - can't be transformed" << std::endl;
+    } else {
+      object->Smooth(GetAmount());
       UpdateDependentObjects(object);
     }
     iter++;
@@ -339,6 +438,35 @@ void FrameMain::SetVisualizationMode( wxCommandEvent& event )
 }
 
 
+void FrameMain::DecimateObjects( wxCommandEvent& event )
+{
+  std::list<GLObject *> objects = mGLViewer->GetSelectedObjects();
+  std::list<GLObject *>::iterator iter = objects.begin();
+  std::list<GLObject *>::iterator iend = objects.end();
+  while (iter != iend) {
+    DecimationMesh * mesh = dynamic_cast<DecimationMesh *>(*iter);
+    if (mesh == NULL)
+      std::cerr << "Warning: Object '" << (*iter)->GetName() << "' is not a decimation mesh - can't be decimated" << std::endl;
+    else
+      {
+        /*mesh->decimate();*/
+        long targetFaces;
+        if (m_DecimationTargetTxtBox->GetValue().ToLong(&targetFaces)) {
+          std::cout << "Target Decimation Faces: " << targetFaces << std::endl;
+          mesh->decimate( targetFaces );
+        }
+        else
+          std::cout << "Decimating one edge" << std::endl;
+        mesh->decimate();
+      }
+
+    iter++;
+  }
+
+  mGLViewer->Render();
+}
+
+
 void FrameMain::ScaleChanged( wxCommandEvent& event )
 {
   if (mUniformScaling->IsChecked()) {
@@ -365,6 +493,16 @@ void FrameMain::TextCtrlFocus( wxFocusEvent& event )
   ctrl->SetSelection(-1,-1);
 }
 
+double FrameMain::GetAmount()
+{
+  double amount;
+  if (!mAmount->GetValue().ToDouble(&amount)) {
+    amount = 1;
+    mAmount->SetValue(_T("1"));
+  }
+
+  return amount;
+}
 
 /*
  * This event is triggered when an object is selected in the GUI

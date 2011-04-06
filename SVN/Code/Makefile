@@ -17,7 +17,8 @@ UTIL = Util/Util.cpp Util/ObjIO.cpp Util/ColorMap.cpp \
 GUI =	main.cpp GUI/GUI.cpp GUI/FrameMain.cpp GUI/GLViewer.cpp \
 			GUI/GLAxis.cpp  GUI/GLGridPlane.cpp GUI/GLObject.cpp
 
-MESH = Geometry/HalfEdgeMesh.cpp Geometry/SimpleMesh.cpp Geometry/Mesh.cpp
+MESH = Geometry/HalfEdgeMesh.cpp Decimation/DecimationMesh.cpp Decimation/SimpleDecimationMesh.cpp\
+Decimation/QuadricDecimationMesh.cpp Geometry/SimpleMesh.cpp Geometry/Mesh.cpp
 
 SOURCE =  $(UTIL) $(GUI) $(MESH)
 
@@ -51,6 +52,9 @@ clean:
 	rm -fr *.o
 	rm -fr *~
 	rm -fr *.d
+	rm -fr Decimation/*.o
+	rm -fr Decimation/*~
+	rm -fr Decimation/*.d
 	rm -fr Geometry/*.o
 	rm -fr Geometry/*~
 	rm -fr Geometry/*.d

@@ -41,6 +41,8 @@ public:
   void SelectObject(const std::string & name);
   std::list<GLObject *> GetSelectedObjects();
 
+  void SetLighting(bool lighting);
+
 protected :
 
   GLCamera mCamera;
@@ -48,6 +50,7 @@ protected :
 
   long mMouseDown[2];
   long mMousePrevious[2];
+  bool mLighting;
 
   GLuint mSelectBuffer[512];
   GLObject * PickObject(long x, long y);

@@ -93,7 +93,9 @@ public:
   const std::vector<Vertex>& GetVerts() const { return mVerts; }
   const std::vector<Face>& GetFaces() const { return mFaces; }
 
-  virtual void Dilate(float epsilon);
+  virtual void Dilate(float amount);
+  virtual void Erode(float amount);
+  virtual void Smooth(float amount);
 
   int Genus() const;
 

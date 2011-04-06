@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Decimation">
+      <UniqueIdentifier>{53930336-7408-4cf7-8199-48f404cdf864}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Geometry">
       <UniqueIdentifier>{0c21d55d-b3b7-42aa-98ee-8d6a4d41152f}</UniqueIdentifier>
     </Filter>
@@ -15,6 +18,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\decimation\DecimationInterface.h">
+      <Filter>Decimation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\decimation\DecimationMesh.h">
+      <Filter>Decimation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\decimation\QuadricDecimationMesh.h">
+      <Filter>Decimation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\decimation\SimpleDecimationMesh.h">
+      <Filter>Decimation</Filter>
+    </ClInclude>
     <ClInclude Include="..\geometry\Geometry.h">
       <Filter>Geometry</Filter>
     </ClInclude>
@@ -146,6 +161,15 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\decimation\DecimationMesh.cpp">
+      <Filter>Decimation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\decimation\QuadricDecimationMesh.cpp">
+      <Filter>Decimation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\decimation\SimpleDecimationMesh.cpp">
+      <Filter>Decimation</Filter>
+    </ClCompile>
     <ClCompile Include="..\geometry\HalfEdgeMesh.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>

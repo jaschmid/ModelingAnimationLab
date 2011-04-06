@@ -8,15 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		D40615D00DC28529001EA9E1 /* Trackball.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D40615CE0DC28529001EA9E1 /* Trackball.cpp */; };
-		D4368E7A0FA89A3900FF156F /* HalfEdgeMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4368E630FA89A3900FF156F /* HalfEdgeMesh.cpp */; };
-		D4368E7E0FA89A3900FF156F /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4368E6D0FA89A3900FF156F /* Mesh.cpp */; };
-		D4368E810FA89A3900FF156F /* SimpleMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4368E730FA89A3900FF156F /* SimpleMesh.cpp */; };
 		D462C7E00D88838B00B01FCB /* IsoContourColorMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D462C7DF0D88838B00B01FCB /* IsoContourColorMap.cpp */; };
 		D491A7580D8FB0E000469485 /* ColorMapFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D491A7560D8FB0E000469485 /* ColorMapFactory.cpp */; };
 		D492F07F0DDDEF82005AFACF /* GLObjectPlayback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D492F07D0DDDEF82005AFACF /* GLObjectPlayback.cpp */; };
 		D4A660320D5C910F007DE0D2 /* GLObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4A660310D5C910F007DE0D2 /* GLObject.cpp */; };
 		D4A660650D5C965F007DE0D2 /* GLAxis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4A660620D5C965F007DE0D2 /* GLAxis.cpp */; };
 		D4A660660D5C965F007DE0D2 /* GLGridPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4A660630D5C965F007DE0D2 /* GLGridPlane.cpp */; };
+		D4AE429D0D5356FB007E34DE /* DecimationMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE422D0D5356FB007E34DE /* DecimationMesh.cpp */; };
+		D4AE429E0D5356FB007E34DE /* QuadricDecimationMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE422F0D5356FB007E34DE /* QuadricDecimationMesh.cpp */; };
+		D4AE429F0D5356FB007E34DE /* SimpleDecimationMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE42310D5356FB007E34DE /* SimpleDecimationMesh.cpp */; };
+		D4AE42A10D5356FB007E34DE /* HalfEdgeMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE42390D5356FB007E34DE /* HalfEdgeMesh.cpp */; };
+		D4AE42A40D5356FB007E34DE /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE42430D5356FB007E34DE /* Mesh.cpp */; };
+		D4AE42A70D5356FB007E34DE /* SimpleMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE42490D5356FB007E34DE /* SimpleMesh.cpp */; };
 		D4AE42AA0D5356FB007E34DE /* GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE42530D5356FB007E34DE /* GUI.cpp */; };
 		D4AE42B50D5356FB007E34DE /* TrilinearInterpolator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE42750D5356FB007E34DE /* TrilinearInterpolator.cpp */; };
 		D4AE42BC0D5356FB007E34DE /* ColorMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE42870D5356FB007E34DE /* ColorMap.cpp */; };
@@ -37,13 +40,6 @@
 /* Begin PBXFileReference section */
 		D40615CE0DC28529001EA9E1 /* Trackball.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Trackball.cpp; sourceTree = "<group>"; };
 		D40615CF0DC28529001EA9E1 /* Trackball.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trackball.h; sourceTree = "<group>"; };
-		D4368E620FA89A3900FF156F /* Geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Geometry.h; sourceTree = "<group>"; };
-		D4368E630FA89A3900FF156F /* HalfEdgeMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HalfEdgeMesh.cpp; sourceTree = "<group>"; };
-		D4368E640FA89A3900FF156F /* HalfEdgeMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HalfEdgeMesh.h; sourceTree = "<group>"; };
-		D4368E6D0FA89A3900FF156F /* Mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
-		D4368E6E0FA89A3900FF156F /* Mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mesh.h; sourceTree = "<group>"; };
-		D4368E730FA89A3900FF156F /* SimpleMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleMesh.cpp; sourceTree = "<group>"; };
-		D4368E740FA89A3900FF156F /* SimpleMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleMesh.h; sourceTree = "<group>"; };
 		D462C7DF0D88838B00B01FCB /* IsoContourColorMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IsoContourColorMap.cpp; sourceTree = "<group>"; };
 		D491A7560D8FB0E000469485 /* ColorMapFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorMapFactory.cpp; sourceTree = "<group>"; };
 		D491A7570D8FB0E000469485 /* ColorMapFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMapFactory.h; sourceTree = "<group>"; };
@@ -55,6 +51,20 @@
 		D4A660620D5C965F007DE0D2 /* GLAxis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLAxis.cpp; sourceTree = "<group>"; };
 		D4A660630D5C965F007DE0D2 /* GLGridPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLGridPlane.cpp; sourceTree = "<group>"; };
 		D4A660640D5C965F007DE0D2 /* GLGridPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLGridPlane.h; sourceTree = "<group>"; };
+		D4AE422C0D5356FB007E34DE /* DecimationInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DecimationInterface.h; sourceTree = "<group>"; };
+		D4AE422D0D5356FB007E34DE /* DecimationMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DecimationMesh.cpp; sourceTree = "<group>"; };
+		D4AE422E0D5356FB007E34DE /* DecimationMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DecimationMesh.h; sourceTree = "<group>"; };
+		D4AE422F0D5356FB007E34DE /* QuadricDecimationMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuadricDecimationMesh.cpp; sourceTree = "<group>"; };
+		D4AE42300D5356FB007E34DE /* QuadricDecimationMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuadricDecimationMesh.h; sourceTree = "<group>"; };
+		D4AE42310D5356FB007E34DE /* SimpleDecimationMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleDecimationMesh.cpp; sourceTree = "<group>"; };
+		D4AE42320D5356FB007E34DE /* SimpleDecimationMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleDecimationMesh.h; sourceTree = "<group>"; };
+		D4AE42380D5356FB007E34DE /* Geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Geometry.h; sourceTree = "<group>"; };
+		D4AE42390D5356FB007E34DE /* HalfEdgeMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HalfEdgeMesh.cpp; sourceTree = "<group>"; };
+		D4AE423A0D5356FB007E34DE /* HalfEdgeMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HalfEdgeMesh.h; sourceTree = "<group>"; };
+		D4AE42430D5356FB007E34DE /* Mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
+		D4AE42440D5356FB007E34DE /* Mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mesh.h; sourceTree = "<group>"; };
+		D4AE42490D5356FB007E34DE /* SimpleMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleMesh.cpp; sourceTree = "<group>"; };
+		D4AE424A0D5356FB007E34DE /* SimpleMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleMesh.h; sourceTree = "<group>"; };
 		D4AE42530D5356FB007E34DE /* GUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUI.cpp; sourceTree = "<group>"; };
 		D4AE42540D5356FB007E34DE /* GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUI.h; sourceTree = "<group>"; };
 		D4AE42690D5356FB007E34DE /* ConjugateGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConjugateGradient.h; sourceTree = "<group>"; };
@@ -123,8 +133,9 @@
 			isa = PBXGroup;
 			children = (
 				D4AE44420D5367F8007E34DE /* Makefile */,
-				D4368E5D0FA89A3900FF156F /* Geometry */,
 				D4AE42F30D535E1F007E34DE /* main.cpp */,
+				D4AE422B0D5356FB007E34DE /* Decimation */,
+				D4AE42330D5356FB007E34DE /* Geometry */,
 				D4AE42510D5356FB007E34DE /* GUI */,
 				D4AE42680D5356FB007E34DE /* Math */,
 				D4AE42850D5356FB007E34DE /* Util */,
@@ -133,26 +144,40 @@
 			name = "Modeling & Animation";
 			sourceTree = "<group>";
 		};
-		D4368E5D0FA89A3900FF156F /* Geometry */ = {
-			isa = PBXGroup;
-			children = (
-				D4368E620FA89A3900FF156F /* Geometry.h */,
-				D4368E630FA89A3900FF156F /* HalfEdgeMesh.cpp */,
-				D4368E640FA89A3900FF156F /* HalfEdgeMesh.h */,
-				D4368E6D0FA89A3900FF156F /* Mesh.cpp */,
-				D4368E6E0FA89A3900FF156F /* Mesh.h */,
-				D4368E730FA89A3900FF156F /* SimpleMesh.cpp */,
-				D4368E740FA89A3900FF156F /* SimpleMesh.h */,
-			);
-			path = Geometry;
-			sourceTree = "<group>";
-		};
 		D4AE42250D5356C2007E34DE /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				D4AE42C80D535741007E34DE /* Modeling & Animation.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		D4AE422B0D5356FB007E34DE /* Decimation */ = {
+			isa = PBXGroup;
+			children = (
+				D4AE422C0D5356FB007E34DE /* DecimationInterface.h */,
+				D4AE422D0D5356FB007E34DE /* DecimationMesh.cpp */,
+				D4AE422E0D5356FB007E34DE /* DecimationMesh.h */,
+				D4AE422F0D5356FB007E34DE /* QuadricDecimationMesh.cpp */,
+				D4AE42300D5356FB007E34DE /* QuadricDecimationMesh.h */,
+				D4AE42310D5356FB007E34DE /* SimpleDecimationMesh.cpp */,
+				D4AE42320D5356FB007E34DE /* SimpleDecimationMesh.h */,
+			);
+			path = Decimation;
+			sourceTree = "<group>";
+		};
+		D4AE42330D5356FB007E34DE /* Geometry */ = {
+			isa = PBXGroup;
+			children = (
+				D4AE42380D5356FB007E34DE /* Geometry.h */,
+				D4AE42390D5356FB007E34DE /* HalfEdgeMesh.cpp */,
+				D4AE423A0D5356FB007E34DE /* HalfEdgeMesh.h */,
+				D4AE42430D5356FB007E34DE /* Mesh.cpp */,
+				D4AE42440D5356FB007E34DE /* Mesh.h */,
+				D4AE42490D5356FB007E34DE /* SimpleMesh.cpp */,
+				D4AE424A0D5356FB007E34DE /* SimpleMesh.h */,
+			);
+			path = Geometry;
 			sourceTree = "<group>";
 		};
 		D4AE42510D5356FB007E34DE /* GUI */ = {
@@ -262,16 +287,9 @@
 /* Begin PBXProject section */
 		08FB7793FE84155DC02AAC07 /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = 1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "ModelingAnimation" */;
+			buildConfigurationList = 1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "ModelingAnimation_Lab2" */;
 			compatibilityVersion = "Xcode 2.4";
-			developmentRegion = English;
 			hasScannedForEncodings = 1;
-			knownRegions = (
-				English,
-				Japanese,
-				French,
-				German,
-			);
 			mainGroup = 08FB7794FE84155DC02AAC07 /* Modeling & Animation */;
 			productRefGroup = D4AE42250D5356C2007E34DE /* Products */;
 			projectDirPath = "";
@@ -297,6 +315,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4AE429D0D5356FB007E34DE /* DecimationMesh.cpp in Sources */,
+				D4AE429E0D5356FB007E34DE /* QuadricDecimationMesh.cpp in Sources */,
+				D4AE429F0D5356FB007E34DE /* SimpleDecimationMesh.cpp in Sources */,
+				D4AE42A10D5356FB007E34DE /* HalfEdgeMesh.cpp in Sources */,
+				D4AE42A40D5356FB007E34DE /* Mesh.cpp in Sources */,
+				D4AE42A70D5356FB007E34DE /* SimpleMesh.cpp in Sources */,
 				D4AE42AA0D5356FB007E34DE /* GUI.cpp in Sources */,
 				D4AE42B50D5356FB007E34DE /* TrilinearInterpolator.cpp in Sources */,
 				D4AE42BC0D5356FB007E34DE /* ColorMap.cpp in Sources */,
@@ -319,9 +343,6 @@
 				D491A7580D8FB0E000469485 /* ColorMapFactory.cpp in Sources */,
 				D40615D00DC28529001EA9E1 /* Trackball.cpp in Sources */,
 				D492F07F0DDDEF82005AFACF /* GLObjectPlayback.cpp in Sources */,
-				D4368E7A0FA89A3900FF156F /* HalfEdgeMesh.cpp in Sources */,
-				D4368E7E0FA89A3900FF156F /* Mesh.cpp in Sources */,
-				D4368E810FA89A3900FF156F /* SimpleMesh.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,7 +423,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "Modeling & Animation";
-				SDKROOT = "";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
@@ -460,7 +480,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "Modeling & Animation";
-				SDKROOT = "";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
@@ -469,7 +488,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "ModelingAnimation" */ = {
+		1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "ModelingAnimation_Lab2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB923608733DC60010E9CD /* Debug */,

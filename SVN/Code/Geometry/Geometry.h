@@ -47,6 +47,21 @@ public:
     SetTransform(mTransform * Matrix4x4<float>::RotationXYZ(rx,ry,rz));
   }
 
+  //! Dilate geometry
+  virtual void Dilate(float amount) {
+    std::cout << "Dilate() not implemented for this type of geometry" << std::endl;
+  }
+
+  //! Erode geometry
+  virtual void Erode(float amount) {
+    std::cout << "Erode() not implemented for this type of geometry" << std::endl;
+  }
+
+  //! Smooth geometry
+  virtual void Smooth(float amount) {
+    std::cout << "Smooth() not implemented for this type of geometry" << std::endl;
+  }
+
   //! Set transformation
   virtual void SetTransform(const Matrix4x4<float> & transform) {
     mTransform = transform;

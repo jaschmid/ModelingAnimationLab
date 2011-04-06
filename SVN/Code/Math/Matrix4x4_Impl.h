@@ -218,6 +218,7 @@ Matrix4x4<Real> Matrix4x4<Real>::Inverse() const
 template <typename Real>
 bool Matrix4x4<Real>::CholeskyFactorization(Matrix4x4& U)
 {
+  U = Matrix4x4();
   Matrix4x4& A = *this;
   static const Real TOOSMALL ((Real) 0.0);
   static const int N = 4;
