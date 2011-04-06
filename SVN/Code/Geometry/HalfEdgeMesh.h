@@ -145,7 +145,7 @@ private:
 
   HageMesh mMeshData;
   
-  unsigned int GetNumEdges() const { return mMeshData.GetNumEdgeIndices(); }
+  unsigned int GetNumEdges() const { return (unsigned int)mMeshData.GetNumEdgeIndices(); }
   
   
   //! Finds all triangles that includes a given vertex.

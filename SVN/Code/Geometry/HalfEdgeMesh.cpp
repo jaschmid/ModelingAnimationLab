@@ -14,6 +14,8 @@
 const unsigned int HalfEdgeMesh::BORDER = (std::numeric_limits<unsigned int>::max)();
 const unsigned int HalfEdgeMesh::UNINITIALIZED = (std::numeric_limits<unsigned int>::max)()-1;
 
+const static bool bMergeLoad = true;
+
 HalfEdgeMesh::HalfEdgeMesh()
 {
 }
@@ -31,15 +33,50 @@ HalfEdgeMesh::~HalfEdgeMesh()
 bool HalfEdgeMesh::AddFace(const std::vector<::Vector3<float> > &verts){
   // Add your code here
 
-	Vertex v1 = mMeshData.InsertVertex();
-	mMeshData.GetVertexData(v1).Position = ToLocal(verts[0]);
-	Vertex v2 = mMeshData.InsertVertex();
-	mMeshData.GetVertexData(v2).Position = ToLocal(verts[1]);
-	Vertex v3 = mMeshData.InsertVertex();
-	mMeshData.GetVertexData(v3).Position = ToLocal(verts[2]);
-	
+	Vertex v1 = HageMesh::nullVertex,v2 = HageMesh::nullVertex,v3 = HageMesh::nullVertex;
 
-	mMeshData.InsertFace(mMeshData.MakeTriple(v1,v2,v3));
+	if(bMergeLoad)
+	{
+		static std::map<::Vector3<float>,Vertex> vectorMap;
+		auto f1 = vectorMap.find(verts[0]);
+		auto f2 = vectorMap.find(verts[1]);
+		auto f3 = vectorMap.find(verts[2]);
+
+		if(f1!=vectorMap.end())
+			v1 = f1->second;
+		else
+		{
+			v1 = mMeshData.InsertVertex();
+			vectorMap.insert(std::pair<::Vector3<float>,Vertex>(verts[0],v1));
+		}
+		if(f2!=vectorMap.end())
+			v2 = f2->second;
+		else
+		{
+			v2 = mMeshData.InsertVertex();
+			vectorMap.insert(std::pair<::Vector3<float>,Vertex>(verts[1],v2));
+		}
+		if(f3!=vectorMap.end())
+			v3 = f3->second;
+		else
+		{
+			v3 = mMeshData.InsertVertex();
+			vectorMap.insert(std::pair<::Vector3<float>,Vertex>(verts[2],v3));
+		}
+	}
+	else
+	{
+		v1 = mMeshData.InsertVertex();
+		v2 = mMeshData.InsertVertex();
+		v3 = mMeshData.InsertVertex();
+	}
+	
+	
+	mMeshData.GetVertexData(v1).Position = ToLocal(verts[0]);
+	mMeshData.GetVertexData(v2).Position = ToLocal(verts[1]);
+	mMeshData.GetVertexData(v3).Position = ToLocal(verts[2]);
+
+	assert(mMeshData.InsertFace(mMeshData.MakeTriple(v1,v2,v3)) != HageMesh::nullFace);
 
   // Add the vertices of the face/triangle
 
@@ -151,7 +188,7 @@ std::vector<unsigned int> HalfEdgeMesh::FindNeighborVertices(unsigned int vertex
   {
 	  Vertex neighbor = mMeshData.GetVertex(v,e);
 
-	  oneRing.push_back( mMeshData.GetIndex(neighbor) );
+	  oneRing.push_back( (unsigned int)mMeshData.GetIndex(neighbor) );
 
 	  assert( mMeshData.GetEdge(mMeshData.MakePair(v,neighbor)) != HageMesh::nullEdge);
 
@@ -303,10 +340,14 @@ void HalfEdgeMesh::mergeMeshVertices()
 						Vector3 pos1 = mMeshData.GetVertexData(v1).Position;
 						Vector3 pos2 = mMeshData.GetVertexData(v2).Position;
 						float distance_sq = !( pos1 - pos2);
-						if(distance_sq < 0.000001f)
+						if(pos1 == pos2)
 						{
-							assert(mMeshData.MergeVertex(mMeshData.MakePair(v1,v2)));
-							break;
+							//mMeshData.DebugValidateMesh();
+							//std::cerr << "Merging " << mMeshData.GetIndex(v1) << " and " << mMeshData.GetIndex(v2) << "\n";
+							if(!mMeshData.MergeVertex(mMeshData.MakePair(v1,v2)))
+								continue;
+							else
+								break;
 						}
 					}
 				}
@@ -314,11 +355,15 @@ void HalfEdgeMesh::mergeMeshVertices()
 		cur = cur->GetNextNode();
 	}
 	
-	std::cerr << "Num Vertices pre Merge:" << mMeshData.GetNumVertexIndices();
+	mMeshData.DebugValidateMesh();
+
+	std::cerr << "Num Edges pre Merge:" << mMeshData.GetNumEdgeIndices() << "\n";
+	std::cerr << "Num Vertices pre Merge:" << mMeshData.GetNumVertexIndices() << "\n";
 
 	mMeshData.Compact();
 
-	std::cerr << "Num Vertices post Merge:" << mMeshData.GetNumVertexIndices();
+	std::cerr << "Num Edges post Merge:" << mMeshData.GetNumEdgeIndices() << "\n";
+	std::cerr << "Num Vertices post Merge:" << mMeshData.GetNumVertexIndices() << "\n";
 }
 
 
@@ -448,7 +493,7 @@ void HalfEdgeMesh::Render()
 
   // Draw geometry
   glBegin(GL_TRIANGLES);
-  const int numTriangles = mMeshData.GetNumFaces();
+  const int numTriangles = (int)mMeshData.GetNumFaces();
   for (int i = 0; i < numTriangles; i++){
 
 	Face face = mMeshData.GetFace(i);
@@ -481,7 +526,7 @@ void HalfEdgeMesh::Render()
   {
     glDisable(GL_LIGHTING);
     glBegin(GL_LINES);
-    const int numTriangles = mMeshData.GetNumFaces();
+    const int numTriangles = (int)mMeshData.GetNumFaces();
     for (int i = 0; i < numTriangles; i++){
 
      
