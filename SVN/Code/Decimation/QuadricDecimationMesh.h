@@ -44,23 +44,26 @@ public :
 
 protected :
 
-	typedef HAGE::Matrix4<> Matrix4;
-	typedef HAGE::Vector4<> Vector4;
-
 
   //! Compute the cost and new position for an edge collapse
   virtual void computeCollapse(EdgeCollapse * collapse);
   //! Update vertex properties. Used after an edge collapse
   virtual void updateVertexProperties(unsigned int ind);
   //! Compute the quadric for a vertex
-  Matrix4 createQuadricForVert(unsigned int indx) const;
+  Matrix4 createQuadricForVert(Vertex v) const;
   //! Copmute the quadric for a face
-  Matrix4 createQuadricForFace(unsigned int indx) const;
+  Matrix4 createQuadricForFace(Face f) const;
 	//! Render (redefined)
 	virtual void Render();
 
-  //! The quadrics used in the decimation
-  std::vector< Matrix4 > mQuadrics;
+  Vector4 getPlaneEquation(Face f) const
+  {
+	  auto vp = mMeshData.GetFaceVertices(f);
+	  return Vector4(
+		  f->Normal,
+		  -f->Normal * vp[0]->Position
+		  );
+  }
 };
 
 #endif

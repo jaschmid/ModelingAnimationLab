@@ -48,7 +48,7 @@ private:
 
 public:
   HalfEdgeMesh();
-  ~HalfEdgeMesh();
+  virtual ~HalfEdgeMesh();
   virtual void Update();
   virtual void Initialize();
   
@@ -84,6 +84,7 @@ public:
 
   virtual void Render();
 
+
 protected:
 	
   //! Adds a vertex to the mesh
@@ -101,7 +102,8 @@ protected:
    */
 
   typedef HAGE::Vector3<> Vector3;
-  
+  	typedef HAGE::Matrix4<> Matrix4;
+	typedef HAGE::Vector4<> Vector4;
 
   struct VertexData
   {
@@ -109,7 +111,7 @@ protected:
 	  Vector3 Position;
 	  Vector3 Color;
 	  float Curvature;
-
+	  Matrix4 ErrorQuadric;
 	  
 	operator Vector3&()
 	{

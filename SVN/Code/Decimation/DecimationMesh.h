@@ -16,6 +16,7 @@
 #include "Geometry/HalfEdgeMesh.h"
 #include "Util/Heap.h"
 #include "Util/ColorMap.h"
+#include <queue>
 
 class DecimationMesh : public DecimationInterface, public HalfEdgeMesh
 {
@@ -32,8 +33,13 @@ public :
   virtual ~DecimationMesh() { }
 
   /*! The EdgeCollapse is a Heapable type */
-  struct EdgeCollapse : public Heap::Heapable
+  struct EdgeCollapse
   {
+    bool operator < (const EdgeCollapse & h) const {
+      return this->cost > h.cost;
+    }
+	
+    float cost;
     unsigned int halfEdge;
     Vector3 position;
   };
@@ -58,14 +64,15 @@ protected :
   virtual void computeCollapse(EdgeCollapse * collapse) = 0;
 
   virtual void Cleanup();
-
-  bool isValidCollapse(EdgeCollapse * collapse);
-
-  //! Utility mapping between half edges and collapses
-  std::vector<EdgeCollapse *> mHalfEdge2EdgeCollapse;
+  
 
   //! The heap that stores the edge collapses
-  Heap mHeap;
+  typedef std::multimap<float,EdgeCollapse> costHeap;
+  costHeap heap;
+  std::vector<costHeap::iterator> lookup;
+
+  void updateEdgeCollapse(const EdgeCollapse& e);
+  bool getNextCollapse(EdgeCollapse& e);
 
   void drawText(const Vector3 & pos, const char * str);
   /*

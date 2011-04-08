@@ -23,24 +23,25 @@ void DecimationMesh::Initialize()
 
   // Allocate memory for the references from half-edge
   // to edge collapses
-  mHalfEdge2EdgeCollapse.reserve(mMeshData.GetNumEdgeIndices());
-  mHalfEdge2EdgeCollapse.assign(mMeshData.GetNumEdgeIndices(), NULL);
 
   // Loop through the half-edges (we know they are stored
   // sequentially) and create an edge collapse operation
   // for each pair
   unsigned int numCollapses = mMeshData.GetNumEdgeIndices();
+
+  lookup.resize(numCollapses);
+  for(int i = 0; i < numCollapses; ++i)
+	  lookup[i] = heap.end();
+
   for (unsigned int i = 0; i < numCollapses; i++) {
-    EdgeCollapse * collapse = new EdgeCollapse();
+    EdgeCollapse collapse;
 
     // Connect the edge collapse with the half-edge pair
-    collapse->halfEdge = i;
-
-    mHalfEdge2EdgeCollapse[i] = collapse;
+    collapse.halfEdge = i;
 
     // Compute the cost and push it to the heap
-    computeCollapse(collapse);
-    mHeap.push(collapse);
+    computeCollapse(&collapse);
+    updateEdgeCollapse(collapse);
   }
   //mHeap.print(std::cout);
 
@@ -126,8 +127,10 @@ bool DecimationMesh::decimate(unsigned int targetFaces)
 
   // Keep collapsing one edge at a time until the target is reached
   // or the heap is empty (when we have no possible collapses left)
-  while (mMeshData.GetNumFaces()  > targetFaces && !mHeap.isEmpty())
+  while (mMeshData.GetNumFaces()  > targetFaces && !heap.empty())
+  {
     decimate();
+  }
 
   // Return true if target is reached
   std::cout << "Collapsed mesh to " << mMeshData.GetNumFaces() << " faces" << std::endl;
@@ -137,40 +140,59 @@ bool DecimationMesh::decimate(unsigned int targetFaces)
 
 bool DecimationMesh::decimate()
 {
-  EdgeCollapse * collapse = static_cast<EdgeCollapse *>(mHeap.pop());
-  if (collapse == NULL) return false;
 
   // Stop the collapse when we only have two triangles left
   // (the smallest entity representable)
   if (mMeshData.GetNumFaces()  == 2) return false;
 
   
-  Vertex v = HageMesh::nullVertex;
-
-  while(mHeap.size() > 0)
+  while(!heap.empty())
   {
-	  Edge e = mMeshData.GetEdge(collapse->halfEdge);
-	  auto vp = mMeshData.GetEdgeVertices(e);
+	  EdgeCollapse collapse;
 
-	  if(e != HageMesh::nullEdge && mMeshData.MergeVertex(vp))
-	  {
-		  v=vp[1];
-		  v->Position = collapse->position;
-		  //delete collapse;
-		  return true;
-	  }
-	  else
-	  {
-		  auto last = collapse;
-		collapse = static_cast<EdgeCollapse *>(mHeap.pop());
-		//delete last;
-		if (collapse == NULL) return false;
-	  }
+	  if(!getNextCollapse(collapse))
+		  return false;
+	  
+	  Edge e = mMeshData.GetEdge(collapse.halfEdge);
+
+	  if(e == HageMesh::nullEdge)
+		  continue;
+
+		auto vp = mMeshData.GetEdgeVertices(e);
+		Vertex v = HageMesh::nullVertex;
+
+		if((v = mMeshData.MergeVertex(vp)) != HageMesh::nullVertex)
+		{
+			v->Position = collapse.position;
+			
+			//update collapses
+			Face f = HageMesh::nullFace;
+			while( (f = mMeshData.GetNextVertexFace(v,f) ) != HageMesh::nullFace)
+				updateFaceProperties(f.Index());
+
+
+			Edge e = HageMesh::nullEdge;
+			while( (e = mMeshData.GetNextVertexEdge(v,e) ) != HageMesh::nullEdge)
+			{
+				vp = mMeshData.GetEdgeVertices(e);
+
+				updateVertexProperties(vp[0].Index());
+				updateVertexProperties(vp[1].Index());
+
+				EdgeCollapse c;
+				c.halfEdge = e.Index();
+				computeCollapse(&c);
+				updateEdgeCollapse(c);
+			}
+
+			std::cerr << "Num faces Left:" << mMeshData.GetNumFaces() << "\n";
+			return true;
+		}
   }
 
   //mHeap.print(std::cout);
 
-  return true;
+  return false;
 }
 
 
@@ -382,6 +404,25 @@ void DecimationMesh::Render()
   glPopMatrix();
 
   GLObject::Render();
+}
+
+
+void DecimationMesh::updateEdgeCollapse(const EdgeCollapse& e)
+{
+	if(lookup[e.halfEdge] != heap.end())
+		heap.erase(lookup[e.halfEdge]);
+	lookup[e.halfEdge] = heap.insert(std::pair<float,EdgeCollapse>(e.cost,e));
+}
+bool DecimationMesh::getNextCollapse(EdgeCollapse& e)
+{
+	if(heap.empty())
+		return false;
+
+	e = heap.begin()->second;
+	lookup[e.halfEdge] = heap.end();
+	heap.erase(heap.begin());
+
+	return true;
 }
 
 void DecimationMesh::drawText(const Vector3 & pos, const char * str)

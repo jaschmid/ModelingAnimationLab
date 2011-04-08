@@ -315,6 +315,9 @@ Vector3<float> HalfEdgeMesh::VertexNormal(unsigned int vertexIndex) const
 
 void HalfEdgeMesh::mergeMeshVertices()
 {
+	if(mMeshData.GetNumVertices() == 0)
+		return;
+
 	Vector3 first = mMeshData.GetVertexData(mMeshData.GetVertex(0)).Position;
 	Vector3 min=first,max=first;
 	for(int i = 1; i < mMeshData.GetNumVertexIndices(); ++i)
@@ -365,7 +368,7 @@ void HalfEdgeMesh::mergeMeshVertices()
 						{
 							//mMeshData.DebugValidateMesh();
 							//std::cerr << "Merging " << mMeshData.GetIndex(v1) << " and " << mMeshData.GetIndex(v2) << "\n";
-							if(!mMeshData.MergeVertex(mMeshData.MakePair(v1,v2)))
+							if(mMeshData.MergeVertex(mMeshData.MakePair(v1,v2)) != HageMesh::nullVertex)
 								continue;
 							else
 								break;
@@ -375,8 +378,6 @@ void HalfEdgeMesh::mergeMeshVertices()
 		}
 		cur = cur->GetNextNode();
 	}
-	
-	mMeshData.DebugValidateMesh();
 
 	std::cerr << "Num Edges pre Merge:" << mMeshData.GetNumEdgeIndices() << "\n";
 	std::cerr << "Num Vertices pre Merge:" << mMeshData.GetNumVertexIndices() << "\n";
