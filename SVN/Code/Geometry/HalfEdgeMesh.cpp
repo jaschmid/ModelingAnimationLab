@@ -14,7 +14,7 @@
 const unsigned int HalfEdgeMesh::BORDER = (std::numeric_limits<unsigned int>::max)();
 const unsigned int HalfEdgeMesh::UNINITIALIZED = (std::numeric_limits<unsigned int>::max)()-1;
 
-const static bool bMergeLoad = true;
+const static bool bMergeLoad = false;
 
 HalfEdgeMesh::HalfEdgeMesh()
 {
@@ -109,65 +109,6 @@ void HalfEdgeMesh::Validate()
 {
 	mMeshData.DebugValidateMesh();
 	
-	/*
-  std::vector<HalfEdge>::iterator iterEdge = mEdges.begin();
-  std::vector<HalfEdge>::iterator iterEdgeEnd = mEdges.end();
-  while (iterEdge != iterEdgeEnd) {
-    if ((*iterEdge).face == UNINITIALIZED ||
-        (*iterEdge).next == UNINITIALIZED ||
-        (*iterEdge).pair == UNINITIALIZED ||
-        (*iterEdge).prev == UNINITIALIZED ||
-        (*iterEdge).vert == UNINITIALIZED)
-        std::cerr << "HalfEdge " << iterEdge - mEdges.begin() << " not properly initialized" << std::endl;
-
-    iterEdge++;
-  }
-  std::cerr << "Done with edge check (checked " << GetNumEdges() << " edges)" << std::endl;
-
-  std::vector<Face>::iterator iterTri = mFaces.begin();
-  std::vector<Face>::iterator iterTriEnd = mFaces.end();
-  while (iterTri != iterTriEnd) {
-    if ((*iterTri).edge == UNINITIALIZED)
-        std::cerr << "Tri " << iterTri - mFaces.begin() << " not properly initialized" << std::endl;
-
-    iterTri++;
-  }
-  std::cerr << "Done with face check (checked " << GetNumFaces() << " faces)" << std::endl;
-
-  std::vector<Vertex>::iterator iterVertex = mVerts.begin();
-  std::vector<Vertex>::iterator iterVertexEnd = mVerts.end();
-  while (iterVertex != iterVertexEnd) {
-    if ((*iterVertex).edge == UNINITIALIZED)
-        std::cerr << "Vertex " << iterVertex - mVerts.begin() << " not properly initialized" << std::endl;
-
-    iterVertex++;
-  }
-  std::cerr << "Done with vertex check (checked " << GetNumVerts() << " vertices)" << std::endl;
-
-  std::cerr << "Looping through triangle neighborhood of each vertex... ";
-  iterVertex = mVerts.begin();
-  iterVertexEnd = mVerts.end();
-  int emptyCount = 0;
-  std::vector<unsigned int> problemVerts;
-  while (iterVertex != iterVertexEnd) {
-    std::vector<unsigned int> foundFaces = FindNeighborFaces(iterVertex - mVerts.begin());
-    std::vector<unsigned int> foundVerts = FindNeighborVertices(iterVertex - mVerts.begin());
-    if (foundFaces.empty() || foundVerts.empty())
-      emptyCount++;
-    std::set<unsigned int> uniqueFaces(foundFaces.begin(), foundFaces.end());
-    std::set<unsigned int> uniqueVerts(foundVerts.begin(), foundVerts.end());
-        if ( foundFaces.size() != uniqueFaces.size() ||
-         foundVerts.size() != uniqueVerts.size() )
-      problemVerts.push_back(iterVertex - mVerts.begin());
-    iterVertex++;
-  }
-  std::cerr << std::endl << "Done: " << emptyCount << " isolated vertices found" << std::endl;
-  if(problemVerts.size()){
-    std::cerr << std::endl << "Found " << problemVerts.size() << " duplicate faces in vertices: ";
-    std::copy(problemVerts.begin(), problemVerts.end(), std::ostream_iterator<unsigned int>(std::cerr, ", "));
-    std::cerr << "\n";
-  }
-  std::cerr << std::endl << "The mesh has genus " << Genus() << ", and consists of " << Shells() << " shells.\n";*/
 }
 
 /*! \lab1 Implement the FindNeighborVertices */
@@ -278,37 +219,20 @@ float HalfEdgeMesh::FaceCurvature(unsigned int faceIndex) const
 
 Vector3<float> HalfEdgeMesh::FaceNormal(unsigned int faceIndex) const
 {
-
-	HageMesh::VertexTriple vertices = mMeshData.GetFaceVertices(mMeshData.GetFace(faceIndex));
-
-  const Vector3 &p1 = vertices[0]->Position;
-  const Vector3 &p2 = vertices[1]->Position;
-  const Vector3 &p3 = vertices[2]->Position;
-
-  const Vector3 e1 = p2-p1;
-  const Vector3 e2 = p3-p1;
-
-  return ToGlobal((e1%e2).normalize());
+	Face f = mMeshData.GetFace(faceIndex);
+	if(f!=HageMesh::nullFace)
+	{
+		return ToGlobal(f->Normal);
+	}
 }
 
 Vector3<float> HalfEdgeMesh::VertexNormal(unsigned int vertexIndex) const
 {
-
-	Face current = mMeshData.GetFirstVertexFace(mMeshData.GetVertex(vertexIndex));
-
-	float fNumNormals = 0.0f;
-	Vector3 NormalSum(0.0f,0.0f,0.0f);
-
-	while(current != HageMesh::nullFace)
+	Vertex v = mMeshData.GetVertex(vertexIndex);
+	if(v!=HageMesh::nullVertex)
 	{
-		NormalSum += current->Normal;
-		fNumNormals+=1.0f;
-		current = mMeshData.GetNextVertexFace(mMeshData.GetVertex(vertexIndex),current);
+		return ToGlobal(v->Normal);
 	}
-
-	assert(fNumNormals != 0.0f);
-  // Add your code here
-  return ToGlobal(NormalSum * (1.0f/fNumNormals));
 }
 
 
@@ -403,14 +327,8 @@ void HalfEdgeMesh::Update() {
   // Calculate and store all differentials and area
 
   // First update all face normals and triangle areas
-	for(unsigned int i = 0; i < mMeshData.GetNumFaceIndices(); i++){
-	  mMeshData.GetFace(i)->Normal = ToLocal(FaceNormal(i));
-  }
-  // Then update all vertex normals and curvature
-  for(unsigned int i = 0; i < mMeshData.GetNumVertexIndices(); i++){
-    // Vertex normals are just weighted averages
-    mMeshData.GetVertex(i)->Normal = ToLocal(VertexNormal(i));
-  }
+
+	mMeshData.UpdateAllNormals();
 
   // Then update vertex curvature
   for(unsigned int i = 0; i < mMeshData.GetNumVertexIndices(); i++){

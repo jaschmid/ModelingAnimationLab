@@ -15,6 +15,8 @@ const QuadricDecimationMesh::VisualizationMode QuadricDecimationMesh::QuadricIso
 
 void QuadricDecimationMesh::Initialize()
 {
+	DecimationMesh::Initialize();
+	/*
 	HalfEdgeMesh::Initialize();
 
   // Allocate memory for the quadric array
@@ -28,14 +30,14 @@ void QuadricDecimationMesh::Initialize()
 	  if(vert == mMeshData.nullVertex)
 		  continue;
 
-	  vert->ErrorQuadric = createQuadricForVert(vert);
+	  vert->Quadric = createQuadricForVert(vert);
 
 
     // Calculate initial error, should be numerically close to 0
 
 	Vector3 v0 = mMeshData.GetVertex(i)->Position;
     Vector4 v(v0[0],v0[1],v0[2],1);
-    Matrix4 m = vert->ErrorQuadric;
+    Matrix4 m = vert->Quadric;
 
     float error = v*(m*v);
     std::cerr << std::scientific << std::setprecision(2) << error << " ";
@@ -43,25 +45,23 @@ void QuadricDecimationMesh::Initialize()
   std::cerr << std::setprecision(width) << std::fixed; // reset stream precision
 
   // Run the initialize for the parent class to initialize the edge collapses
-  DecimationMesh::Initialize();
+  DecimationMesh::Initialize();*/
 }
 
 /*! \lab2 Implement the computeCollapse here */
 /*!
  * \param[in,out] collapse The edge collapse object to (re-)compute, DecimationMesh::EdgeCollapse
  */
-void QuadricDecimationMesh::computeCollapse(EdgeCollapse * collapse)
+void QuadricDecimationMesh::computeCollapse(Edge& e)
 {
   // Compute collapse->position and collapse->cost here
   // based on the quadrics at the edge endpoints
-
-	Edge e= mMeshData.GetEdge(collapse->halfEdge);
-
+	/*
 	assert(e != HageMesh::nullEdge);
 
 	auto vp = mMeshData.GetEdgeVertices(e);
 
-	Matrix4 QEdge = vp[0]->ErrorQuadric + vp[1]->ErrorQuadric;
+	Matrix4 QEdge = vp[0]->Quadric + vp[1]->Quadric;
 	Matrix4 QEdgeInv = Matrix4(QEdge.Row(0),QEdge.Row(1),QEdge.Row(2),Vector4(0.0f,0.0f,0.0f,1.0f)).Invert();
 
 	if(QEdgeInv.IsNaN())
@@ -75,40 +75,37 @@ void QuadricDecimationMesh::computeCollapse(EdgeCollapse * collapse)
 		float eV2 = v2*(QEdge*v2);
 		if( eVM < eV1 && eVM < eV2)
 		{
-			collapse->position = vM.xyz();
-			collapse->cost = eVM;
+			e->DecimationPosition = vM.xyz();
+			e->Cost = eVM;
 		}
 		else if( eV1 < eV2)
 		{
-			collapse->position = v1.xyz();
-			collapse->cost = eV1;
+			e->DecimationPosition = v1.xyz();
+			e->Cost = eV1;
 		}
 		else
 		{
-			collapse->position = v2.xyz();
-			collapse->cost = eV2;
+			e->DecimationPosition = v2.xyz();
+			e->Cost = eV2;
 		}
 	}
 	else
 	{
 		Vector4 vIdeal = QEdgeInv*Vector4(0.0f,0.0f,0.0f,1.0f);
-		collapse->position = vIdeal.xyz();
-		collapse->cost = vIdeal*(QEdge*vIdeal);
-	}
+		e->DecimationPosition = vIdeal.xyz();
+		e->Cost = vIdeal*(QEdge*vIdeal);
+	}*/
 
 }
 
 /*! After each edge collapse the vertex properties need to be updated */
-void QuadricDecimationMesh::updateVertexProperties(unsigned int ind)
-{
-  DecimationMesh::updateVertexProperties(ind);
-
-	Vertex v = mMeshData.GetVertex(ind);
-
+void QuadricDecimationMesh::updateVertexProperties(Vertex v)
+{/*
 	if(v == mMeshData.nullVertex)
 		return;
 
-	v->ErrorQuadric = createQuadricForVert(v);
+	DecimationMesh::updateVertexProperties(v);
+	v->Quadric = createQuadricForVert(v);*/
 }
 
 /*!
@@ -116,13 +113,13 @@ void QuadricDecimationMesh::updateVertexProperties(unsigned int ind)
  */
 QuadricDecimationMesh::Matrix4 QuadricDecimationMesh::createQuadricForVert(Vertex v) const{
   Matrix4 Q = Matrix4::Zero();
-
+  /*
   Face f = HageMesh::nullFace;
   
   while( (f = mMeshData.GetNextVertexFace(v,f)) != HageMesh::nullFace )
   {
 	  Q += createQuadricForFace(f);
-  }
+  }*/
 
   // The quadric for a vertex is the sum of all the quadrics for the adjacent faces
   // Tip: Matrix4x4 has an operator +=
@@ -148,13 +145,34 @@ void QuadricDecimationMesh::Render()
   glEnable(GL_LIGHTING);
   glMatrixMode(GL_MODELVIEW);
 
+  static GLUquadric* quad = gluNewQuadric();
+
   if (mVisualizationMode == QuadricIsoSurfaces)
     {
       // Apply transform
       glPushMatrix(); // Push modelview matrix onto stack
 
-      // Implement the quadric visualization here
-      std::cout << "Quadric visualization not implemented" << std::endl;
+	  for(HageMesh::IndexType i = 0; i < mMeshData.GetNumVertexIndices(); ++i)
+	  {
+		  Vertex v = mMeshData.GetVertex(i);
+		  if(v == HageMesh::nullVertex)
+			  continue;
+
+		  Matrix4 R = v->Quadric.Cholesky();
+		  if(R.IsNaN())
+			  continue;
+		  Matrix4 InvR = R.Invert();
+		  if(InvR.IsNaN())
+			  continue;
+
+		  glPushMatrix(); 
+		  const Vector3 color = Vector3(0.0f,1.0f,0.0f);
+		  glColor3f(color.x,color.y,color.z);
+		  glMultMatrixf( InvR.Transpose().v );
+
+		  gluSphere(quad,1.0f,10,10);
+		  glPopMatrix();
+	  }
 
       // Restore modelview matrix
       glPopMatrix();

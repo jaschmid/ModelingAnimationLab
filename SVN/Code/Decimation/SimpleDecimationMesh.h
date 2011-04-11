@@ -17,13 +17,17 @@
 class SimpleDecimationMesh : public virtual DecimationMesh
 {
 public :
-  SimpleDecimationMesh() { }
+  SimpleDecimationMesh() 
+  { 
+	  std::cout << "hi";
+  }
   virtual ~SimpleDecimationMesh() { }
 
-
+  
+  virtual void Initialize();
 protected :
 
-  virtual void computeCollapse(EdgeCollapse * collapse);
+  virtual void computeCollapse(Edge& e);
 };
 
 #endif

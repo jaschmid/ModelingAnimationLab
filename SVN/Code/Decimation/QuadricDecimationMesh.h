@@ -46,9 +46,9 @@ protected :
 
 
   //! Compute the cost and new position for an edge collapse
-  virtual void computeCollapse(EdgeCollapse * collapse);
+  virtual void computeCollapse(Edge& e);
   //! Update vertex properties. Used after an edge collapse
-  virtual void updateVertexProperties(unsigned int ind);
+  virtual void updateVertexProperties(Vertex v);
   //! Compute the quadric for a vertex
   Matrix4 createQuadricForVert(Vertex v) const;
   //! Copmute the quadric for a face

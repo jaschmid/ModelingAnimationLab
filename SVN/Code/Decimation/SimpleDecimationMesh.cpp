@@ -11,15 +11,27 @@
  *************************************************************************************************/
 #include "SimpleDecimationMesh.h"
 
-void SimpleDecimationMesh::computeCollapse(EdgeCollapse * collapse)
+void SimpleDecimationMesh::Initialize()
+{
+	mMeshData.SetCustomWeightingFunction(
+		[&] (Edge e) -> bool 
+		{ 
+			computeCollapse(e);
+			return true;
+		}
+		);
+	DecimationMesh::Initialize();
+}
+
+void SimpleDecimationMesh::computeCollapse(Edge& e)
 {
   // The new vertex position is implicitly stored as the
   // position halfway along the edge. The cost is computed as
   // the vertex-to-vertex distance between the new vertex
   // and the old vertices at the edge's endpoints
-	auto pair = mMeshData.GetEdgeVertices(mMeshData.GetEdge(collapse->halfEdge));
+	auto pair = mMeshData.GetEdgeVertices(e);
 	Vector3& v0 = pair[0]->Position;
 	Vector3& v1 = pair[1]->Position;
-  collapse->position = (v0 + v1)*0.5;
-  collapse->cost = (collapse->position - v0).length();
+	e->DecimationPosition = (v0 + v1)*0.5;
+	e->Cost = (e->DecimationPosition - v0).length();
 }

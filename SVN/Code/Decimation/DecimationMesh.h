@@ -29,20 +29,13 @@ public :
     return L;
   }
 
-  DecimationMesh() { }
+  DecimationMesh() 
+  { 
+	  std::cout << "hi";
+  }
   virtual ~DecimationMesh() { }
 
   /*! The EdgeCollapse is a Heapable type */
-  struct EdgeCollapse
-  {
-    bool operator < (const EdgeCollapse & h) const {
-      return this->cost > h.cost;
-    }
-	
-    float cost;
-    unsigned int halfEdge;
-    Vector3 position;
-  };
 
   virtual void Initialize();
 
@@ -57,22 +50,22 @@ public :
   virtual const char * GetTypeName() { return typeid(DecimationMesh).name(); }
 
 protected :
-  virtual void updateVertexProperties(unsigned int ind);
+  virtual void updateVertexProperties(Vertex v);
 
   virtual void updateFaceProperties(unsigned int ind);
 
-  virtual void computeCollapse(EdgeCollapse * collapse) = 0;
+  virtual void computeCollapse(Edge& e) = 0;
 
   virtual void Cleanup();
   
 
-  //! The heap that stores the edge collapses
-  typedef std::multimap<float,EdgeCollapse> costHeap;
-  costHeap heap;
-  std::vector<costHeap::iterator> lookup;
-
-  void updateEdgeCollapse(const EdgeCollapse& e);
-  bool getNextCollapse(EdgeCollapse& e);
+  //! The map that stores the edge collapses
+  /*
+  typedef std::multimap<float,HageMesh::IndexType> collapseType;
+  collapseType collapseMap;
+  */
+  void updateEdgeCollapse(const Edge& e);
+  Edge getNextCollapse();
 
   void drawText(const Vector3 & pos, const char * str);
   /*

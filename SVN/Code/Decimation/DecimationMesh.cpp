@@ -20,6 +20,8 @@ const DecimationMesh::VisualizationMode DecimationMesh::CollapseCost = NewVisual
 
 void DecimationMesh::Initialize()
 {
+	
+  HalfEdgeMesh::Initialize();
 
   // Allocate memory for the references from half-edge
   // to edge collapses
@@ -27,25 +29,23 @@ void DecimationMesh::Initialize()
   // Loop through the half-edges (we know they are stored
   // sequentially) and create an edge collapse operation
   // for each pair
+  /*
   unsigned int numCollapses = mMeshData.GetNumEdgeIndices();
-
-  lookup.resize(numCollapses);
-  for(int i = 0; i < numCollapses; ++i)
-	  lookup[i] = heap.end();
-
+  
   for (unsigned int i = 0; i < numCollapses; i++) {
-    EdgeCollapse collapse;
+	  Edge e = mMeshData.GetEdge(i);
 
-    // Connect the edge collapse with the half-edge pair
-    collapse.halfEdge = i;
+	  if(e == HageMesh::nullEdge)
+		  continue;
 
     // Compute the cost and push it to the heap
-    computeCollapse(&collapse);
-    updateEdgeCollapse(collapse);
-  }
+    computeCollapse(e);
+    updateEdgeCollapse(e);
+  }*/
   //mHeap.print(std::cout);
 
-  HalfEdgeMesh::Initialize();
+  mMeshData.InitializeDecimate();
+
 }
 
 
@@ -53,17 +53,7 @@ void DecimationMesh::Update()
 {
   // Calculate and store all differentials and area
 
-  // First update all face normals and triangle areas
-  for(unsigned int i = 0; i < mMeshData.GetNumFaceIndices(); i++){
-    if (mMeshData.GetFace(i) != HageMesh::nullFace)
-		mMeshData.GetFace(i)->Normal = ToLocal(FaceNormal(i));
-  }
-  // Then update all vertex normals and curvature
-  for(unsigned int i = 0; i < mMeshData.GetNumVertexIndices(); i++){
-    // Vertex normals are just weighted averages
-    if (mMeshData.GetVertex(i) != HageMesh::nullVertex)
-      mMeshData.GetVertex(i)->Normal = ToLocal(VertexNormal(i));
-  }
+	mMeshData.UpdateAllNormals();
 
   // Then update vertex curvature
   for(unsigned int i = 0; i < mMeshData.GetNumVertexIndices(); i++){
@@ -89,6 +79,7 @@ void DecimationMesh::Update()
 	float maxCurvature = -(std::numeric_limits<float>::max)();
 
 	for(unsigned int i = 0; i < mMeshData.GetNumVertexIndices(); i++){
+		if (mMeshData.GetVertex(i) == HageMesh::nullVertex) continue;
 		if (minCurvature > mMeshData.GetVertex(i)->Curvature)  minCurvature = mMeshData.GetVertex(i)->Curvature;
 		if (maxCurvature < mMeshData.GetVertex(i)->Curvature)  maxCurvature = mMeshData.GetVertex(i)->Curvature;
 	}
@@ -97,6 +88,7 @@ void DecimationMesh::Update()
     std::cerr << "Mapping color based on vertex curvature with range [" << minCurvature << "," << maxCurvature << "]" << std::endl;
     
 	for(unsigned int i = 0; i < mMeshData.GetNumVertexIndices(); i++){
+		if (mMeshData.GetVertex(i) == HageMesh::nullVertex) continue;
 		mMeshData.GetVertex(i)->Color = ToLocal(mColorMap->Map(mMeshData.GetVertex(i)->Curvature, minCurvature, maxCurvature));
 	}
   }
@@ -107,6 +99,7 @@ void DecimationMesh::Update()
 	float maxCurvature = -(std::numeric_limits<float>::max)();
 
 	for(unsigned int i = 0; i < mMeshData.GetNumFaceIndices(); i++){
+		if (mMeshData.GetFace(i) == HageMesh::nullFace) continue;
 		if (minCurvature > mMeshData.GetFace(i)->Curvature)  minCurvature = mMeshData.GetFace(i)->Curvature;
 		if (maxCurvature < mMeshData.GetFace(i)->Curvature)  maxCurvature = mMeshData.GetFace(i)->Curvature;
 	}
@@ -115,26 +108,30 @@ void DecimationMesh::Update()
     std::cerr << "Mapping color based on vertex curvature with range [" << minCurvature << "," << maxCurvature << "]" << std::endl;
     
 	for(unsigned int i = 0; i < mMeshData.GetNumFaceIndices(); i++){
+		if (mMeshData.GetFace(i) == HageMesh::nullFace) continue;
 		mMeshData.GetFace(i)->Color = ToLocal(mColorMap->Map(mMeshData.GetFace(i)->Curvature, minCurvature, maxCurvature));
 	}
   }
 }
 
 bool DecimationMesh::decimate(unsigned int targetFaces)
-{
+{/*
   // We can't collapse down to less than two faces
   if (targetFaces < 2) targetFaces = 2;
 
   // Keep collapsing one edge at a time until the target is reached
   // or the heap is empty (when we have no possible collapses left)
-  while (mMeshData.GetNumFaces()  > targetFaces && !heap.empty())
+  while (mMeshData.GetNumFaces()  > targetFaces && !collapseMap.empty())
   {
     decimate();
   }
 
   // Return true if target is reached
   std::cout << "Collapsed mesh to " << mMeshData.GetNumFaces() << " faces" << std::endl;
-  return mMeshData.GetNumFaces()  == targetFaces;
+  return mMeshData.GetNumFaces()  == targetFaces;*/
+	mMeshData.DecimateToFaceCount(targetFaces);
+	std::cout << "Collapsed mesh to " << mMeshData.GetNumFaces() << " faces" << std::endl;
+	return mMeshData.GetNumFaces()  == targetFaces;
 }
 
 
@@ -143,80 +140,58 @@ bool DecimationMesh::decimate()
 
   // Stop the collapse when we only have two triangles left
   // (the smallest entity representable)
+	/*
   if (mMeshData.GetNumFaces()  == 2) return false;
 
   
-  while(!heap.empty())
+  while(!collapseMap.empty())
   {
-	  EdgeCollapse collapse;
-
-	  if(!getNextCollapse(collapse))
-		  return false;
-	  
-	  Edge e = mMeshData.GetEdge(collapse.halfEdge);
+	  Edge e = getNextCollapse();
 
 	  if(e == HageMesh::nullEdge)
 		  continue;
 
 		auto vp = mMeshData.GetEdgeVertices(e);
 		Vertex v = HageMesh::nullVertex;
+		
+		Vector3 pos = e->DecimationPosition;
+		Matrix4 qNew = vp[0]->Quadric + vp[1]->Quadric;
 
 		if((v = mMeshData.MergeVertex(vp)) != HageMesh::nullVertex)
 		{
-			v->Position = collapse.position;
-			
+			v->Position = pos;
+			v->Quadric = qNew;
+
 			//update collapses
 			Face f = HageMesh::nullFace;
 			while( (f = mMeshData.GetNextVertexFace(v,f) ) != HageMesh::nullFace)
-				updateFaceProperties(f.Index());
+				mMeshData.UpdateFaceNormal(f);
 
 
-			Edge e = HageMesh::nullEdge;
-			while( (e = mMeshData.GetNextVertexEdge(v,e) ) != HageMesh::nullEdge)
+			Edge e2 = HageMesh::nullEdge;
+			while( (e2 = mMeshData.GetNextVertexEdge(v,e2) ) != HageMesh::nullEdge)
 			{
-				vp = mMeshData.GetEdgeVertices(e);
-
-				updateVertexProperties(vp[0].Index());
-				updateVertexProperties(vp[1].Index());
-
-				EdgeCollapse c;
-				c.halfEdge = e.Index();
-				computeCollapse(&c);
-				updateEdgeCollapse(c);
+				computeCollapse(e2);
+				updateEdgeCollapse(e2);
 			}
 
-			std::cerr << "Num faces Left:" << mMeshData.GetNumFaces() << "\n";
 			return true;
 		}
   }
 
   //mHeap.print(std::cout);
-
+  */
   return false;
 }
 
 
-void DecimationMesh::updateVertexProperties(unsigned int ind)
+void DecimationMesh::updateVertexProperties(Vertex v)
 {
-  std::vector<unsigned int> neighborFaces = FindNeighborFaces(ind);
-
-  // Approximate vertex normal
-  Vector3 n(0,0,0);
-
-  const unsigned int numCandidates = neighborFaces.size();
-  for (unsigned int i = 0; i < numCandidates; i++){
-
-    n += ToLocal(FaceNormal(neighborFaces[i]));
-  }
-
-  mMeshData.GetVertex(ind)->Normal = n.normalize();
 }
 
 
 void DecimationMesh::updateFaceProperties(unsigned int ind)
 {
-
-  mMeshData.GetFace(ind)->Normal = ToLocal(FaceNormal(ind));
 }
 
 
@@ -407,22 +382,27 @@ void DecimationMesh::Render()
 }
 
 
-void DecimationMesh::updateEdgeCollapse(const EdgeCollapse& e)
+void DecimationMesh::updateEdgeCollapse(const Edge& e)
 {
-	if(lookup[e.halfEdge] != heap.end())
-		heap.erase(lookup[e.halfEdge]);
-	lookup[e.halfEdge] = heap.insert(std::pair<float,EdgeCollapse>(e.cost,e));
+	//collapseMap.insert(collapseType::value_type(e->Cost,e.Index()));
 }
-bool DecimationMesh::getNextCollapse(EdgeCollapse& e)
-{
-	if(heap.empty())
-		return false;
 
-	e = heap.begin()->second;
-	lookup[e.halfEdge] = heap.end();
-	heap.erase(heap.begin());
+DecimationMesh::Edge DecimationMesh::getNextCollapse()
+{/*
+	Edge e = HageMesh::nullEdge;
+	while(!collapseMap.empty())
+	{
+		Edge e = mMeshData.GetEdge(collapseMap.begin()->second);
+		float cost = collapseMap.begin()->first;
+		collapseMap.erase(collapseMap.begin());
 
-	return true;
+		if(e == HageMesh::nullEdge || e->Cost != cost)
+			continue;
+
+		return e;
+	}
+	*/
+	return HageMesh::nullEdge;
 }
 
 void DecimationMesh::drawText(const Vector3 & pos, const char * str)

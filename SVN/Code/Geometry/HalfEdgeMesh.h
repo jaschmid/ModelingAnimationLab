@@ -105,14 +105,14 @@ protected:
   	typedef HAGE::Matrix4<> Matrix4;
 	typedef HAGE::Vector4<> Vector4;
 
-  struct VertexData
+
+	typedef HAGE::set<HAGE::MeshGeometryFeature,HAGE::MeshDecimatorFeature<>> MeshFeatures;
+
+  struct VertexData : public HAGE::MinVertexType<MeshFeatures>::type
   {
-	  Vector3 Normal;
-	  Vector3 Position;
 	  Vector3 Color;
 	  float Curvature;
-	  Matrix4 ErrorQuadric;
-	  
+
 	operator Vector3&()
 	{
 		return Position;
@@ -123,9 +123,8 @@ protected:
 	}
   };
 
-  struct FaceData
+  struct FaceData : public HAGE::MinFaceType<MeshFeatures>::type
   {
-	  Vector3 Normal;
 	  Vector3 Color;
 	  float Curvature;
   };
@@ -140,7 +139,7 @@ protected:
 	  return Vector3(v[0],v[1],v[2]);
   }
 
-  typedef HAGE::CEditableMesh<VertexData,FaceData,void> HageMesh;
+  typedef HAGE::HageMeshEx< MeshFeatures ,VertexData , FaceData > HageMesh;
   typedef HageMesh::Vertex Vertex;
   typedef HageMesh::Face Face;
   typedef HageMesh::Edge Edge;
@@ -149,7 +148,7 @@ protected:
   
 
   float FaceArea(HageMesh::IndexType i) const;
-  unsigned int GetNumEdges() const { return (unsigned int)mMeshData.GetNumEdgeIndices(); }
+  unsigned int GetNumEdges() const { return 0; /*return (unsigned int)mMeshData.GetNumEdgeIndices();*/ }
   
   
   //! Finds all triangles that includes a given vertex.
@@ -222,7 +221,7 @@ protected:
   virtual void Smooth(float amount);
 
   virtual bool save(std::ostream &os){
-    os << "# HalfEdgeMesh obj streamer\n# M&A 2008\n\n";
+/*    os << "# HalfEdgeMesh obj streamer\n# M&A 2008\n\n";
     os << "# Vertices\n";
 	for(unsigned int i=0; i<mMeshData.GetNumVertexIndices(); i++){
 		os << "v " << ToGlobal(mMeshData.GetVertex(i)->Position) << " " <<  ToGlobal(mMeshData.GetVertex(i)->Position) << " " <<  ToGlobal(mMeshData.GetVertex(i)->Position) << "\n";
@@ -230,11 +229,12 @@ protected:
     os << "\n# Faces\n";
     for(unsigned int i=0; i<mMeshData.GetNumFaceIndices(); i++){
 		HageMesh::VertexTriple vt = mMeshData.GetFaceVertices(mMeshData.GetFace(i));
-      os << "f " << mMeshData.GetIndex(vt[0])+1 << " "
-         << mMeshData.GetIndex(vt[1])+1
-         << " " <<  mMeshData.GetIndex(vt[2])+1 << "\n";
+      os << "f " << vt[0].Index()+1 << " "
+         << vt[1].Index()+1
+         << " " <<  vt[2].Index()+1 << "\n";
     }
-    return os.good();
+    return os.good();*/
+	  return true;
   }
 };
 
