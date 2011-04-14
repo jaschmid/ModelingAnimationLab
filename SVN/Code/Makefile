@@ -18,9 +18,16 @@ GUI =	main.cpp GUI/GUI.cpp GUI/FrameMain.cpp GUI/GLViewer.cpp \
 			GUI/GLAxis.cpp  GUI/GLGridPlane.cpp GUI/GLObject.cpp
 
 MESH = Geometry/HalfEdgeMesh.cpp Decimation/DecimationMesh.cpp Decimation/SimpleDecimationMesh.cpp\
-Decimation/QuadricDecimationMesh.cpp Geometry/SimpleMesh.cpp Geometry/Mesh.cpp
+Decimation/QuadricDecimationMesh.cpp Geometry/SimpleMesh.cpp Geometry/Mesh.cpp \
+Geometry/LineStrip.cpp
 
-SOURCE =  $(UTIL) $(GUI) $(MESH)
+SUBDIVISION = Subdivision/LoopSubdivisionMesh.cpp \
+							Subdivision/AdaptiveLoopSubdivisionMesh.cpp \
+							Subdivision/UniformCubicSplineSubdivisionCurve.cpp \
+							Subdivision/UniformCubicSpline.cpp
+
+
+SOURCE =  $(UTIL) $(GUI) $(MESH) $(SUBDIVISION)
 
 OBJ = $(SOURCE:.cpp=.o)
 
@@ -35,7 +42,9 @@ all: $(OBJ)
 	mkdir -p Moa.app
 	mkdir -p Moa.app/Contents
 	mkdir -p Moa.app/Contents/MacOS
+	mkdir -p Moa.app/Contents/Resources
 	cp Moa.plist Moa.app/Contents/Info.plist
+	cp Moa.icns Moa.app/Contents/Resources
 	echo -n 'APPL????' > Moa.app/Contents/PkgInfo
 	cp main Moa.app/Contents/MacOS/Moa
 
@@ -64,6 +73,9 @@ clean:
 	rm -fr Math/*.o
 	rm -fr Math/*~
 	rm -fr Math/*.d
+	rm -fr Subdivision/*.o
+	rm -fr Subdivision/*~
+	rm -fr Subdivision/*.d
 	rm -fr Util/*.o
 	rm -fr Util/*~
 	rm -fr Util/*.d

@@ -227,11 +227,22 @@ protected:
 		os << "v " << ToGlobal(mMeshData.GetVertex(i)->Position) << " " <<  ToGlobal(mMeshData.GetVertex(i)->Position) << " " <<  ToGlobal(mMeshData.GetVertex(i)->Position) << "\n";
     }
     os << "\n# Faces\n";
+<<<<<<< .mine
     for(unsigned int i=0; i<mMeshData.GetNumFaceIndices(); i++){
 		HageMesh::VertexTriple vt = mMeshData.GetFaceVertices(mMeshData.GetFace(i));
       os << "f " << vt[0].Index()+1 << " "
          << vt[1].Index()+1
          << " " <<  vt[2].Index()+1 << "\n";
+=======
+    for(unsigned int i=0; i<GetNumFaces(); i++){
+      EdgeIterator it = GetEdgeIterator(f(i).edge);
+      os << "f ";
+      os << it.GetEdgeVertexIndex()+1 << " ";
+      it.Next();
+      os << it.GetEdgeVertexIndex()+1 << " ";
+      it.Next();
+      os << it.GetEdgeVertexIndex()+1 << "\n";
+>>>>>>> .r7
     }
     return os.good();*/
 	  return true;

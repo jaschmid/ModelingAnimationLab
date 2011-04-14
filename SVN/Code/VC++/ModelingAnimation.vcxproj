@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -100,6 +100,7 @@
     <ClInclude Include="..\decimation\SimpleDecimationMesh.h" />
     <ClInclude Include="..\geometry\Geometry.h" />
     <ClInclude Include="..\geometry\HalfEdgeMesh.h" />
+    <ClInclude Include="..\geometry\LineStrip.h" />
     <ClInclude Include="..\geometry\Mesh.h" />
     <ClInclude Include="..\geometry\SimpleMesh.h" />
     <ClInclude Include="..\gui\FrameMain.h" />
@@ -122,6 +123,12 @@
     <ClInclude Include="..\math\Vector4.h" />
     <ClInclude Include="..\math\Volume.h" />
     <ClInclude Include="..\math\VortexVectorField.h" />
+    <ClInclude Include="..\subdivision\AdaptiveLoopSubdivisionMesh.h" />
+    <ClInclude Include="..\subdivision\LoopSubdivisionMesh.h" />
+    <ClInclude Include="..\Subdivision\StrangeSubdivisionMesh.h" />
+    <ClInclude Include="..\Subdivision\Subdivision.h" />
+    <ClInclude Include="..\Subdivision\UniformCubicSpline.h" />
+    <ClInclude Include="..\Subdivision\UniformCubicSplineSubdivisionCurve.h" />
     <ClInclude Include="..\util\BitMask3D.h" />
     <ClInclude Include="..\util\BlackWhiteColorMap.h" />
     <ClInclude Include="..\util\ColorMap.h" />
@@ -147,6 +154,7 @@
     <ClCompile Include="..\decimation\QuadricDecimationMesh.cpp" />
     <ClCompile Include="..\decimation\SimpleDecimationMesh.cpp" />
     <ClCompile Include="..\geometry\HalfEdgeMesh.cpp" />
+    <ClCompile Include="..\geometry\LineStrip.cpp" />
     <ClCompile Include="..\geometry\Mesh.cpp" />
     <ClCompile Include="..\geometry\SimpleMesh.cpp" />
     <ClCompile Include="..\gui\FrameMain.cpp" />
@@ -156,6 +164,10 @@
     <ClCompile Include="..\gui\GLViewer.cpp" />
     <ClCompile Include="..\gui\GUI.cpp" />
     <ClCompile Include="..\math\TrilinearInterpolator.cpp" />
+    <ClCompile Include="..\subdivision\AdaptiveLoopSubdivisionMesh.cpp" />
+    <ClCompile Include="..\subdivision\LoopSubdivisionMesh.cpp" />
+    <ClCompile Include="..\Subdivision\UniformCubicSpline.cpp" />
+    <ClCompile Include="..\Subdivision\UniformCubicSplineSubdivisionCurve.cpp" />
     <ClCompile Include="..\util\BlackWhiteColorMap.cpp" />
     <ClCompile Include="..\util\ColorMap.cpp" />
     <ClCompile Include="..\util\ColorMapFactory.cpp" />

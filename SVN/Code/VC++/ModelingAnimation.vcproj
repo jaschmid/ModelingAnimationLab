@@ -221,6 +221,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\geometry\LineStrip.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\geometry\LineStrip.h"
+				>
+			</File>
+			<File
 				RelativePath="..\geometry\Mesh.cpp"
 				>
 			</File>
@@ -350,6 +358,50 @@
 			</File>
 			<File
 				RelativePath="..\math\VortexVectorField.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Subdivision"
+			>
+			<File
+				RelativePath="..\subdivision\AdaptiveLoopSubdivisionMesh.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\subdivision\AdaptiveLoopSubdivisionMesh.h"
+				>
+			</File>
+			<File
+				RelativePath="..\subdivision\LoopSubdivisionMesh.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\subdivision\LoopSubdivisionMesh.h"
+				>
+			</File>
+			<File
+				RelativePath="..\Subdivision\StrangeSubdivisionMesh.h"
+				>
+			</File>
+			<File
+				RelativePath="..\Subdivision\Subdivision.h"
+				>
+			</File>
+			<File
+				RelativePath="..\Subdivision\UniformCubicSpline.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\Subdivision\UniformCubicSpline.h"
+				>
+			</File>
+			<File
+				RelativePath="..\Subdivision\UniformCubicSplineSubdivisionCurve.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\Subdivision\UniformCubicSplineSubdivisionCurve.h"
 				>
 			</File>
 		</Filter>

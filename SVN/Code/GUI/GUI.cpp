@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Sep  8 2010)
+// C++ code generated with wxFormBuilder (version Sep 12 2010)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -14,13 +14,6 @@ BaseFrameMain::BaseFrameMain( wxWindow* parent, wxWindowID id, const wxString& t
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
 	m_menubar2 = new wxMenuBar( 0 );
-	m_menu3 = new wxMenu();
-	wxMenuItem* m_menuItem10;
-	m_menuItem10 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("Save selected") ) , wxEmptyString, wxITEM_NORMAL );
-	m_menu3->Append( m_menuItem10 );
-
-	m_menubar2->Append( m_menu3, wxT("File") );
-
 	mMenuAddObject = new wxMenu();
 	wxMenuItem* mAddObjectSimpleMesh;
 	mAddObjectSimpleMesh = new wxMenuItem( mMenuAddObject, wxID_ANY, wxString( wxT("Simple mesh") ) , wxEmptyString, wxITEM_NORMAL );
@@ -37,6 +30,100 @@ BaseFrameMain::BaseFrameMain( wxWindow* parent, wxWindowID id, const wxString& t
 	wxMenuItem* mAddObjectQuadricDecimationMesh;
 	mAddObjectQuadricDecimationMesh = new wxMenuItem( mMenuAddObject, wxID_ANY, wxString( wxT("Quadric decimation mesh") ) , wxEmptyString, wxITEM_NORMAL );
 	mMenuAddObject->Append( mAddObjectQuadricDecimationMesh );
+
+	wxMenuItem* m_separator1;
+	m_separator1 = mMenuAddObject->AppendSeparator();
+
+	wxMenuItem* mAddObjectCubicSpline;
+	mAddObjectCubicSpline = new wxMenuItem( mMenuAddObject, wxID_ANY, wxString( wxT("Cubic spline") ) , wxEmptyString, wxITEM_NORMAL );
+	mMenuAddObject->Append( mAddObjectCubicSpline );
+
+	wxMenuItem* mAddObjectSubdivisionCurve;
+	mAddObjectSubdivisionCurve = new wxMenuItem( mMenuAddObject, wxID_ANY, wxString( wxT("Subdivision curve") ) , wxEmptyString, wxITEM_NORMAL );
+	mMenuAddObject->Append( mAddObjectSubdivisionCurve );
+
+	wxMenuItem* mAddObjectLoopSubdivisionMesh;
+	mAddObjectLoopSubdivisionMesh = new wxMenuItem( mMenuAddObject, wxID_ANY, wxString( wxT("Loop subdivision mesh") ) , wxEmptyString, wxITEM_NORMAL );
+	mMenuAddObject->Append( mAddObjectLoopSubdivisionMesh );
+
+	wxMenuItem* mAddObjectStrangeSubdivisionMesh;
+	mAddObjectStrangeSubdivisionMesh = new wxMenuItem( mMenuAddObject, wxID_ANY, wxString( wxT("Strange subdivision mesh") ) , wxEmptyString, wxITEM_NORMAL );
+	mMenuAddObject->Append( mAddObjectStrangeSubdivisionMesh );
+
+	wxMenuItem* m_separator2;
+	m_separator2 = mMenuAddObject->AppendSeparator();
+
+	wxMenuItem* mAddObjectImplicitSphere;
+	mAddObjectImplicitSphere = new wxMenuItem( mMenuAddObject, wxID_ANY, wxString( wxT("Implicit sphere") ) , wxEmptyString, wxITEM_NORMAL );
+	mMenuAddObject->Append( mAddObjectImplicitSphere );
+
+	wxMenuItem* mAddObjectImplicitMesh;
+	mAddObjectImplicitMesh = new wxMenuItem( mMenuAddObject, wxID_ANY, wxString( wxT("Implicit mesh") ) , wxEmptyString, wxITEM_NORMAL );
+	mMenuAddObject->Append( mAddObjectImplicitMesh );
+
+	m_menu1 = new wxMenu();
+	wxMenuItem* mAddObjectQuadricPlane;
+	mAddObjectQuadricPlane = new wxMenuItem( m_menu1, wxID_ANY, wxString( wxT("Plane") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menu1->Append( mAddObjectQuadricPlane );
+
+	wxMenuItem* mAddObjectQuadricCylinder;
+	mAddObjectQuadricCylinder = new wxMenuItem( m_menu1, wxID_ANY, wxString( wxT("Cylinder") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menu1->Append( mAddObjectQuadricCylinder );
+
+	wxMenuItem* mAddObjectQuadricEllipsoid;
+	mAddObjectQuadricEllipsoid = new wxMenuItem( m_menu1, wxID_ANY, wxString( wxT("Ellipsoid") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menu1->Append( mAddObjectQuadricEllipsoid );
+
+	wxMenuItem* mAddObjectQuadricCone;
+	mAddObjectQuadricCone = new wxMenuItem( m_menu1, wxID_ANY, wxString( wxT("Cone") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menu1->Append( mAddObjectQuadricCone );
+
+	wxMenuItem* mAddObjectQuadricParaboloid;
+	mAddObjectQuadricParaboloid = new wxMenuItem( m_menu1, wxID_ANY, wxString( wxT("Paraboloid") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menu1->Append( mAddObjectQuadricParaboloid );
+
+	wxMenuItem* mAddObjectQuadricHyperboloid;
+	mAddObjectQuadricHyperboloid = new wxMenuItem( m_menu1, wxID_ANY, wxString( wxT("Hyperboloid") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menu1->Append( mAddObjectQuadricHyperboloid );
+
+	mMenuAddObject->Append( -1, wxT("Implicit quadric"), m_menu1 );
+
+	wxMenuItem* m_separator3;
+	m_separator3 = mMenuAddObject->AppendSeparator();
+
+	wxMenuItem* mAddObjectScalarCutPlane;
+	mAddObjectScalarCutPlane = new wxMenuItem( mMenuAddObject, wxID_ANY, wxString( wxT("Scalar cut plane") ) , wxEmptyString, wxITEM_NORMAL );
+	mMenuAddObject->Append( mAddObjectScalarCutPlane );
+
+	wxMenuItem* mAddObjectVectorCutPlane;
+	mAddObjectVectorCutPlane = new wxMenuItem( mMenuAddObject, wxID_ANY, wxString( wxT("Vector cut plane") ) , wxEmptyString, wxITEM_NORMAL );
+	mMenuAddObject->Append( mAddObjectVectorCutPlane );
+
+	wxMenuItem* m_separator4;
+	m_separator4 = mMenuAddObject->AppendSeparator();
+
+	wxMenuItem* m_menuItem21;
+	m_menuItem21 = new wxMenuItem( mMenuAddObject, wxID_ANY, wxString( wxT("Load levelset") ) , wxEmptyString, wxITEM_NORMAL );
+	mMenuAddObject->Append( m_menuItem21 );
+
+	wxMenuItem* m_menuItem8;
+	m_menuItem8 = new wxMenuItem( mMenuAddObject, wxID_ANY, wxString( wxT("Convert implicit to levelset") ) , wxEmptyString, wxITEM_NORMAL );
+	mMenuAddObject->Append( m_menuItem8 );
+
+	wxMenuItem* m_separator5;
+	m_separator5 = mMenuAddObject->AppendSeparator();
+
+	wxMenuItem* m_menuItem22;
+	m_menuItem22 = new wxMenuItem( mMenuAddObject, wxID_ANY, wxString( wxT("Add template 1") ) , wxEmptyString, wxITEM_NORMAL );
+	mMenuAddObject->Append( m_menuItem22 );
+
+	wxMenuItem* m_menuItem23;
+	m_menuItem23 = new wxMenuItem( mMenuAddObject, wxID_ANY, wxString( wxT("Add template 2") ) , wxEmptyString, wxITEM_NORMAL );
+	mMenuAddObject->Append( m_menuItem23 );
+
+	wxMenuItem* m_menuItem24;
+	m_menuItem24 = new wxMenuItem( mMenuAddObject, wxID_ANY, wxString( wxT("Add template 3") ) , wxEmptyString, wxITEM_NORMAL );
+	mMenuAddObject->Append( m_menuItem24 );
 
 	m_menubar2->Append( mMenuAddObject, wxT("Add object") );
 
@@ -533,11 +620,29 @@ BaseFrameMain::BaseFrameMain( wxWindow* parent, wxWindowID id, const wxString& t
 
 	// Connect Events
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( BaseFrameMain::OnClose ) );
-	this->Connect( m_menuItem10->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::SaveSelected ) );
 	this->Connect( mAddObjectSimpleMesh->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectSimpleMesh ) );
 	this->Connect( mAddObjectHalfEdgeMesh->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectHalfEdgeMesh ) );
 	this->Connect( mAddObjectSimpleDecimationMesh->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectSimpleDecimationMesh ) );
 	this->Connect( mAddObjectQuadricDecimationMesh->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectQuadricDecimationMesh ) );
+	this->Connect( mAddObjectCubicSpline->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectCubicSpline ) );
+	this->Connect( mAddObjectSubdivisionCurve->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectSubdivisionCurve ) );
+	this->Connect( mAddObjectLoopSubdivisionMesh->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectLoopSubdivisionMesh ) );
+	this->Connect( mAddObjectStrangeSubdivisionMesh->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectStrangeSubdivisionMesh ) );
+	this->Connect( mAddObjectImplicitSphere->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectImplicitSphere ) );
+	this->Connect( mAddObjectImplicitMesh->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectImplicitMesh ) );
+	this->Connect( mAddObjectQuadricPlane->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectQuadricPlane ) );
+	this->Connect( mAddObjectQuadricCylinder->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectQuadricCylinder ) );
+	this->Connect( mAddObjectQuadricEllipsoid->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectQuadricEllipsoid ) );
+	this->Connect( mAddObjectQuadricCone->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectQuadricCone ) );
+	this->Connect( mAddObjectQuadricParaboloid->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectQuadricParaboloid ) );
+	this->Connect( mAddObjectQuadricHyperboloid->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectQuadricHyperboloid ) );
+	this->Connect( mAddObjectScalarCutPlane->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectScalarCutPlane ) );
+	this->Connect( mAddObjectVectorCutPlane->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectVectorCutPlane ) );
+	this->Connect( m_menuItem21->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::LoadLevelset ) );
+	this->Connect( m_menuItem8->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::ConvertToLevelset ) );
+	this->Connect( m_menuItem22->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddTemplate1 ) );
+	this->Connect( m_menuItem23->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddTemplate2 ) );
+	this->Connect( m_menuItem24->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddTemplate3 ) );
 	this->Connect( m_menuItem14->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::CaptureScreen ) );
 	this->Connect( m_menuItem26->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::SaveMesh ) );
 	mObjectList->Connect( wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler( BaseFrameMain::SelectObjects ), NULL, this );
@@ -612,7 +717,6 @@ BaseFrameMain::~BaseFrameMain()
 {
 	// Disconnect Events
 	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( BaseFrameMain::OnClose ) );
-	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::SaveSelected ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectSimpleMesh ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectHalfEdgeMesh ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BaseFrameMain::AddObjectSimpleDecimationMesh ) );

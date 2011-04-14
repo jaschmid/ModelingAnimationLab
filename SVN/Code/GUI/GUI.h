@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Sep  8 2010)
+// C++ code generated with wxFormBuilder (version Sep 12 2010)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -44,7 +44,6 @@ class BaseFrameMain : public wxFrame
 
 	protected:
 		wxMenuBar* m_menubar2;
-		wxMenu* m_menu3;
 		wxMenu* mMenuAddObject;
 		wxMenu* m_menu1;
 		wxMenu* m_menu2;
@@ -139,7 +138,6 @@ class BaseFrameMain : public wxFrame
 
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
-		virtual void SaveSelected( wxCommandEvent& event ) { event.Skip(); }
 		virtual void AddObjectSimpleMesh( wxCommandEvent& event ) { event.Skip(); }
 		virtual void AddObjectHalfEdgeMesh( wxCommandEvent& event ) { event.Skip(); }
 		virtual void AddObjectSimpleDecimationMesh( wxCommandEvent& event ) { event.Skip(); }

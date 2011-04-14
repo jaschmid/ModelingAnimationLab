@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Decimation">
@@ -12,6 +12,9 @@
     </Filter>
     <Filter Include="Math">
       <UniqueIdentifier>{f2a0245a-e6e9-4973-be93-f72a212e803b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Subdivision">
+      <UniqueIdentifier>{1b27733f-98ae-43e0-91e7-e8e9d0a5cc08}</UniqueIdentifier>
     </Filter>
     <Filter Include="Util">
       <UniqueIdentifier>{f5466a2a-6ebd-411b-9754-562f7a4dff74}</UniqueIdentifier>
@@ -34,6 +37,9 @@
       <Filter>Geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\geometry\HalfEdgeMesh.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\geometry\LineStrip.h">
       <Filter>Geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\geometry\Mesh.h">
@@ -101,6 +107,24 @@
     </ClInclude>
     <ClInclude Include="..\math\VortexVectorField.h">
       <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\subdivision\AdaptiveLoopSubdivisionMesh.h">
+      <Filter>Subdivision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\subdivision\LoopSubdivisionMesh.h">
+      <Filter>Subdivision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Subdivision\StrangeSubdivisionMesh.h">
+      <Filter>Subdivision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Subdivision\Subdivision.h">
+      <Filter>Subdivision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Subdivision\UniformCubicSpline.h">
+      <Filter>Subdivision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Subdivision\UniformCubicSplineSubdivisionCurve.h">
+      <Filter>Subdivision</Filter>
     </ClInclude>
     <ClInclude Include="..\util\BitMask3D.h">
       <Filter>Util</Filter>
@@ -173,6 +197,9 @@
     <ClCompile Include="..\geometry\HalfEdgeMesh.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
+    <ClCompile Include="..\geometry\LineStrip.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
     <ClCompile Include="..\geometry\Mesh.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
@@ -199,6 +226,18 @@
     </ClCompile>
     <ClCompile Include="..\math\TrilinearInterpolator.cpp">
       <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\subdivision\AdaptiveLoopSubdivisionMesh.cpp">
+      <Filter>Subdivision</Filter>
+    </ClCompile>
+    <ClCompile Include="..\subdivision\LoopSubdivisionMesh.cpp">
+      <Filter>Subdivision</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Subdivision\UniformCubicSpline.cpp">
+      <Filter>Subdivision</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Subdivision\UniformCubicSplineSubdivisionCurve.cpp">
+      <Filter>Subdivision</Filter>
     </ClCompile>
     <ClCompile Include="..\util\BlackWhiteColorMap.cpp">
       <Filter>Util</Filter>

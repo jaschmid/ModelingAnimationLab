@@ -9,25 +9,36 @@
 #include "GUI.h"
 #include "GLGridPlane.h"
 #include "GLAxis.h"
-#include <sstream>
-
-#include "Geometry/SimpleMesh.h"
-#include "Geometry/HalfEdgeMesh.h"
-
-#include "Decimation/SimpleDecimationMesh.h"
-#include "Decimation/QuadricDecimationMesh.h"
-
-#include "Math/ConstantVectorField.h"
-#include "Math/VortexVectorField.h"
-
 #include "Util/ObjIO.h"
 #include "Util/ColorMapFactory.h"
-#include "Util/GLObjectPlayback.h"
 
+#include <sstream>
 #include <fstream>
 #include <list>
 #include <map>
 #include <typeinfo>
+
+
+//Lab1->
+#include "Geometry/SimpleMesh.h"
+#include "Geometry/HalfEdgeMesh.h"
+//Lab1<-
+
+//Lab2->
+#include "Decimation/SimpleDecimationMesh.h"
+#include "Decimation/QuadricDecimationMesh.h"
+//Lab2<-
+
+//Lab3->
+#include "Subdivision/UniformCubicSpline.h"
+#include "Subdivision/UniformCubicSplineSubdivisionCurve.h"
+#include "Subdivision/LoopSubdivisionMesh.h"
+#include "Subdivision/StrangeSubdivisionMesh.h"
+//Lab3<-
+
+
+
+
 
 /** Implementing BaseFrameMain */
 class FrameMain : public BaseFrameMain
@@ -52,18 +63,18 @@ protected :
   std::map<const char *, std::list<wxWindow *> > mPanelSwitches;
   std::map<std::string, std::list<std::string> > mDependentObjects;
 
-  void SaveSelected( wxCommandEvent& event );
+  // Window close in MSW_XP (both VS2005/2008) is not working without this
+#ifdef WIN32
+  virtual void OnClose( wxCloseEvent& event )
+  { if( event.CanVeto() ) wxWindow::Destroy(); }
+#endif
+
   void AddUniqueObject(GLObject * object);
   void RemoveObject(GLObject * object);
-  void UpdateDependentObjects(GLObject * object);
-  void DeleteDependentObjects(GLObject * object);
-
-  void AddObjectSimpleMesh( wxCommandEvent& event );
-  void AddObjectHalfEdgeMesh( wxCommandEvent& event );
-  void AddObjectSimpleDecimationMesh( wxCommandEvent& event );
-  void AddObjectQuadricDecimationMesh( wxCommandEvent& event );
-
   void DeleteObjects( wxCommandEvent& event );
+  void DeleteDependentObjects(GLObject * object);
+  void UpdateDependentObjects(GLObject * object);
+  void ObjectSelected(wxCommandEvent & event);
   void SelectObjects( wxCommandEvent& event );
   void MoveObjectsUp( wxCommandEvent& event );
   void MoveObjecsDown( wxCommandEvent& event );
@@ -74,31 +85,45 @@ protected :
   void OpacityChanged( wxScrollEvent& event );
   void SetColormap( wxCommandEvent& event );
   void SetVisualizationMode( wxCommandEvent& event );
-  void DecimateObjects( wxCommandEvent& event );
   void ScaleChanged( wxCommandEvent& event );
   void ToggleUniformScaling( wxCommandEvent& event );
   void ToggleAutoMinMax( wxCommandEvent& event );
-  void ObjectSelected(wxCommandEvent & event);
+  void SaveMesh( wxCommandEvent& event );
   void CaptureScreen( wxCommandEvent& event );
 	void Dilate( wxCommandEvent& event );
 	void Erode( wxCommandEvent& event );
 	void Smooth( wxCommandEvent& event );
-
-  // Window close in MSW_XP (both VS2005/2008) is not working without this
-#ifdef WIN32
-  virtual void OnClose( wxCloseEvent& event )
-  { if( event.CanVeto() ) wxWindow::Destroy(); }
-#endif
-
+  double GetAmount();
   void HideAllPanels();
   void UpdatePanels();
-  double GetAmount();
 
+  //Lab1->
+  void AddObjectSimpleMesh( wxCommandEvent& event );
+  void AddObjectHalfEdgeMesh( wxCommandEvent& event );
   template <class MeshType>
   MeshType * AddMesh(const wxString & path);
+  //Lab1<-
+
+  //Lab2->
+  void AddObjectSimpleDecimationMesh( wxCommandEvent& event );
+  void AddObjectQuadricDecimationMesh( wxCommandEvent& event );
+  void DecimateObjects( wxCommandEvent& event );
+  //Lab2<-
+
+  //Lab3->
+  void AddObjectCubicSpline( wxCommandEvent& event );
+  void AddObjectSubdivisionCurve( wxCommandEvent& event );
+  void AddObjectLoopSubdivisionMesh( wxCommandEvent& event );
+  void AddObjectStrangeSubdivisionMesh( wxCommandEvent& event );
+  void SubdivideObjects( wxCommandEvent& event );
+  //Lab3<-
+
+
+
+
 };
 
-
+//Lab1->
 template <class MeshType>
 MeshType * FrameMain::AddMesh(const wxString & path)
 {
@@ -129,5 +154,8 @@ MeshType * FrameMain::AddMesh(const wxString & path)
 
   return NULL;
 }
+//Lab1<-
+
+
 
 #endif // __FrameMain__

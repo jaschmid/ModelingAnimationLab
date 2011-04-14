@@ -40,7 +40,7 @@ void QuadricDecimationMesh::Initialize()
     Matrix4 m = vert->Quadric;
 
     float error = v*(m*v);
-    std::cerr << std::scientific << std::setprecision(2) << error << " ";
+    //std::cerr << std::scientific << std::setprecision(2) << error << " ";
   }
   std::cerr << std::setprecision(width) << std::fixed; // reset stream precision
 
