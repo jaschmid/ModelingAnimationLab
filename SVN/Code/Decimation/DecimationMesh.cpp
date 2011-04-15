@@ -54,13 +54,7 @@ void DecimationMesh::Update()
   // Calculate and store all differentials and area
 
 	mMeshData.UpdateAllNormals();
-
-  // Then update vertex curvature
-  for(unsigned int i = 0; i < mMeshData.GetNumVertexIndices(); i++){
-    if (mMeshData.GetVertex(i) != HageMesh::nullVertex)
-      mMeshData.GetVertex(i)->Curvature = VertexCurvature(i);
-    //    std::cerr <<   mVerts.at(i).curvature << "\n";
-  }
+	mMeshData.UpdateAllCurvatures();
 
   // Finally update face curvature
   for(unsigned int i = 0; i < mMeshData.GetNumFaceIndices(); i++){

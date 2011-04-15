@@ -29,19 +29,21 @@ public :
   virtual void Subdivide();
 
 protected :
-  virtual bool Subdividable(unsigned int faceIndex) { return true; }
+  virtual bool Subdividable(const Face& f) { return true; }
 
   //! Subdivides the face at faceIndex given 1 not subdividable neighbor
-  virtual std::vector< std::vector<Vector3<float> > > Subdivide1(unsigned int faceIndex);
+  virtual std::vector< std::vector<Vector3 > > Subdivide1(unsigned int faceIndex);
 
   //! Subdivides the face at faceIndex given 2 not subdividable neighbors
-  virtual std::vector< std::vector<Vector3<float> > > Subdivide2(unsigned int faceIndex);
+  virtual std::vector< std::vector<Vector3 > > Subdivide2(unsigned int faceIndex);
 
   //! Subdivides the face at faceIndex given 3 not subdividable neighbors (trivial)
-  virtual std::vector< std::vector<Vector3<float> > > Subdivide3(unsigned int faceIndex);
+  virtual std::vector< std::vector<Vector3 > > Subdivide3(unsigned int faceIndex);
 
   //! Computes a new vertex, replacing a vertex in the old mesh
-  virtual Vector3<float> VertexRule(unsigned int vertexIndex);
+  virtual Vector3 VertexRule(unsigned int vertexIndex);
+
+  
 };
 
 #endif

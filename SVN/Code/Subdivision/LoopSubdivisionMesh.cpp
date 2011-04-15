@@ -17,43 +17,27 @@
 */
 void LoopSubdivisionMesh::Subdivide()
 {
-  // Create new mesh and copy all the attributes
-  HalfEdgeMesh subDivMesh;
-  subDivMesh.SetTransform(GetTransform());
-  subDivMesh.SetName(GetName());
-  subDivMesh.SetColorMap(GetColorMap());
-  subDivMesh.SetWireframe(GetWireframe());
-  subDivMesh.SetShowNormals(GetShowNormals());
-  subDivMesh.SetOpacity(GetOpacity());
-  if (IsHovering()) subDivMesh.Hover();
-  if (IsSelected()) subDivMesh.Select();
-  subDivMesh.mMinCMap = mMinCMap;
-  subDivMesh.mMaxCMap = mMaxCMap;
-  subDivMesh.mAutoMinMax = mAutoMinMax;
 
+	mMeshData.Subdivide();
 
-  // loop over each face and create 4 new ones
-  for (unsigned int i=0; i<mFaces.size(); i++){
-    // subdivide face
-    std::vector< std::vector<Vector3<float> > > faces = Subdivide(i);
+	mMeshData.DebugValidateMesh();
+	mMeshData.UpdateAllNormals();
+	mMeshData.UpdateAllCurvatures();
 
-    // add new faces to subDivMesh
-    for(unsigned int j=0; j<faces.size(); j++){
-      subDivMesh.AddFace(faces.at(j));
-    }
+  for(unsigned int i = 0; i < mMeshData.GetNumFaceIndices(); i++){
+    if (mMeshData.GetFace(i) != HageMesh::nullFace)
+      mMeshData.GetFace(i)->Curvature = FaceCurvature(i);
   }
-
-  // Assigns the new mesh
-  *this = LoopSubdivisionMesh(subDivMesh, ++mNumSubDivs);
-  Update();
 }
 
 
 /*! Subdivides the face at faceindex into a vector of faces
 */
-std::vector< std::vector<Vector3<float> > > LoopSubdivisionMesh::Subdivide(unsigned int faceIndex)
+std::vector< std::vector<LoopSubdivisionMesh::Vector3 > > LoopSubdivisionMesh::Subdivide(unsigned int faceIndex)
 {
-  std::vector< std::vector<Vector3<float> > > faces;
+	
+  std::vector< std::vector<Vector3 > > faces;
+  /*
   EdgeIterator eit = GetEdgeIterator( f(faceIndex).edge );
 
   // get the inner halfedges
@@ -92,17 +76,17 @@ std::vector< std::vector<Vector3<float> > > LoopSubdivisionMesh::Subdivide(unsig
   faces.push_back(verts);
   verts.clear();
   verts.push_back(pn5); verts.push_back(pn4); verts.push_back(pn2);
-  faces.push_back(verts);
+  faces.push_back(verts);*/
   return faces;
 }
 
 
 /*! Computes a new vertex, replacing a vertex in the old mesh
 */
-Vector3<float> LoopSubdivisionMesh::VertexRule(unsigned int vertexIndex)
+LoopSubdivisionMesh::Vector3 LoopSubdivisionMesh::VertexRule(unsigned int vertexIndex)
 {
   // Get the current vertex
-  Vector3<float> vtx = v(vertexIndex).pos;
+	Vector3 vtx = mMeshData.GetVertex(vertexIndex)->Position;
 
 
   return vtx;
@@ -111,15 +95,16 @@ Vector3<float> LoopSubdivisionMesh::VertexRule(unsigned int vertexIndex)
 
 /*! Computes a new vertex, placed along an edge in the old mesh
 */
-Vector3<float> LoopSubdivisionMesh::EdgeRule(unsigned int edgeIndex)
+LoopSubdivisionMesh::Vector3 LoopSubdivisionMesh::EdgeRule(unsigned int edgeIndex)
 {
 
   // Place the edge vertex halfway along the edge
+	/*
   HalfEdge & e0 = e(edgeIndex);
   HalfEdge & e1 = e(e0.pair);
   Vector3<float> & v0 = v(e0.vert).pos;
-  Vector3<float> & v1 = v(e1.vert).pos;
-  return (v0 + v1) * 0.5;
+  Vector3<float> & v1 = v(e1.vert).pos;*/
+  return Vector3(0.0f,0.0f,0.0f);//(v0 + v1) * 0.5;
 }
 
 //! Return weights for interior verts

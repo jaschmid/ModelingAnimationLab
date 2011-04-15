@@ -106,12 +106,11 @@ protected:
 	typedef HAGE::Vector4<> Vector4;
 
 
-	typedef HAGE::set<HAGE::MeshGeometryFeature,HAGE::MeshDecimatorFeature<>> MeshFeatures;
+	typedef HAGE::set<HAGE::MeshGeometryFeature,HAGE::MeshDecimatorFeature<>,HAGE::MeshCurvatureFeature,HAGE::MeshSubdivisionFeature> MeshFeatures;
 
   struct VertexData : public HAGE::MinVertexType<MeshFeatures>::type
   {
 	  Vector3 Color;
-	  float Curvature;
 
 	operator Vector3&()
 	{

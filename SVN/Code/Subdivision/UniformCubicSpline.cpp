@@ -55,7 +55,10 @@ Vector3<float> UniformCubicSpline::GetValue(float t) const
   Vector3<float> val;
   float sum = 0;
 
-  for (unsigned int i = 0; i < mCoefficients.size(); i++) {
+  unsigned int begin = std::max((int)(floorf(t-1.0f)),0);
+  unsigned int end = std::min((int)mCoefficients.size(),(int)(ceilf(t+2.0f)));
+
+  for (unsigned int i = begin; i < end; i++) {
     float bval = GetBSplineValue(i, t);
     val += mCoefficients.at(i)*bval;
     sum += bval;

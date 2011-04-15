@@ -39,13 +39,13 @@ protected :
   unsigned int mNumSubDivs;
 
   //! Subdivides the face at faceIndex and returns a vector of faces
-  virtual std::vector< std::vector<Vector3<float> > > Subdivide(unsigned int faceIndex);
+  virtual std::vector< std::vector<Vector3 > > Subdivide(unsigned int faceIndex);
 
   //! Computes a new vertex, replacing a vertex in the old mesh
-  virtual Vector3<float> VertexRule(unsigned int vertexIndex);
+  virtual Vector3 VertexRule(unsigned int vertexIndex);
 
   //! Computes a new vertex, placed along an edge in the old mesh
-  virtual Vector3<float> EdgeRule(unsigned int edgeIndex);
+  virtual Vector3 EdgeRule(unsigned int edgeIndex);
 };
 
 #endif

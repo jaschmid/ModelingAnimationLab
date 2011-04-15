@@ -6,7 +6,7 @@
 class StrangeSubdivisionMesh : public AdaptiveLoopSubdivisionMesh
 {
 protected:
-  bool Subdividable(unsigned int fi){
+  bool Subdividable(const Face& f){
     // Every 4th face is not subdividable - kinda strange!
     // Do something more interesting...
     return (fi % 4);

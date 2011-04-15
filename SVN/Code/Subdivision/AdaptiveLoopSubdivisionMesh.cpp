@@ -15,10 +15,35 @@
 
 /*! Subdivides the mesh one step, depending on subdividability
 */
+
+
 void AdaptiveLoopSubdivisionMesh::Subdivide()
 {
+	
+	mMeshData.Subdivide(
+		[] (const HageMesh::Edge& e,
+			HageMesh::VertexType& newData,
+			const HageMesh::BaseType& mesh) -> bool 
+			{ 
+				auto vp = mesh.GetEdgeVertices(e);
+				if(vp[0]->Position.y < 0.0f || vp[1]->Position.y < 0.0f)
+					return false;
+				else
+					return AdaptiveLoopSubdivisionMesh::HageMesh::DefaultEdgeRule(e,newData,mesh);
+			}
+		);
+
+	mMeshData.DebugValidateMesh();
+	mMeshData.UpdateAllNormals();
+	mMeshData.UpdateAllCurvatures();
+
+  for(unsigned int i = 0; i < mMeshData.GetNumFaceIndices(); i++){
+    if (mMeshData.GetFace(i) != HageMesh::nullFace)
+      mMeshData.GetFace(i)->Curvature = FaceCurvature(i);
+  }
+
   // Create new mesh and copy all the attributes
-  HalfEdgeMesh subDivMesh;
+  /*HalfEdgeMesh subDivMesh;
   subDivMesh.SetTransform(GetTransform());
   subDivMesh.SetName(GetName());
   subDivMesh.SetColorMap(GetColorMap());
@@ -77,7 +102,7 @@ void AdaptiveLoopSubdivisionMesh::Subdivide()
 
   // Assign the new mesh
   *this = AdaptiveLoopSubdivisionMesh(subDivMesh, ++mNumSubDivs);
-  Update();
+  Update();*/
 }
 
 
@@ -86,9 +111,10 @@ void AdaptiveLoopSubdivisionMesh::Subdivide()
   If any of the neighboring faces have subdividability == false
   then we should not move this vertex, else use the rules from loop subdivision
 */
-Vector3<float> AdaptiveLoopSubdivisionMesh::VertexRule(unsigned int vertexIndex)
+AdaptiveLoopSubdivisionMesh::Vector3 AdaptiveLoopSubdivisionMesh::VertexRule(unsigned int vertexIndex)
 {
   // Get the current vertex
+	/*
   Vector3<float> vtx = v(vertexIndex).pos;
 
   // Get face neighborhood
@@ -100,32 +126,32 @@ Vector3<float> AdaptiveLoopSubdivisionMesh::VertexRule(unsigned int vertexIndex)
       return vtx;
     }
   }
-
+  */
   // else return VertexRule for LSMesh
   return LoopSubdivisionMesh::VertexRule(vertexIndex);
 }
 
 /*! Subdivides the face at faceIndex given 1 not subdividable neighbor
  */
-std::vector< std::vector<Vector3<float> > >
+std::vector< std::vector<AdaptiveLoopSubdivisionMesh::Vector3 > >
 AdaptiveLoopSubdivisionMesh::Subdivide1(unsigned int faceIndex){
 
   // We know we have one false face
 
   // 1. Start by orienting the triangle so that we always have the same case
   // We find the start edge as the edge who shares face with the _not_subdividable_ neighbor
-  HalfEdgeMesh::EdgeIterator eit = GetEdgeIterator( f(faceIndex).edge );
+  /*HalfEdgeMesh::EdgeIterator eit = GetEdgeIterator( f(faceIndex).edge );
   unsigned int num = 0;
   while( Subdividable(eit.Pair().GetEdgeFaceIndex()) ){
     eit.Pair().Next();
     assert(num++ < 3);
   }
   // go back to inner edge
-  eit.Pair();
+  eit.Pair();*/
 
   // 2. Now find the vertices
-  std::vector< std::vector<Vector3<float> > > faces;
-
+  std::vector< std::vector<Vector3 > > faces;
+  /*
   // corner vertices, labeled from current edge's origin vertex
   Vector3<float> v1 = VertexRule(eit.GetEdgeVertexIndex());
   Vector3<float> v2 = VertexRule(eit.Next().GetEdgeVertexIndex());
@@ -148,21 +174,21 @@ AdaptiveLoopSubdivisionMesh::Subdivide1(unsigned int faceIndex){
   face.push_back(e3v); face.push_back(v1); face.push_back(e2v);
   faces.push_back(face);
   face.clear();
-
+  */
   // 4. Return
   return faces;
 }
 
 /*! Subdivides the face at faceIndex given 2 not subdividable neighbors
  */
-std::vector< std::vector<Vector3<float> > >
+std::vector< std::vector<AdaptiveLoopSubdivisionMesh::Vector3 > >
 AdaptiveLoopSubdivisionMesh::Subdivide2(unsigned int faceIndex){
 
   // We know we have otwo false faces
 
   // 1. Start by orienting the triangle so that we always have the same case
   // We find the start edge as the edge who shares face with the _subdividable_ neighbor
-  EdgeIterator eit = GetEdgeIterator( f(faceIndex).edge );
+  /*EdgeIterator eit = GetEdgeIterator( f(faceIndex).edge );
   unsigned int num = 0;
   while( !Subdividable(eit.Pair().GetEdgeFaceIndex()) ){
     eit.Pair().Next();
@@ -170,10 +196,10 @@ AdaptiveLoopSubdivisionMesh::Subdivide2(unsigned int faceIndex){
   }
   // go back to inner edge
   eit.Pair();
-
+  */
   // 2. Now find the vertices
-  std::vector< std::vector<Vector3<float> > > faces;
-
+  std::vector< std::vector<Vector3> > faces;
+  /*
   // corner vertices, labeled from current edge's origin vertex
   Vector3<float> v1 = VertexRule(eit.GetEdgeVertexIndex());
   Vector3<float> v2 = VertexRule(eit.Next().GetEdgeVertexIndex());
@@ -191,7 +217,7 @@ AdaptiveLoopSubdivisionMesh::Subdivide2(unsigned int faceIndex){
   face.push_back(e1v); face.push_back(v2); face.push_back(v3);
   faces.push_back(face);
   face.clear();
-
+  */
   // 4. Return
   return faces;
 }
@@ -200,16 +226,16 @@ AdaptiveLoopSubdivisionMesh::Subdivide2(unsigned int faceIndex){
 /*! Subdivides the face at faceIndex given 3 not subdividable neighbors
   or if subdividable for this face is false
 */
-std::vector< std::vector<Vector3<float> > >
+std::vector< std::vector<AdaptiveLoopSubdivisionMesh::Vector3 > >
 AdaptiveLoopSubdivisionMesh::Subdivide3(unsigned int faceIndex){
-
+	/*
   EdgeIterator eit = GetEdgeIterator( f(faceIndex).edge );
   Vector3<float> v1 = VertexRule(eit.GetEdgeVertexIndex());
   Vector3<float> v2 = VertexRule(eit.Next().GetEdgeVertexIndex());
   Vector3<float> v3 = VertexRule(eit.Next().GetEdgeVertexIndex());
   std::vector<Vector3<float> > face;
-  face.push_back(v1); face.push_back(v2); face.push_back(v3);
-  std::vector< std::vector<Vector3<float> > > faces;
-  faces.push_back(face);
+  face.push_back(v1); face.push_back(v2); face.push_back(v3);*/
+  std::vector< std::vector<Vector3 > > faces;
+  //faces.push_back(face);
   return faces;
 }

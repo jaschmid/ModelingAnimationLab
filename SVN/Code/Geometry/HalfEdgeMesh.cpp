@@ -122,18 +122,16 @@ std::vector<unsigned int> HalfEdgeMesh::FindNeighborVertices(unsigned int vertex
   // Add your code here
 
   Vertex v = mMeshData.GetVertex(vertexIndex);
-
-  Edge e = mMeshData.GetFirstVertexEdge(v);
-
-  while( e != HageMesh::nullEdge )
+  
+  auto trip = mMeshData.GetFirstVertexElementTriple(v);
+  
+  while( std::get<1>(trip) != HageMesh::nullEdge )
   {
-	  Vertex neighbor = mMeshData.GetVertex(v,e);
+	  Vertex neighbor = std::get<0>(trip);
 
 	  oneRing.push_back( (unsigned int)mMeshData.GetIndex(neighbor) );
 
-	  assert( mMeshData.GetEdge(mMeshData.MakePair(v,neighbor)) != HageMesh::nullEdge);
-
-	  e = mMeshData.GetNextVertexEdge(v,e);
+	  trip =  mMeshData.GetNextVertexElementTriple(v,trip);
   }
 
   return oneRing;
@@ -147,7 +145,19 @@ std::vector<unsigned int> HalfEdgeMesh::FindNeighborVertices(unsigned int vertex
 std::vector<unsigned int> HalfEdgeMesh::FindNeighborFaces(unsigned int vertexIndex) const
 {
   std::vector<unsigned int> foundFaces;
+  
+  Vertex v = mMeshData.GetVertex(vertexIndex);
+  
+  auto trip = mMeshData.GetFirstVertexElementTriple(v);
 
+  while( std::get<1>(trip) != HageMesh::nullEdge )
+  {
+	  Face neighbor = std::get<2>(trip);
+
+	  foundFaces.push_back( (unsigned int)neighbor.Index() );
+
+	  trip =  mMeshData.GetNextVertexElementTriple(v,trip);
+  }
   // Add your code here
   return foundFaces;
 }
@@ -331,10 +341,7 @@ void HalfEdgeMesh::Update() {
 	mMeshData.UpdateAllNormals();
 
   // Then update vertex curvature
-  for(unsigned int i = 0; i < mMeshData.GetNumVertexIndices(); i++){
-    mMeshData.GetVertex(i)->Curvature = VertexCurvature(i);
-    //    std::cerr <<   mVerts.at(i).curvature << "\n";
-  }
+	mMeshData.UpdateAllCurvatures();
 
   // Finally update face curvature
   for(unsigned int i = 0; i < mMeshData.GetNumFaceIndices(); i++){
