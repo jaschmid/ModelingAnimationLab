@@ -98,7 +98,11 @@ public:
   }
 
   virtual float GetValue(float x, float y, float z) const {
-    return 0;
+	Implicit::TransformW2O(x,y,z);
+	float l = exp(-left->GetValue(x,y,z));
+	float r = exp(-right->GetValue(x,y,z));
+	float res = pow(pow(l,mBlend) + pow(r,mBlend),1.0f/(float)mBlend);
+	return -log(res);
   }
 
 protected :
@@ -115,7 +119,11 @@ public:
   }
 
   virtual float GetValue(float x, float y, float z) const {
-    return 0;
+	Implicit::TransformW2O(x,y,z);
+	float l = exp(-left->GetValue(x,y,z));
+	float r = exp(-right->GetValue(x,y,z));
+	float res= pow(pow(l,-mBlend) + pow(r,-mBlend),-1.0f/(float)mBlend);
+	return -log(res);
   }
 
 protected :
@@ -132,7 +140,11 @@ public:
   }
 
   virtual float GetValue(float x, float y, float z) const {
-    return 0;
+	Implicit::TransformW2O(x,y,z);
+	float l = exp(-left->GetValue(x,y,z));
+	float r = exp(right->GetValue(x,y,z));
+	float res = pow(pow(l,-mBlend) + pow(r,-mBlend),-1.0f/(float)mBlend);
+	return -log(res);
   }
 
 protected :

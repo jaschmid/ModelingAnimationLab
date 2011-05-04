@@ -111,11 +111,11 @@ float Implicit::GetCurvature(float x, float y, float z) const
   Vector3<float> posD( GetValue(x + d,y,z) , GetValue(x,y + d,z), GetValue(x,y,z + d));
   Vector3<float> negD( GetValue(x - d,y,z) , GetValue(x,y - d,z), GetValue(x,y,z - d));
   Vector3<float> deriv2(
-	  ( posD[0] + negD[0] - val )*rd2,
-	  ( posD[1] + negD[1] - val )*rd2,
-	  ( posD[2] + negD[2] - val )*rd2
+	  ( posD[0] - val + negD[0])*rd2,
+	  ( posD[1] - val + negD[1])*rd2,
+	  ( posD[2] - val + negD[2])*rd2
 	  );
-  return deriv2[0];
+  return deriv2[0] + deriv2[1] + deriv2[2];
 }
 
 
