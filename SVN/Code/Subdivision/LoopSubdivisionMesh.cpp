@@ -21,13 +21,7 @@ void LoopSubdivisionMesh::Subdivide()
 	mMeshData.Subdivide();
 
 	mMeshData.DebugValidateMesh();
-	mMeshData.UpdateAllNormals();
-	mMeshData.UpdateAllCurvatures();
-
-  for(unsigned int i = 0; i < mMeshData.GetNumFaceIndices(); i++){
-    if (mMeshData.GetFace(i) != HageMesh::nullFace)
-      mMeshData.GetFace(i)->Curvature = FaceCurvature(i);
-  }
+	Update();
 }
 
 

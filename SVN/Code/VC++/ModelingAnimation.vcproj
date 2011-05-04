@@ -209,6 +209,22 @@
 			Name="Geometry"
 			>
 			<File
+				RelativePath="..\geometry\Bbox.h"
+				>
+			</File>
+			<File
+				RelativePath="..\geometry\CSG.h"
+				>
+			</File>
+			<File
+				RelativePath="..\geometry\Cube.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\geometry\Cube.h"
+				>
+			</File>
+			<File
 				RelativePath="..\geometry\Geometry.h"
 				>
 			</File>
@@ -218,6 +234,30 @@
 			</File>
 			<File
 				RelativePath="..\geometry\HalfEdgeMesh.h"
+				>
+			</File>
+			<File
+				RelativePath="..\geometry\Implicit.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\geometry\Implicit.h"
+				>
+			</File>
+			<File
+				RelativePath="..\geometry\ImplicitMesh.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\geometry\ImplicitMesh.h"
+				>
+			</File>
+			<File
+				RelativePath="..\geometry\ImplicitGradientField.h"
+				>
+			</File>
+			<File
+				RelativePath="..\geometry\ImplicitValueField.h"
 				>
 			</File>
 			<File
@@ -237,11 +277,43 @@
 				>
 			</File>
 			<File
+				RelativePath="..\geometry\Quadric.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\geometry\Quadric.h"
+				>
+			</File>
+			<File
+				RelativePath="..\geometry\SignedDistanceSphere.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\geometry\SignedDistanceSphere.h"
+				>
+			</File>
+			<File
 				RelativePath="..\geometry\SimpleMesh.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\geometry\SimpleMesh.h"
+				>
+			</File>
+			<File
+				RelativePath="..\geometry\Sphere.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\geometry\Sphere.h"
+				>
+			</File>
+			<File
+				RelativePath="..\geometry\SphereFractal.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\geometry\SphereFractal.h"
 				>
 			</File>
 		</Filter>
@@ -298,6 +370,22 @@
 			</File>
 			<File
 				RelativePath="..\gui\GUI.h"
+				>
+			</File>
+			<File
+				RelativePath="..\gui\ScalarCutPlane.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\gui\ScalarCutPlane.h"
+				>
+			</File>
+			<File
+				RelativePath="..\gui\VectorCutPlane.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\gui\VectorCutPlane.h"
 				>
 			</File>
 		</Filter>

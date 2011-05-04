@@ -30,6 +30,15 @@ FrameMain::FrameMain(wxWindow* parent) : BaseFrameMain(parent)
   mPanelSwitches[typeid(LoopSubdivisionMesh).name()].push_back(mPanelVisualization);
   mPanelSwitches[typeid(LoopSubdivisionMesh).name()].push_back(mPanelSubdivision);
   //Lab3<-
+  //Lab4->
+  mPanelSwitches[typeid(Implicit).name()].push_back(mPanelTransform);
+  mPanelSwitches[typeid(Implicit).name()].push_back(mPanelVisualization);
+  mPanelSwitches[typeid(Implicit).name()].push_back(mPanelImplicit);
+  mPanelSwitches[typeid(ScalarCutPlane).name()].push_back(mPanelTransform);
+  mPanelSwitches[typeid(ScalarCutPlane).name()].push_back(mPanelVisualization);
+  mPanelSwitches[typeid(VectorCutPlane).name()].push_back(mPanelTransform);
+  mPanelSwitches[typeid(VectorCutPlane).name()].push_back(mPanelVisualization);
+  //Lab4<-
 
   // Add all available color maps
   std::list<std::string> maps = ColorMapFactory::GetColorMaps();
@@ -290,6 +299,7 @@ void FrameMain::SetColormap( wxCommandEvent& event )
   mColorMapChoice->SetSelection(0);
   mGLViewer->Render();
 
+  /*
   if(!objects.empty()){
     wxString min, max;
     min.Printf(_T("%.3f"), objects.front()->mMinCMap);
@@ -298,6 +308,7 @@ void FrameMain::SetColormap( wxCommandEvent& event )
     mMax->SetValue(max);
     mGLViewer->Render();
   }
+  */
 }
 
 
@@ -352,6 +363,13 @@ void FrameMain::SaveMesh( wxCommandEvent& event )
 
     // Try to fetch a mesh...
     Mesh * mesh = dynamic_cast<Mesh *>(*iter);
+    //Lab4->
+    if (mesh == NULL) {
+      Implicit * impl = dynamic_cast<Implicit *>(*iter);
+      if (impl != NULL)
+        mesh = impl->GetMesh();
+    }
+    //Lab4<-
 
     if (mesh != NULL) {
       wxFileDialog * dialog = new wxFileDialog(this,_T("Save mesh '") + wxString(mesh->GetName().c_str(), wxConvUTF8) + _T("' as"),_T("."),wxString(mesh->GetName().c_str(), wxConvUTF8) + _T(".obj"),_T("OBJ (*.obj)|*.obj"),wxFD_SAVE, wxDefaultPosition);
@@ -698,5 +716,316 @@ void FrameMain::SubdivideObjects( wxCommandEvent& event )
 
 //Lab3<-
 
+//Lab4->
+
+void FrameMain::AddObjectImplicitSphere( wxCommandEvent& event )
+{
+  Sphere * sphere = new Sphere(1);
+  sphere->SetMeshSampling(GetMeshSampling());
+  sphere->SetDifferentialScale(GetDifferentialScale());
+  sphere->Triangulate<SimpleMesh>();
+
+  std::cout << "Volume of sphere: " << sphere->ComputeVolume() << std::endl;
+
+  sphere->SetName("Sphere");
+  AddUniqueObject(sphere);
+  mGLViewer->Render();
+}
+
+
+void FrameMain::AddObjectImplicitMesh( wxCommandEvent& event )
+{
+  wxFileDialog * dialog = new wxFileDialog(this);
+  if (dialog->ShowModal() == wxID_OK) {
+    wxString path = dialog->GetPath();
+    wxString filename = path.AfterLast('/');
+    if (filename == path) // If we're on Windows
+      filename = path.AfterLast('\\');
+    wxString suffix = path.AfterLast('.');
+
+    if (suffix == _T("obj")) {
+      // Create new mesh
+      SimpleMesh * mesh = new SimpleMesh();
+
+      // Load mesh
+      std::ifstream infile;
+      ObjIO objIO;
+      infile.open(path.mb_str());
+      objIO.Load(mesh, infile);
+
+      // Create new implicit mesh with loaded mesh as argument
+      ImplicitMesh * implicitMesh = new ImplicitMesh(mesh);
+      implicitMesh->SetDifferentialScale(GetDifferentialScale());
+      implicitMesh->SetMeshSampling(GetMeshSampling());
+      implicitMesh->Triangulate<SimpleMesh>();
+
+      implicitMesh->SetName("Implicit " + std::string(filename.mb_str()));
+      AddUniqueObject(implicitMesh);
+    }
+    else
+      std::cerr << "Error: File type not supported" << std::endl;
+  }
+
+  delete dialog;
+  mGLViewer->Render();
+}
+
+
+void FrameMain::AddObjectQuadricPlane( wxCommandEvent& event )
+{
+  Matrix4x4<float> M;
+  // Construct the quadric matrix here
+
+  Quadric * Q = new Quadric(M);
+  Q->SetBoundingBox(Bbox(-1,1));
+  Q->SetMeshSampling(GetMeshSampling());
+  Q->SetDifferentialScale(GetDifferentialScale());
+  Q->Triangulate<SimpleMesh>();
+  Q->SetName("Plane");
+  AddUniqueObject(Q);
+  mGLViewer->Render();
+}
+
+
+void FrameMain::AddObjectQuadricCylinder( wxCommandEvent& event )
+{
+  Matrix4x4<float> M;
+  // Construct the quadric matrix here
+
+  Quadric * Q = new Quadric(M);
+  Q->SetBoundingBox(Bbox(-1,1));
+  Q->SetMeshSampling(GetMeshSampling());
+  Q->SetDifferentialScale(GetDifferentialScale());
+  Q->Triangulate<SimpleMesh>();
+  Q->SetName("Cylinder");
+  AddUniqueObject(Q);
+  mGLViewer->Render();
+}
+
+
+void FrameMain::AddObjectQuadricEllipsoid( wxCommandEvent& event )
+{
+  Matrix4x4<float> M;
+  // Construct the quadric matrix here
+
+  Quadric * Q = new Quadric(M);
+  Q->SetBoundingBox(Bbox(-1,1));
+  Q->SetMeshSampling(GetMeshSampling());
+  Q->SetDifferentialScale(GetDifferentialScale());
+  Q->Triangulate<SimpleMesh>();
+  Q->SetName("Ellipsoid");
+  AddUniqueObject(Q);
+  mGLViewer->Render();
+}
+
+
+void FrameMain::AddObjectQuadricCone( wxCommandEvent& event )
+{
+  Matrix4x4<float> M;
+  // Construct the quadric matrix here
+
+  Quadric * Q = new Quadric(M);
+  Q->SetBoundingBox(Bbox(-1,1));
+  Q->SetMeshSampling(GetMeshSampling());
+  Q->SetDifferentialScale(GetDifferentialScale());
+  Q->Triangulate<SimpleMesh>();
+  Q->SetName("Cone");
+  AddUniqueObject(Q);
+  mGLViewer->Render();
+}
+
+
+void FrameMain::AddObjectQuadricParaboloid( wxCommandEvent& event )
+{
+  Matrix4x4<float> M;
+  // Construct the quadric matrix here
+
+  Quadric * Q = new Quadric(M);
+  Q->SetBoundingBox(Bbox(-2,2));
+  Q->SetMeshSampling(GetMeshSampling());
+  Q->SetDifferentialScale(GetDifferentialScale());
+  Q->Triangulate<SimpleMesh>();
+  Q->SetName("Paraboloid");
+  AddUniqueObject(Q);
+  mGLViewer->Render();
+}
+
+
+void FrameMain::AddObjectQuadricHyperboloid( wxCommandEvent& event )
+{
+  Matrix4x4<float> M;
+  // Construct the quadric matrix here
+
+  Quadric * Q = new Quadric(M);
+  Q->SetBoundingBox(Bbox(-2,2));
+  Q->SetMeshSampling(GetMeshSampling());
+  Q->SetDifferentialScale(GetDifferentialScale());
+  Q->Triangulate<SimpleMesh>();
+  Q->SetName("Hyperboloid");
+  AddUniqueObject(Q);
+  mGLViewer->Render();
+}
+
+
+void FrameMain::AddObjectScalarCutPlane( wxCommandEvent& event )
+{
+  std::list<GLObject *> objects = mGLViewer->GetSelectedObjects();
+  std::list<GLObject *>::iterator iter = objects.begin();
+  std::list<GLObject *>::iterator iend = objects.end();
+  while (iter != iend) {
+    Implicit * impl = dynamic_cast<Implicit *>(*iter);
+    if (impl != NULL) {
+      ImplicitValueField * field = new ImplicitValueField(impl);
+      ScalarCutPlane * plane = new ScalarCutPlane("Scalar cut plane", 0.005, field);
+      AddUniqueObject(plane);
+
+      // Scale cut plane to fill the bounding box
+      const Bbox & b = impl->GetBoundingBox();
+      float x = b.pMax[0] - b.pMin[0];
+      float y = b.pMax[1] - b.pMin[1];
+      float z = b.pMax[2] - b.pMin[2];
+      float scale = x;
+      if (scale < y)  scale = y;
+      if (scale < z)  scale = z;
+      plane->Scale(scale*0.5);
+
+      mDependentObjects[impl->GetName()].push_back(plane->GetName());
+    }
+
+    iter++;
+  }
+  mGLViewer->Render();
+}
+
+
+void FrameMain::AddObjectVectorCutPlane( wxCommandEvent& event )
+{
+  std::list<GLObject *> objects = mGLViewer->GetSelectedObjects();
+  std::list<GLObject *>::iterator iter = objects.begin();
+  std::list<GLObject *>::iterator iend = objects.end();
+  while (iter != iend) {
+    Implicit * impl = dynamic_cast<Implicit *>(*iter);
+    if (impl != NULL) {
+      ImplicitGradientField * field = new ImplicitGradientField(impl);
+      VectorCutPlane * plane = new VectorCutPlane("Vector cut plane", 0.1, field);
+      AddUniqueObject(plane);
+
+      // Scale cut plane to fill the bounding box
+      const Bbox & b = impl->GetBoundingBox();
+      float x = b.pMax[0] - b.pMin[0];
+      float y = b.pMax[1] - b.pMin[1];
+      float z = b.pMax[2] - b.pMin[2];
+      float scale = x;
+      if (scale < y)  scale = y;
+      if (scale < z)  scale = z;
+      plane->Scale(scale*0.5);
+
+      mDependentObjects[impl->GetName()].push_back(plane->GetName());
+    }
+
+    iter++;
+  }
+  mGLViewer->Render();
+}
+
+
+void FrameMain::Union( wxCommandEvent& event )
+{
+  Implicit * impl = CSG< ::Union, ::BlendedUnion>("U");
+  impl->SetMeshSampling(GetMeshSampling());
+  impl->SetDifferentialScale(GetDifferentialScale());
+  impl->Triangulate<SimpleMesh>();
+  AddUniqueObject(impl);
+  mGLViewer->SelectObject(impl->GetName());
+  mGLViewer->Render();
+}
+
+
+void FrameMain::Intersection( wxCommandEvent& event )
+{
+  Implicit * impl = CSG< ::Intersection, ::BlendedIntersection>("A");
+  impl->SetMeshSampling(GetMeshSampling());
+  impl->SetDifferentialScale(GetDifferentialScale());
+  impl->Triangulate<SimpleMesh>();
+  AddUniqueObject(impl);
+  mGLViewer->SelectObject(impl->GetName());
+  mGLViewer->Render();
+}
+
+
+void FrameMain::Difference( wxCommandEvent& event )
+{
+  Implicit * impl = CSG< ::Difference, ::BlendedDifference>("-");
+  impl->SetMeshSampling(GetMeshSampling());
+  impl->SetDifferentialScale(GetDifferentialScale());
+  impl->Triangulate<SimpleMesh>();
+  AddUniqueObject(impl);
+  mGLViewer->SelectObject(impl->GetName());
+  mGLViewer->Render();
+}
+
+
+void FrameMain::SwitchBlending( wxCommandEvent& event )
+{
+  mBlendLabel->Enable(event.IsChecked());
+  mBlendParameter->Enable(event.IsChecked());
+}
+
+
+void FrameMain::ResampleImplicit( wxCommandEvent& event )
+{
+  std::list<GLObject *> objects = mGLViewer->GetSelectedObjects();
+  std::list<GLObject *>::iterator iter = objects.begin();
+  std::list<GLObject *>::iterator iend = objects.end();
+  while (iter != iend) {
+    Implicit * impl = dynamic_cast<Implicit *>(*iter);
+    if (impl != NULL) {
+      impl->SetMeshSampling(GetMeshSampling());
+      impl->Update();
+      impl->Triangulate<SimpleMesh>();
+    }
+    iter++;
+  }
+  mGLViewer->Render();
+}
+
+
+void FrameMain::DifferentialScaleChanged( wxScrollEvent& event )
+{
+  std::list<GLObject *> objects = mGLViewer->GetSelectedObjects();
+  std::list<GLObject *>::iterator iter = objects.begin();
+  std::list<GLObject *>::iterator iend = objects.end();
+  while (iter != iend) {
+    Implicit * impl = dynamic_cast<Implicit *>(*iter);
+    if (impl != NULL) {
+      impl->SetDifferentialScale(GetDifferentialScale());
+      impl->Update();
+    }
+    iter++;
+  }
+  mGLViewer->Render();
+}
+
+double FrameMain::GetMeshSampling()
+{
+  double sampling;
+  if (!mMeshSampling->GetValue().ToDouble(&sampling)) {
+    sampling = 0.05;
+    mMeshSampling->SetValue(_T("0.05"));
+  }
+
+  return sampling;
+}
+
+double FrameMain::GetDifferentialScale()
+{
+  int scale = mDifferentialScale->GetValue();
+  if (scale == 0)
+    scale = 1;
+  return scale/100.0f;
+}
+
+
+//Lab4<-
 
 

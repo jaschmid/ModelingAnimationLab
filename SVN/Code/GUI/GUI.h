@@ -98,6 +98,8 @@ class BaseFrameMain : public wxFrame
 		wxCheckBox* mBlend;
 		wxStaticText* mBlendLabel;
 		wxTextCtrl* mBlendParameter;
+		wxStaticText* m_staticText191;
+		wxSlider* mDifferentialScale;
 		wxPanel* mPanelVisualization;
 		wxCheckBox* mVisualizeWireframe;
 		wxCheckBox* mVisualizeMeshNormals;
@@ -189,6 +191,7 @@ class BaseFrameMain : public wxFrame
 		virtual void Intersection( wxCommandEvent& event ) { event.Skip(); }
 		virtual void Difference( wxCommandEvent& event ) { event.Skip(); }
 		virtual void SwitchBlending( wxCommandEvent& event ) { event.Skip(); }
+		virtual void DifferentialScaleChanged( wxScrollEvent& event ) { event.Skip(); }
 		virtual void VisualizeWireframe( wxCommandEvent& event ) { event.Skip(); }
 		virtual void VisualizeMeshNormals( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OpacityChanged( wxScrollEvent& event ) { event.Skip(); }

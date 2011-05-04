@@ -36,6 +36,17 @@
 #include "Subdivision/StrangeSubdivisionMesh.h"
 //Lab3<-
 
+//Lab4->
+#include "Geometry/CSG.h"
+#include "Geometry/Sphere.h"
+#include "Geometry/ImplicitMesh.h"
+#include "Geometry/Cube.h"
+#include "Geometry/Quadric.h"
+#include "Geometry/ImplicitValueField.h"
+#include "Geometry/ImplicitGradientField.h"
+#include "ScalarCutPlane.h"
+#include "VectorCutPlane.h"
+//Lab4<-
 
 
 
@@ -118,6 +129,28 @@ protected :
   void SubdivideObjects( wxCommandEvent& event );
   //Lab3<-
 
+  //Lab4->
+  void AddObjectImplicitSphere( wxCommandEvent& event );
+  void AddObjectImplicitMesh( wxCommandEvent& event );
+  void AddObjectQuadricPlane( wxCommandEvent& event );
+  void AddObjectQuadricCylinder( wxCommandEvent& event );
+  void AddObjectQuadricEllipsoid( wxCommandEvent& event );
+  void AddObjectQuadricCone( wxCommandEvent& event );
+  void AddObjectQuadricParaboloid( wxCommandEvent& event );
+  void AddObjectQuadricHyperboloid( wxCommandEvent& event );
+  void AddObjectScalarCutPlane( wxCommandEvent& event );
+  void AddObjectVectorCutPlane( wxCommandEvent& event );
+  void Union( wxCommandEvent& event );
+  void Intersection( wxCommandEvent& event );
+  void Difference( wxCommandEvent& event );
+  void SwitchBlending( wxCommandEvent& event );
+  void ResampleImplicit( wxCommandEvent& event );
+  void DifferentialScaleChanged( wxScrollEvent& event );
+  double GetMeshSampling();
+  double GetDifferentialScale();
+  template <class CSGType, class CSGTypeBlend>
+  Implicit * CSG(const std::string & oper);
+  //Lab4<-
 
 
 
@@ -156,6 +189,53 @@ MeshType * FrameMain::AddMesh(const wxString & path)
 }
 //Lab1<-
 
+//Lab4->
+template <class CSGType, class CSGTypeBlend>
+Implicit * FrameMain::CSG(const std::string & oper)
+{
+  std::list<GLObject *> objects = mGLViewer->GetSelectedObjects();
+  std::list<GLObject *>::iterator iter = objects.begin();
+  std::list<GLObject *>::iterator iend = objects.end();
+
+  // Find first implicit in the selected list
+  Implicit * impl = NULL;
+  while (iter != iend) {
+    impl = dynamic_cast<Implicit *>(*iter);
+    iter++;
+    if (impl != NULL) break;
+  }
+
+  // No implicit found - exit...
+  if (impl == NULL)  return NULL;
+
+  // Else, remove implicit and do successive CSG
+  RemoveObject(impl);
+  while (iter != iend) {
+    Implicit * second = dynamic_cast<Implicit *>(*iter);
+    if (second != NULL) {
+      std::string name = impl->GetName() + " " + oper + " " + second->GetName();
+
+      if (mBlend->IsChecked()) {
+        long int blend;
+        if (!mBlendParameter->GetValue().ToLong(&blend)) {
+          std::cerr << "Error: can't parse CSG blend parameter - defaulting to 10" << std::endl;
+          mBlendParameter->SetValue(_T("10"));
+          blend = 10;
+        }
+        impl = new CSGTypeBlend(impl, second, blend);
+      }
+      else
+        impl = new CSGType(impl, second);
+
+      impl->SetName(name);
+      RemoveObject(second);
+    }
+    iter++;
+  }
+
+  return impl;
+}
+//Lab4<-
 
 
 #endif // __FrameMain__

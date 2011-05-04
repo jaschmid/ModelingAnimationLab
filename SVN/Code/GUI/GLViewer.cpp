@@ -48,6 +48,9 @@ GLViewer::GLViewer(wxWindow* parent, int* args) :
 
 void GLViewer::InitGL()
 {
+
+  std::cout << "OpenGL version " << glGetString(GL_VERSION) << std::endl;
+  std::cout << "OpenGL vendor " << glGetString(GL_VENDOR) << std::endl;
   SetupView();
 
   // Setup OpenGL environment

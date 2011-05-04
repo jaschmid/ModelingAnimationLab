@@ -29,6 +29,7 @@ public:
   bool IsSingular(Real epsilon = 1e-6) const;
   Real Determinant() const;
   Matrix4x4 Inverse() const;
+  Matrix4x4 Transpose() const;
   Real* GetArrayPtr() { return &m[0][0]; }
   const Real* GetArrayPtr() const { return &m[0][0]; }
 

@@ -358,8 +358,6 @@ BaseFrameMain::BaseFrameMain( wxWindow* parent, wxWindowID id, const wxString& t
 	bSizer2->Add( mPanelLevelset, 0, wxEXPAND | wxALL, 5 );
 
 	mPanelImplicit = new wxPanel( mPanelSideBar, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	mPanelImplicit->Hide();
-
 	wxStaticBoxSizer* sbSizer72;
 	sbSizer72 = new wxStaticBoxSizer( new wxStaticBox( mPanelImplicit, wxID_ANY, wxT("Implicit") ), wxVERTICAL );
 
@@ -421,14 +419,24 @@ BaseFrameMain::BaseFrameMain( wxWindow* parent, wxWindowID id, const wxString& t
 
 	sbSizer72->Add( bSizer12, 1, wxEXPAND, 5 );
 
+	wxBoxSizer* bSizer18;
+	bSizer18 = new wxBoxSizer( wxHORIZONTAL );
+
+	m_staticText191 = new wxStaticText( mPanelImplicit, wxID_ANY, wxT("Differential scale"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText191->Wrap( -1 );
+	bSizer18->Add( m_staticText191, 0, wxALL, 5 );
+
+	mDifferentialScale = new wxSlider( mPanelImplicit, wxID_ANY, 5, 0, 100, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL );
+	bSizer18->Add( mDifferentialScale, 0, wxALL, 5 );
+
+	sbSizer72->Add( bSizer18, 0, 0, 5 );
+
 	mPanelImplicit->SetSizer( sbSizer72 );
 	mPanelImplicit->Layout();
 	sbSizer72->Fit( mPanelImplicit );
 	bSizer2->Add( mPanelImplicit, 0, wxEXPAND | wxALL, 5 );
 
 	mPanelVisualization = new wxPanel( mPanelSideBar, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	mPanelVisualization->Hide();
-
 	wxStaticBoxSizer* sbSizer51;
 	sbSizer51 = new wxStaticBoxSizer( new wxStaticBox( mPanelVisualization, wxID_ANY, wxT("Visualization") ), wxVERTICAL );
 
@@ -679,6 +687,15 @@ BaseFrameMain::BaseFrameMain( wxWindow* parent, wxWindowID id, const wxString& t
 	mIntersection->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BaseFrameMain::Intersection ), NULL, this );
 	mDifference->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BaseFrameMain::Difference ), NULL, this );
 	mBlend->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( BaseFrameMain::SwitchBlending ), NULL, this );
+	mDifferentialScale->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( BaseFrameMain::DifferentialScaleChanged ), NULL, this );
+	mDifferentialScale->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( BaseFrameMain::DifferentialScaleChanged ), NULL, this );
+	mDifferentialScale->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( BaseFrameMain::DifferentialScaleChanged ), NULL, this );
+	mDifferentialScale->Connect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( BaseFrameMain::DifferentialScaleChanged ), NULL, this );
+	mDifferentialScale->Connect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( BaseFrameMain::DifferentialScaleChanged ), NULL, this );
+	mDifferentialScale->Connect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( BaseFrameMain::DifferentialScaleChanged ), NULL, this );
+	mDifferentialScale->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( BaseFrameMain::DifferentialScaleChanged ), NULL, this );
+	mDifferentialScale->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( BaseFrameMain::DifferentialScaleChanged ), NULL, this );
+	mDifferentialScale->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( BaseFrameMain::DifferentialScaleChanged ), NULL, this );
 	mVisualizeWireframe->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( BaseFrameMain::VisualizeWireframe ), NULL, this );
 	mVisualizeMeshNormals->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( BaseFrameMain::VisualizeMeshNormals ), NULL, this );
 	mVisualizeOpacity->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( BaseFrameMain::OpacityChanged ), NULL, this );
@@ -776,6 +793,15 @@ BaseFrameMain::~BaseFrameMain()
 	mIntersection->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BaseFrameMain::Intersection ), NULL, this );
 	mDifference->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BaseFrameMain::Difference ), NULL, this );
 	mBlend->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( BaseFrameMain::SwitchBlending ), NULL, this );
+	mDifferentialScale->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( BaseFrameMain::DifferentialScaleChanged ), NULL, this );
+	mDifferentialScale->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( BaseFrameMain::DifferentialScaleChanged ), NULL, this );
+	mDifferentialScale->Disconnect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( BaseFrameMain::DifferentialScaleChanged ), NULL, this );
+	mDifferentialScale->Disconnect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( BaseFrameMain::DifferentialScaleChanged ), NULL, this );
+	mDifferentialScale->Disconnect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( BaseFrameMain::DifferentialScaleChanged ), NULL, this );
+	mDifferentialScale->Disconnect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( BaseFrameMain::DifferentialScaleChanged ), NULL, this );
+	mDifferentialScale->Disconnect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( BaseFrameMain::DifferentialScaleChanged ), NULL, this );
+	mDifferentialScale->Disconnect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( BaseFrameMain::DifferentialScaleChanged ), NULL, this );
+	mDifferentialScale->Disconnect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( BaseFrameMain::DifferentialScaleChanged ), NULL, this );
 	mVisualizeWireframe->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( BaseFrameMain::VisualizeWireframe ), NULL, this );
 	mVisualizeMeshNormals->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( BaseFrameMain::VisualizeMeshNormals ), NULL, this );
 	mVisualizeOpacity->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( BaseFrameMain::OpacityChanged ), NULL, this );
