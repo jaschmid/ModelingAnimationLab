@@ -26,7 +26,9 @@ void AdaptiveLoopSubdivisionMesh::Subdivide()
 			const HageMesh::BaseType& mesh) -> bool 
 			{ 
 				auto vp = mesh.GetEdgeVertices(e);
-				if(vp[0]->Position.y < 0.0f || vp[1]->Position.y < 0.0f)
+				auto fp = mesh.GetEdgeFaces(e);
+				if( vp[0]->Normal * vp[1]->Normal > 0.9 )
+				//if(vp[0]->Position.y < 0.0f && vp[1]->Position.y < 0.0f)
 					return false;
 				else
 					return AdaptiveLoopSubdivisionMesh::HageMesh::DefaultEdgeRule(e,newData,mesh);
@@ -34,13 +36,7 @@ void AdaptiveLoopSubdivisionMesh::Subdivide()
 		);
 
 	mMeshData.DebugValidateMesh();
-	mMeshData.UpdateAllNormals();
-	mMeshData.UpdateAllCurvatures();
-
-  for(unsigned int i = 0; i < mMeshData.GetNumFaceIndices(); i++){
-    if (mMeshData.GetFace(i) != HageMesh::nullFace)
-      mMeshData.GetFace(i)->Curvature = FaceCurvature(i);
-  }
+	Update();
 
   // Create new mesh and copy all the attributes
   /*HalfEdgeMesh subDivMesh;

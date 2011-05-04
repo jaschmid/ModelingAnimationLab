@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Decimation">
@@ -33,10 +33,31 @@
     <ClInclude Include="..\decimation\SimpleDecimationMesh.h">
       <Filter>Decimation</Filter>
     </ClInclude>
+    <ClInclude Include="..\geometry\Bbox.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\geometry\CSG.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\geometry\Cube.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
     <ClInclude Include="..\geometry\Geometry.h">
       <Filter>Geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\geometry\HalfEdgeMesh.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\geometry\Implicit.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\geometry\ImplicitMesh.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\geometry\ImplicitGradientField.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\geometry\ImplicitValueField.h">
       <Filter>Geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\geometry\LineStrip.h">
@@ -45,7 +66,19 @@
     <ClInclude Include="..\geometry\Mesh.h">
       <Filter>Geometry</Filter>
     </ClInclude>
+    <ClInclude Include="..\geometry\Quadric.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\geometry\SignedDistanceSphere.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
     <ClInclude Include="..\geometry\SimpleMesh.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\geometry\Sphere.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\geometry\SphereFractal.h">
       <Filter>Geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\gui\FrameMain.h">
@@ -67,6 +100,12 @@
       <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\gui\GUI.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gui\ScalarCutPlane.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gui\VectorCutPlane.h">
       <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\math\ConjugateGradient.h">
@@ -194,7 +233,16 @@
     <ClCompile Include="..\decimation\SimpleDecimationMesh.cpp">
       <Filter>Decimation</Filter>
     </ClCompile>
+    <ClCompile Include="..\geometry\Cube.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
     <ClCompile Include="..\geometry\HalfEdgeMesh.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\geometry\Implicit.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\geometry\ImplicitMesh.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
     <ClCompile Include="..\geometry\LineStrip.cpp">
@@ -203,7 +251,19 @@
     <ClCompile Include="..\geometry\Mesh.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
+    <ClCompile Include="..\geometry\Quadric.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\geometry\SignedDistanceSphere.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
     <ClCompile Include="..\geometry\SimpleMesh.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\geometry\Sphere.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\geometry\SphereFractal.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
     <ClCompile Include="..\gui\FrameMain.cpp">
@@ -222,6 +282,12 @@
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\gui\GUI.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gui\ScalarCutPlane.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gui\VectorCutPlane.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\math\TrilinearInterpolator.cpp">

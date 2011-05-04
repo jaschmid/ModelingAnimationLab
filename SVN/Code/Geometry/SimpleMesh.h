@@ -92,6 +92,8 @@ public:
   //! Access to internal vertex data
   const std::vector<Vertex>& GetVerts() const { return mVerts; }
   const std::vector<Face>& GetFaces() const { return mFaces; }
+  std::vector<Vertex>& GetVerts() { return mVerts; }
+  std::vector<Face>& GetFaces() { return mFaces; }
 
   virtual void Dilate(float amount);
   virtual void Erode(float amount);

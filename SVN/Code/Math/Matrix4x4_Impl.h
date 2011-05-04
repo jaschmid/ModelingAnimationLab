@@ -203,6 +203,19 @@ Matrix4x4<Real> Matrix4x4<Real>::Inverse() const
   return a;
 }
 
+template <typename Real>
+Matrix4x4<Real> Matrix4x4<Real>::Transpose() const
+{
+  Matrix4x4 A;
+
+  A.m[0][0] = m[0][0]; A.m[0][1] = m[1][0]; A.m[0][2] = m[2][0]; A.m[0][3] = m[3][0];
+  A.m[1][0] = m[0][1]; A.m[1][1] = m[1][1]; A.m[1][2] = m[2][1]; A.m[1][3] = m[3][1];
+  A.m[2][0] = m[0][2]; A.m[2][1] = m[1][2]; A.m[2][2] = m[2][2]; A.m[2][3] = m[3][2];
+  A.m[3][0] = m[0][3]; A.m[3][1] = m[1][3]; A.m[3][2] = m[2][3]; A.m[3][3] = m[3][3];
+
+  return A;
+}
+
 // Originally based on public domain code by <Ajay_Shah@rand.org>
 // which can be found at http://lib.stat.cmu.edu/general/ajay
 /*

@@ -15,11 +15,15 @@ UTIL = Util/Util.cpp Util/ObjIO.cpp Util/ColorMap.cpp \
  Util/GLObjectPlayback.cpp
 
 GUI =	main.cpp GUI/GUI.cpp GUI/FrameMain.cpp GUI/GLViewer.cpp \
+			GUI/ScalarCutPlane.cpp GUI/VectorCutPlane.cpp \
 			GUI/GLAxis.cpp  GUI/GLGridPlane.cpp GUI/GLObject.cpp
 
 MESH = Geometry/HalfEdgeMesh.cpp Decimation/DecimationMesh.cpp Decimation/SimpleDecimationMesh.cpp\
-Decimation/QuadricDecimationMesh.cpp Geometry/SimpleMesh.cpp Geometry/Mesh.cpp \
+Decimation/QuadricDecimationMesh.cpp Util/MarchingCubes.cpp Geometry/SimpleMesh.cpp Geometry/Mesh.cpp \
 Geometry/LineStrip.cpp
+
+IMPLICITS =  Geometry/Implicit.cpp Geometry/Quadric.cpp Geometry/Sphere.cpp Geometry/SphereFractal.cpp \
+ Geometry/SignedDistanceSphere.cpp Geometry/Cube.cpp Geometry/ImplicitMesh.cpp
 
 SUBDIVISION = Subdivision/LoopSubdivisionMesh.cpp \
 							Subdivision/AdaptiveLoopSubdivisionMesh.cpp \
@@ -27,7 +31,7 @@ SUBDIVISION = Subdivision/LoopSubdivisionMesh.cpp \
 							Subdivision/UniformCubicSpline.cpp
 
 
-SOURCE =  $(UTIL) $(GUI) $(MESH) $(SUBDIVISION)
+SOURCE =  $(UTIL) $(GUI) $(MESH) $(IMPLICITS) $(SUBDIVISION)
 
 OBJ = $(SOURCE:.cpp=.o)
 

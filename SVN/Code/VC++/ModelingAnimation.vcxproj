@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -98,11 +98,22 @@
     <ClInclude Include="..\decimation\DecimationMesh.h" />
     <ClInclude Include="..\decimation\QuadricDecimationMesh.h" />
     <ClInclude Include="..\decimation\SimpleDecimationMesh.h" />
+    <ClInclude Include="..\geometry\Bbox.h" />
+    <ClInclude Include="..\geometry\CSG.h" />
+    <ClInclude Include="..\geometry\Cube.h" />
     <ClInclude Include="..\geometry\Geometry.h" />
     <ClInclude Include="..\geometry\HalfEdgeMesh.h" />
+    <ClInclude Include="..\geometry\Implicit.h" />
+    <ClInclude Include="..\geometry\ImplicitMesh.h" />
+    <ClInclude Include="..\geometry\ImplicitGradientField.h" />
+    <ClInclude Include="..\geometry\ImplicitValueField.h" />
     <ClInclude Include="..\geometry\LineStrip.h" />
     <ClInclude Include="..\geometry\Mesh.h" />
+    <ClInclude Include="..\geometry\Quadric.h" />
+    <ClInclude Include="..\geometry\SignedDistanceSphere.h" />
     <ClInclude Include="..\geometry\SimpleMesh.h" />
+    <ClInclude Include="..\geometry\Sphere.h" />
+    <ClInclude Include="..\geometry\SphereFractal.h" />
     <ClInclude Include="..\gui\FrameMain.h" />
     <ClInclude Include="..\gui\GLAxis.h" />
     <ClInclude Include="..\gui\GLCamera.h" />
@@ -110,6 +121,8 @@
     <ClInclude Include="..\gui\GLObject.h" />
     <ClInclude Include="..\gui\GLViewer.h" />
     <ClInclude Include="..\gui\GUI.h" />
+    <ClInclude Include="..\gui\ScalarCutPlane.h" />
+    <ClInclude Include="..\gui\VectorCutPlane.h" />
     <ClInclude Include="..\math\ConjugateGradient.h" />
     <ClInclude Include="..\math\ConstantVectorField.h" />
     <ClInclude Include="..\math\Function3D.h" />
@@ -153,16 +166,25 @@
     <ClCompile Include="..\decimation\DecimationMesh.cpp" />
     <ClCompile Include="..\decimation\QuadricDecimationMesh.cpp" />
     <ClCompile Include="..\decimation\SimpleDecimationMesh.cpp" />
+    <ClCompile Include="..\geometry\Cube.cpp" />
     <ClCompile Include="..\geometry\HalfEdgeMesh.cpp" />
+    <ClCompile Include="..\geometry\Implicit.cpp" />
+    <ClCompile Include="..\geometry\ImplicitMesh.cpp" />
     <ClCompile Include="..\geometry\LineStrip.cpp" />
     <ClCompile Include="..\geometry\Mesh.cpp" />
+    <ClCompile Include="..\geometry\Quadric.cpp" />
+    <ClCompile Include="..\geometry\SignedDistanceSphere.cpp" />
     <ClCompile Include="..\geometry\SimpleMesh.cpp" />
+    <ClCompile Include="..\geometry\Sphere.cpp" />
+    <ClCompile Include="..\geometry\SphereFractal.cpp" />
     <ClCompile Include="..\gui\FrameMain.cpp" />
     <ClCompile Include="..\gui\GLAxis.cpp" />
     <ClCompile Include="..\gui\GLGridPlane.cpp" />
     <ClCompile Include="..\gui\GLObject.cpp" />
     <ClCompile Include="..\gui\GLViewer.cpp" />
     <ClCompile Include="..\gui\GUI.cpp" />
+    <ClCompile Include="..\gui\ScalarCutPlane.cpp" />
+    <ClCompile Include="..\gui\VectorCutPlane.cpp" />
     <ClCompile Include="..\math\TrilinearInterpolator.cpp" />
     <ClCompile Include="..\subdivision\AdaptiveLoopSubdivisionMesh.cpp" />
     <ClCompile Include="..\subdivision\LoopSubdivisionMesh.cpp" />

@@ -123,6 +123,8 @@ protected:
 
   bool mShowNormals;
 
+  void CheckGLError();
+
   void RenderString(float x, float y, float z, char *string) {
     int len, i;
     glRasterPos3f(x, y, z);
