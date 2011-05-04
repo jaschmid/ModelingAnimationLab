@@ -303,9 +303,13 @@ void HalfEdgeMesh::mergeMeshVertices()
 							//mMeshData.DebugValidateMesh();
 							//std::cerr << "Merging " << mMeshData.GetIndex(v1) << " and " << mMeshData.GetIndex(v2) << "\n";
 							if(mMeshData.MergeVertex(mMeshData.MakePair(v1,v2)) != HageMesh::nullVertex)
-								continue;
-							else
+							{
 								break;
+							}
+							else
+							{
+								continue;
+							}
 						}
 					}
 				}
@@ -326,6 +330,7 @@ void HalfEdgeMesh::mergeMeshVertices()
 void HalfEdgeMesh::Initialize() {
 
 	//Merge Vertices
+	mMeshData.DebugValidateMesh();
 	mergeMeshVertices();
   Validate();
   Update();

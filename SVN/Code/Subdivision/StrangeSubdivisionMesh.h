@@ -9,7 +9,7 @@ protected:
   bool Subdividable(const Face& f){
     // Every 4th face is not subdividable - kinda strange!
     // Do something more interesting...
-    return (fi % 4);
+    return false;
   }
 
 };

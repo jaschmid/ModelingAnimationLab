@@ -21,7 +21,7 @@ class LoopSubdivisionMesh : public Subdivision, public HalfEdgeMesh
 {
 public :
 
-  LoopSubdivisionMesh(const HalfEdgeMesh & m, unsigned int s) : HalfEdgeMesh(m), mNumSubDivs(s) { }
+  LoopSubdivisionMesh(const HalfEdgeMesh & m, unsigned int s) : /*HalfEdgeMesh(m),*/ mNumSubDivs(s) { }
   LoopSubdivisionMesh() : mNumSubDivs(0) { }
 
   virtual ~LoopSubdivisionMesh() { }
