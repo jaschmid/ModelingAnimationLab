@@ -89,10 +89,14 @@ void Implicit::Initialize() {
  */
 Vector3<float> Implicit::GetGradient(float x, float y, float z) const
 {
-  // Implement finite difference evaluation of gradient at world coordinates (x,y,z)
-  // Use mDelta variable as epsilon in eqn. 16 in lab text
-  std::cerr << "Implicit::GetGradient() not implemented" << std::endl;
-  return Vector3<float>(0,0,0);
+  const float& d = mDelta;
+  float r2d = 1.0f/(2.0f*d);
+
+  return Vector3<float>(
+	  ( GetValue(x + d,y,z) - GetValue(x - d,y,z) )*r2d,
+	  ( GetValue(x,y + d,z) - GetValue(x,y - d,z) )*r2d,
+	  ( GetValue(x,y,z + d) - GetValue(x,y,z - d) )*r2d
+	  );
 }
 
 
@@ -101,10 +105,17 @@ Vector3<float> Implicit::GetGradient(float x, float y, float z) const
  */
 float Implicit::GetCurvature(float x, float y, float z) const
 {
-  // Implement finite difference evaluation of curvature at world coordinates (x,y,z)
-  // Use mDelta variable as epsilon in eqn. 16 in lab text
-  std::cerr << "Implicit::GetCurvature() not implemented" << std::endl;
-  return 0;
+  const float& d = mDelta;
+  float rd2 = 1.0f/(d*d);
+  float val = 2.0f*GetValue(x,y,z);
+  Vector3<float> posD( GetValue(x + d,y,z) , GetValue(x,y + d,z), GetValue(x,y,z + d));
+  Vector3<float> negD( GetValue(x - d,y,z) , GetValue(x,y - d,z), GetValue(x,y,z - d));
+  Vector3<float> deriv2(
+	  ( posD[0] + negD[0] - val )*rd2,
+	  ( posD[1] + negD[1] - val )*rd2,
+	  ( posD[2] + negD[2] - val )*rd2
+	  );
+  return deriv2[0];
 }
 
 

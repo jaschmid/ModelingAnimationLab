@@ -773,8 +773,20 @@ void FrameMain::AddObjectImplicitMesh( wxCommandEvent& event )
 
 void FrameMain::AddObjectQuadricPlane( wxCommandEvent& event )
 {
-  Matrix4x4<float> M;
   // Construct the quadric matrix here
+
+  float a = 0.5f;
+  float b = 0.5f;
+  float c = 0.5f;
+
+  float data[4][4]={
+	  { 0.0f,	0.0f,	0.0f,	a/2.0f},
+	  { 0.0f,	0.0f,	0.0f,	b/2.0f},
+	  { 0.0f,	0.0f,	0.0f,	c/2.0f},
+	  { a/2.0f,	b/2.0f,	c/2.0f,	0.0f}
+  };
+  
+  Matrix4x4<float> M(data);
 
   Quadric * Q = new Quadric(M);
   Q->SetBoundingBox(Bbox(-1,1));
@@ -789,8 +801,15 @@ void FrameMain::AddObjectQuadricPlane( wxCommandEvent& event )
 
 void FrameMain::AddObjectQuadricCylinder( wxCommandEvent& event )
 {
-  Matrix4x4<float> M;
   // Construct the quadric matrix here
+  float data[4][4]={
+	  { 1.0f,	0.0f,	0.0f,	0.0f},
+	  { 0.0f,	1.0f,	0.0f,	0.0f},
+	  { 0.0f,	0.0f,	0.0f,	0.0f},
+	  { 0.0f,	0.0f,	0.0f,	-1.0f}
+  };
+
+  Matrix4x4<float> M(data);
 
   Quadric * Q = new Quadric(M);
   Q->SetBoundingBox(Bbox(-1,1));
@@ -805,11 +824,23 @@ void FrameMain::AddObjectQuadricCylinder( wxCommandEvent& event )
 
 void FrameMain::AddObjectQuadricEllipsoid( wxCommandEvent& event )
 {
-  Matrix4x4<float> M;
   // Construct the quadric matrix here
 
+  float a = 0.5f;
+  float b = 1.0f;
+  float c = 0.5f;
+
+  float data[4][4]={
+	  { 1.0f/(a*a),	0.0f,		0.0f,		0.0f},
+	  { 0.0f,		1.0f/(b*b),	0.0f,		0.0f},
+	  { 0.0f,		0.0f,		1.0f/(c*c),	0.0f},
+	  { 0.0f,		0.0f,		0.0f,		-1.0f}
+  };
+  
+  Matrix4x4<float> M(data);
+
   Quadric * Q = new Quadric(M);
-  Q->SetBoundingBox(Bbox(-1,1));
+  Q->SetBoundingBox(Bbox(Vector3<float>(-a,-b,-c),Vector3<float>(a,b,c)));
   Q->SetMeshSampling(GetMeshSampling());
   Q->SetDifferentialScale(GetDifferentialScale());
   Q->Triangulate<SimpleMesh>();
@@ -821,8 +852,15 @@ void FrameMain::AddObjectQuadricEllipsoid( wxCommandEvent& event )
 
 void FrameMain::AddObjectQuadricCone( wxCommandEvent& event )
 {
-  Matrix4x4<float> M;
   // Construct the quadric matrix here
+  float data[4][4]={
+	  { 1.0f,	0.0f,	0.0f,	0.0f},
+	  { 0.0f,	1.0f,	0.0f,	0.0f},
+	  { 0.0f,	0.0f,	-1.0f,	0.0f},
+	  { 0.0f,	0.0f,	0.0f,	0.0f}
+  };
+
+  Matrix4x4<float> M(data);
 
   Quadric * Q = new Quadric(M);
   Q->SetBoundingBox(Bbox(-1,1));
@@ -837,8 +875,15 @@ void FrameMain::AddObjectQuadricCone( wxCommandEvent& event )
 
 void FrameMain::AddObjectQuadricParaboloid( wxCommandEvent& event )
 {
-  Matrix4x4<float> M;
   // Construct the quadric matrix here
+  float data[4][4]={
+	  { 1.0f,	0.0f,	0.0f,	0.0f},
+	  { 0.0f,	1.0f,	0.0f,	0.0f},
+	  { 0.0f,	0.0f,	0.0f,	-.5f},
+	  { 0.0f,	0.0f,	-.5f,	0.0f}
+  };
+
+  Matrix4x4<float> M(data);
 
   Quadric * Q = new Quadric(M);
   Q->SetBoundingBox(Bbox(-2,2));
@@ -853,8 +898,15 @@ void FrameMain::AddObjectQuadricParaboloid( wxCommandEvent& event )
 
 void FrameMain::AddObjectQuadricHyperboloid( wxCommandEvent& event )
 {
-  Matrix4x4<float> M;
   // Construct the quadric matrix here
+  float data[4][4]={
+	  { 1.0f,	0.0f,	0.0f,	0.0f},
+	  { 0.0f,	1.0f,	0.0f,	0.0f},
+	  { 0.0f,	0.0f,	-1.f,	0.0f},
+	  { 0.0f,	0.0f,	0.0f,	1.0f}
+  };
+
+  Matrix4x4<float> M(data);
 
   Quadric * Q = new Quadric(M);
   Q->SetBoundingBox(Bbox(-2,2));

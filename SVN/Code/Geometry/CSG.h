@@ -47,7 +47,10 @@ public:
     // and can be transformed like all implicit surfaces.
     // Then, get values from left and right children and perform the
     // boolean operation.
-    return 0;
+	Implicit::TransformW2O(x,y,z);
+	float l = left->GetValue(x,y,z);
+	float r = right->GetValue(x,y,z);
+    return std::min<float>(l,r);
   }
 };
 
@@ -61,7 +64,10 @@ public:
   }
 
   virtual float GetValue(float x, float y, float z) const {
-    return 0;
+	Implicit::TransformW2O(x,y,z);
+	float l = left->GetValue(x,y,z);
+	float r = right->GetValue(x,y,z);
+    return std::max<float>(l,r);
   }
 };
 
@@ -75,7 +81,10 @@ public:
   }
 
   virtual float GetValue(float x, float y, float z) const {
-    return 0;
+	Implicit::TransformW2O(x,y,z);
+	float l = left->GetValue(x,y,z);
+	float r = right->GetValue(x,y,z);
+    return std::max<float>(l,-r);
   }
 };
 
