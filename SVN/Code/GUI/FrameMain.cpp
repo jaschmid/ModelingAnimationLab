@@ -39,6 +39,12 @@ FrameMain::FrameMain(wxWindow* parent) : BaseFrameMain(parent)
   mPanelSwitches[typeid(VectorCutPlane).name()].push_back(mPanelTransform);
   mPanelSwitches[typeid(VectorCutPlane).name()].push_back(mPanelVisualization);
   //Lab4<-
+  //Lab5->
+  mPanelSwitches[typeid(LevelSet).name()].push_back(mPanelTransform);
+  mPanelSwitches[typeid(LevelSet).name()].push_back(mPanelVisualization);
+  mPanelSwitches[typeid(LevelSet).name()].push_back(mPanelLevelset);
+  mPanelSwitches[typeid(LevelSet).name()].push_back(mPanelImplicit);
+  //Lab5<-
 
   // Add all available color maps
   std::list<std::string> maps = ColorMapFactory::GetColorMaps();
@@ -1080,4 +1086,370 @@ double FrameMain::GetDifferentialScale()
 
 //Lab4<-
 
+//Lab5->
+
+void FrameMain::LoadLevelset( wxCommandEvent& event )
+{
+  wxFileDialog * dialog = new wxFileDialog(this);
+  if (dialog->ShowModal() == wxID_OK) {
+    wxString path = dialog->GetPath();
+
+    //std::fstream file(path.mb_str());
+    Volume<float> vol;
+    vol.Load(std::string(path.mb_str()));
+
+    LevelSet * LS = new LevelSet(0.05, vol);
+    // Center and scale the level set to convienient size
+    Bbox box = LS->GetBoundingBox();
+    Vector3<float> extent = box.pMax - box.pMin;
+    float maxDim = extent[0];
+    if (maxDim < extent[1])  maxDim = extent[1];
+    if (maxDim < extent[2])  maxDim = extent[2];
+    LS->Scale(2/maxDim);
+    LS->Translate(-extent[0]*0.5, -extent[1]*0.5, -extent[2]*0.5);
+
+    LS->SetMeshSampling(GetMeshSampling());
+    LS->Triangulate<SimpleMesh>();
+
+    wxString filename = path.AfterLast('/');
+    if (filename == path) // If we're on Windows
+      filename = path.AfterLast('\\');
+
+    LS->SetName(std::string(filename.mb_str()) + " (levelset)");
+    AddUniqueObject(LS);
+  }
+
+  delete dialog;
+  mGLViewer->Render();
+}
+
+
+void FrameMain::ConvertToLevelset( wxCommandEvent& event )
+{
+  std::list<GLObject *> objects = mGLViewer->GetSelectedObjects();
+  std::list<GLObject *>::iterator iter = objects.begin();
+  std::list<GLObject *>::iterator iend = objects.end();
+  while (iter != iend) {
+    Implicit * impl = dynamic_cast<Implicit *>(*iter);
+    if (impl != NULL) {
+      // Get the bounding box and increase it by 0.2
+      // in all directions
+      Bbox b = impl->GetBoundingBox();
+      b.pMin -= 0.2;
+      b.pMax += 0.2;
+
+      LevelSet * LS = new LevelSet(0.05, *impl, b);
+      LS->SetMeshSampling(GetMeshSampling());
+      LS->Triangulate<SimpleMesh>();
+      LS->SetName(impl->GetName() + " (levelset)");
+
+      AddUniqueObject(LS);
+      mGLViewer->SelectObject(LS->GetName());
+
+      RemoveObject(impl);
+      DeleteDependentObjects(impl);
+      delete impl;
+    }
+    else
+      std::cerr << "Warning: Object is not an Implicit - cannot be converted to LevelSet" << std::endl;
+
+    iter++;
+  }
+  mGLViewer->Render();
+}
+
+
+void FrameMain::AddTemplate1( wxCommandEvent& event )
+{
+  // Create solid cube
+  Cube* cube1 = new Cube();
+  cube1->Scale(1.3, 1.6, 0.8);
+
+  Cube* cube2 = new Cube();
+  cube2->Scale(1.5, 1.8, 1);
+
+  ::Difference* box = new ::Difference(cube2,cube1);
+
+  box->SetName("Solid cube");
+  box->SetMeshSampling(GetMeshSampling());
+  box->Triangulate<SimpleMesh>();
+  box->SetOpacity(0.3);
+  box->SetWireframe(true);
+  AddUniqueObject(box);
+
+
+  // Create fluid-like level set
+  Cube* cube3 = new Cube();
+  cube3->Scale(0.3, 1.4, 0.6);
+
+  Cube* cube4 = new Cube();
+  cube4->Translate(0, -0.6, 0);
+  cube4->Scale(1.25, 0.2, 0.75);
+
+  ::Union* fluid = new ::Union(cube3,cube4);
+
+  // Setup bounding box
+  Bbox b(Vector3<float>(-1, -1, -1),
+         Vector3<float>(1, 1, 1));
+
+  LevelSet * LS = new LevelSet(0.025, *fluid, b);
+  OperatorReinitializeFastMarching oper(LS);
+  oper.Propagate(1); // time doesn't matter
+  LS->SetNarrowBandWidth(16);
+  LS->SetMeshSampling(GetMeshSampling());
+  LS->Triangulate<SimpleMesh>();
+
+  LS->SetName("Fluid-like levelset");
+  AddUniqueObject(LS);
+
+  mGLViewer->Render();
+}
+
+
+void FrameMain::AddTemplate2( wxCommandEvent& event )
+{
+}
+
+
+void FrameMain::AddTemplate3( wxCommandEvent& event )
+{
+}
+
+
+void FrameMain::LevelsetReinitialize( wxCommandEvent& event )
+{
+  std::list<GLObject *> objects = mGLViewer->GetSelectedObjects();
+  std::list<GLObject *>::iterator iter = objects.begin();
+  std::list<GLObject *>::iterator iend = objects.end();
+  while (iter != iend) {
+    LevelSet * LS = dynamic_cast<LevelSet *>(*iter);
+    if (LS != NULL) {
+
+      if (mReinitializeFastMarching->IsChecked()) {
+        OperatorReinitializeFastMarching oper(LS);
+        oper.Propagate(1); // time doesn't matter
+        LS->SetMeshSampling(GetMeshSampling());
+        LS->Triangulate<SimpleMesh>();
+        UpdateDependentObjects(LS);
+        mGLViewer->Render();
+      }
+      else {
+        long int iterations = GetIterations();
+        OperatorReinitialize oper(LS);
+        for (long int i = 0; i < iterations; i++) {
+          oper.Propagate(GetPropagationTime());
+          LS->SetMeshSampling(GetMeshSampling());
+          LS->Triangulate<SimpleMesh>();
+          UpdateDependentObjects(LS);
+          mGLViewer->Render();
+        }
+      }
+    }
+    iter++;
+  }
+
+  mGLViewer->Render();
+}
+
+
+void FrameMain::LevelsetAdvect( wxCommandEvent& event )
+{
+  std::list<GLObject *> objects = mGLViewer->GetSelectedObjects();
+  std::list<GLObject *>::iterator iter = objects.begin();
+  std::list<GLObject *>::iterator iend = objects.end();
+  while (iter != iend) {
+    LevelSet * LS = dynamic_cast<LevelSet *>(*iter);
+    if (LS != NULL) {
+      long int iterations = GetIterations();
+      //ConstantVectorField field(Vector3<float>(-1, -1, -1));
+      VortexVectorField field;
+      OperatorAdvect oper(LS, &field);
+      for (long int i = 0; i < iterations; i++) {
+        oper.Propagate(GetPropagationTime());
+        LS->SetMeshSampling(GetMeshSampling());
+        LS->Triangulate<SimpleMesh>();
+        UpdateDependentObjects(LS);
+        mGLViewer->Render();
+      }
+    }
+    iter++;
+  }
+
+  mGLViewer->Render();
+}
+
+
+void FrameMain::LevelsetDilate( wxCommandEvent& event )
+{
+  std::list<GLObject *> objects = mGLViewer->GetSelectedObjects();
+  std::list<GLObject *>::iterator iter = objects.begin();
+  std::list<GLObject *>::iterator iend = objects.end();
+  while (iter != iend) {
+    LevelSet * LS = dynamic_cast<LevelSet *>(*iter);
+    if (LS != NULL) {
+      long int iterations = GetIterations();
+      OperatorDilateErode oper(LS, 1);
+      for (long int i = 0; i < iterations; i++) {
+        oper.Propagate(GetPropagationTime());
+        LS->SetMeshSampling(GetMeshSampling());
+        LS->Triangulate<SimpleMesh>();
+        UpdateDependentObjects(LS);
+        mGLViewer->Render();
+      }
+    }
+    iter++;
+  }
+
+  mGLViewer->Render();
+}
+
+
+void FrameMain::LevelsetErode( wxCommandEvent& event )
+{
+  std::list<GLObject *> objects = mGLViewer->GetSelectedObjects();
+  std::list<GLObject *>::iterator iter = objects.begin();
+  std::list<GLObject *>::iterator iend = objects.end();
+  while (iter != iend) {
+    LevelSet * LS = dynamic_cast<LevelSet *>(*iter);
+    if (LS != NULL) {
+      long int iterations = GetIterations();
+      OperatorDilateErode oper(LS, -1);
+      for (long int i = 0; i < iterations; i++) {
+        oper.Propagate(GetPropagationTime());
+        LS->SetMeshSampling(GetMeshSampling());
+        LS->Triangulate<SimpleMesh>();
+        UpdateDependentObjects(LS);
+        mGLViewer->Render();
+      }
+    }
+    iter++;
+  }
+
+  mGLViewer->Render();
+}
+
+
+void FrameMain::LevelsetSmooth( wxCommandEvent& event )
+{
+  std::list<GLObject *> objects = mGLViewer->GetSelectedObjects();
+  std::list<GLObject *>::iterator iter = objects.begin();
+  std::list<GLObject *>::iterator iend = objects.end();
+  while (iter != iend) {
+    LevelSet * LS = dynamic_cast<LevelSet *>(*iter);
+    if (LS != NULL) {
+      long int iterations = GetIterations();
+      OperatorMeanCurvatureFlow oper(LS, 1);
+      for (long int i = 0; i < iterations; i++) {
+        oper.Propagate(GetPropagationTime());
+        LS->SetMeshSampling(GetMeshSampling());
+        LS->Triangulate<SimpleMesh>();
+        UpdateDependentObjects(LS);
+        mGLViewer->Render();
+      }
+    }
+    iter++;
+  }
+
+  mGLViewer->Render();
+}
+
+
+void FrameMain::LevelsetMorph( wxCommandEvent& event )
+{
+  std::list<GLObject *> objects = mGLViewer->GetSelectedObjects();
+  std::list<GLObject *>::iterator iter = objects.begin();
+  std::list<GLObject *>::iterator iend = objects.end();
+
+  // Find first levelset in the selected list
+  LevelSet * LS = NULL;
+  while (iter != iend) {
+    LS = dynamic_cast<LevelSet *>(*iter);
+    iter++;
+    if (LS != NULL) break;
+  }
+
+  // No levelset found - exit...
+  if (LS == NULL) {
+    std::cerr << "Error: Need to select at least one level set object" << std::endl;
+    return;
+  }
+
+  long int iterations = GetIterations();
+
+  // Else, search for the second implicit and do morph
+  iter = objects.begin();
+  while (iter != iend) {
+    Implicit * impl = dynamic_cast<Implicit *>(*iter);
+    if (impl != NULL && impl != LS) {
+
+      // Set the bounding box to the union of the operands
+      LS->SetBoundingBox(BoxUnion(LS->GetBoundingBox(), impl->GetBoundingBox()));
+
+      OperatorMorph oper(LS, impl);
+      for (long int i = 0; i < iterations; i++) {
+        oper.Propagate(GetPropagationTime());
+        LS->SetMeshSampling(GetMeshSampling());
+        LS->Triangulate<SimpleMesh>();
+        UpdateDependentObjects(LS);
+        mGLViewer->Render();
+      }
+
+      return;
+    }
+    iter++;
+  }
+
+  std::cerr << "Error: Need to select at least one level set object and one other implicit" << std::endl;
+}
+
+
+void FrameMain::EnableNarrowband( wxCommandEvent& event )
+{
+  long int width;
+  if (!mNarrowBandWidth->GetValue().ToLong(&width)) {
+    width = 16;
+    mNarrowBandWidth->SetValue(_T("16"));
+  }
+
+  std::list<GLObject *> objects = mGLViewer->GetSelectedObjects();
+  std::list<GLObject *>::iterator iter = objects.begin();
+  std::list<GLObject *>::iterator iend = objects.end();
+  while (iter != iend) {
+    LevelSet * LS = dynamic_cast<LevelSet *>(*iter);
+    if (LS != NULL) {
+      LS->SetNarrowBandWidth(width);
+      LS->Triangulate<SimpleMesh>();
+      UpdateDependentObjects(LS);
+    }
+    iter++;
+  }
+  mGLViewer->Render();
+}
+
+
+double FrameMain::GetPropagationTime()
+{
+  double time;
+  if (!mPropagationTime->GetValue().ToDouble(&time)) {
+    time = 0.01;
+    mPropagationTime->SetValue(_T("0.01"));
+  }
+
+  return time;
+}
+
+
+long int FrameMain::GetIterations()
+{
+  long int iterations;
+  if (!mLevelsetIterations->GetValue().ToLong(&iterations)) {
+    iterations = 1;
+    mLevelsetIterations->SetValue(_T("1"));
+  }
+
+  return iterations;
+}
+
+
+//Lab5<-
 

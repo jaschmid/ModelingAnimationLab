@@ -25,13 +25,15 @@ Geometry/LineStrip.cpp
 IMPLICITS =  Geometry/Implicit.cpp Geometry/Quadric.cpp Geometry/Sphere.cpp Geometry/SphereFractal.cpp \
  Geometry/SignedDistanceSphere.cpp Geometry/Cube.cpp Geometry/ImplicitMesh.cpp
 
+LEVELSET = Levelset/LevelSetGrid.cpp Levelset/LevelSet.cpp Levelset/LevelSetOperator.cpp
+
 SUBDIVISION = Subdivision/LoopSubdivisionMesh.cpp \
 							Subdivision/AdaptiveLoopSubdivisionMesh.cpp \
 							Subdivision/UniformCubicSplineSubdivisionCurve.cpp \
 							Subdivision/UniformCubicSpline.cpp
 
 
-SOURCE =  $(UTIL) $(GUI) $(MESH) $(IMPLICITS) $(SUBDIVISION)
+SOURCE =  $(UTIL) $(GUI) $(MESH) $(IMPLICITS) $(LEVELSET) $(SUBDIVISION)
 
 OBJ = $(SOURCE:.cpp=.o)
 
@@ -74,6 +76,9 @@ clean:
 	rm -fr GUI/*.o
 	rm -fr GUI/*~
 	rm -fr GUI/*.d
+	rm -fr Levelset/*.o
+	rm -fr Levelset/*~
+	rm -fr Levelset/*.d
 	rm -fr Math/*.o
 	rm -fr Math/*~
 	rm -fr Math/*.d

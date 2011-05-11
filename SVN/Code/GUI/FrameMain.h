@@ -48,6 +48,17 @@
 #include "VectorCutPlane.h"
 //Lab4<-
 
+//Lab5->
+#include "Levelset/LevelSet.h"
+#include "Levelset/OperatorReinitialize.h"
+#include "Levelset/OperatorReinitializeFastMarching.h"
+#include "Levelset/OperatorAdvect.h"
+#include "Levelset/OperatorDilateErode.h"
+#include "Levelset/OperatorMeanCurvatureFlow.h"
+#include "Levelset/OperatorMorph.h"
+#include "Math/ConstantVectorField.h"
+#include "Math/VortexVectorField.h"
+//Lab5<-
 
 
 
@@ -152,6 +163,22 @@ protected :
   Implicit * CSG(const std::string & oper);
   //Lab4<-
 
+  //Lab5->
+  void LoadLevelset( wxCommandEvent& event );
+  void ConvertToLevelset( wxCommandEvent& event );
+  void AddTemplate1( wxCommandEvent& event );
+  void AddTemplate2( wxCommandEvent& event );
+  void AddTemplate3( wxCommandEvent& event );
+  void LevelsetReinitialize( wxCommandEvent& event );
+  void LevelsetAdvect( wxCommandEvent& event );
+  void LevelsetDilate( wxCommandEvent& event );
+  void LevelsetErode( wxCommandEvent& event );
+  void LevelsetSmooth( wxCommandEvent& event );
+  void LevelsetMorph( wxCommandEvent& event );
+  void EnableNarrowband( wxCommandEvent& event );
+  double GetPropagationTime();
+  long int GetIterations();
+  //Lab5<-
 
 
 };

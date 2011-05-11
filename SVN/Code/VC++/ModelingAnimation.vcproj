@@ -390,6 +390,54 @@
 			</File>
 		</Filter>
 		<Filter
+			Name="Levelset"
+			>
+			<File
+				RelativePath="..\levelset\LevelSet.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\levelset\LevelSet.h"
+				>
+			</File>
+			<File
+				RelativePath="..\levelset\LevelSetGrid.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\levelset\LevelSetGrid.h"
+				>
+			</File>
+			<File
+				RelativePath="..\levelset\LevelSetOperator.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\levelset\LevelSetOperator.h"
+				>
+			</File>
+			<File
+				RelativePath="..\levelset\OperatorAdvect.h"
+				>
+			</File>
+			<File
+				RelativePath="..\levelset\OperatorDilateErode.h"
+				>
+			</File>
+			<File
+				RelativePath="..\levelset\OperatorMeanCurvatureFlow.h"
+				>
+			</File>
+			<File
+				RelativePath="..\Levelset\OperatorMorph.h"
+				>
+			</File>
+			<File
+				RelativePath="..\levelset\OperatorReinitialize.h"
+				>
+			</File>
+		</Filter>
+		<Filter
 			Name="Math"
 			>
 			<File

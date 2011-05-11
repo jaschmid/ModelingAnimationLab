@@ -31,6 +31,9 @@
 		D4AE429E0D5356FB007E34DE /* QuadricDecimationMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE422F0D5356FB007E34DE /* QuadricDecimationMesh.cpp */; };
 		D4AE429F0D5356FB007E34DE /* SimpleDecimationMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE42310D5356FB007E34DE /* SimpleDecimationMesh.cpp */; };
 		D4AE42AA0D5356FB007E34DE /* GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE42530D5356FB007E34DE /* GUI.cpp */; };
+		D4AE42AD0D5356FB007E34DE /* LevelSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE425A0D5356FB007E34DE /* LevelSet.cpp */; };
+		D4AE42AF0D5356FB007E34DE /* LevelSetGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE425D0D5356FB007E34DE /* LevelSetGrid.cpp */; };
+		D4AE42B00D5356FB007E34DE /* LevelSetOperator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE425F0D5356FB007E34DE /* LevelSetOperator.cpp */; };
 		D4AE42B50D5356FB007E34DE /* TrilinearInterpolator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE42750D5356FB007E34DE /* TrilinearInterpolator.cpp */; };
 		D4AE42B70D5356FB007E34DE /* LoopSubdivisionMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE427E0D5356FB007E34DE /* LoopSubdivisionMesh.cpp */; };
 		D4AE42BC0D5356FB007E34DE /* ColorMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AE42870D5356FB007E34DE /* ColorMap.cpp */; };
@@ -54,6 +57,7 @@
 /* Begin PBXFileReference section */
 		D40615CE0DC28529001EA9E1 /* Trackball.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Trackball.cpp; sourceTree = "<group>"; };
 		D40615CF0DC28529001EA9E1 /* Trackball.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trackball.h; sourceTree = "<group>"; };
+		D40B0CB30DD17E2A00882EFC /* OperatorReinitializeFastMarching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OperatorReinitializeFastMarching.h; sourceTree = "<group>"; };
 		D4368E5E0FA89A3900FF156F /* Bbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bbox.h; sourceTree = "<group>"; };
 		D4368E5F0FA89A3900FF156F /* CSG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSG.h; sourceTree = "<group>"; };
 		D4368E600FA89A3900FF156F /* Cube.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cube.cpp; sourceTree = "<group>"; };
@@ -81,6 +85,7 @@
 		D4368E760FA89A3900FF156F /* Sphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sphere.h; sourceTree = "<group>"; };
 		D4368E770FA89A3900FF156F /* SphereFractal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SphereFractal.cpp; sourceTree = "<group>"; };
 		D4368E780FA89A3900FF156F /* SphereFractal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SphereFractal.h; sourceTree = "<group>"; };
+		D45AE5980DCF0EFC00D27EFD /* OperatorMorph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OperatorMorph.h; sourceTree = "<group>"; };
 		D462C7DF0D88838B00B01FCB /* IsoContourColorMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IsoContourColorMap.cpp; sourceTree = "<group>"; };
 		D491A7560D8FB0E000469485 /* ColorMapFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorMapFactory.cpp; sourceTree = "<group>"; };
 		D491A7570D8FB0E000469485 /* ColorMapFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMapFactory.h; sourceTree = "<group>"; };
@@ -105,6 +110,17 @@
 		D4AE42320D5356FB007E34DE /* SimpleDecimationMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleDecimationMesh.h; sourceTree = "<group>"; };
 		D4AE42530D5356FB007E34DE /* GUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUI.cpp; sourceTree = "<group>"; };
 		D4AE42540D5356FB007E34DE /* GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUI.h; sourceTree = "<group>"; };
+		D4AE425A0D5356FB007E34DE /* LevelSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelSet.cpp; sourceTree = "<group>"; };
+		D4AE425B0D5356FB007E34DE /* LevelSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelSet.h; sourceTree = "<group>"; };
+		D4AE425C0D5356FB007E34DE /* LevelSet_Test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelSet_Test.cpp; sourceTree = "<group>"; };
+		D4AE425D0D5356FB007E34DE /* LevelSetGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelSetGrid.cpp; sourceTree = "<group>"; };
+		D4AE425E0D5356FB007E34DE /* LevelSetGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelSetGrid.h; sourceTree = "<group>"; };
+		D4AE425F0D5356FB007E34DE /* LevelSetOperator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelSetOperator.cpp; sourceTree = "<group>"; };
+		D4AE42600D5356FB007E34DE /* LevelSetOperator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelSetOperator.h; sourceTree = "<group>"; };
+		D4AE42610D5356FB007E34DE /* OperatorAdvect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OperatorAdvect.h; sourceTree = "<group>"; };
+		D4AE42620D5356FB007E34DE /* OperatorDilateErode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OperatorDilateErode.h; sourceTree = "<group>"; };
+		D4AE42630D5356FB007E34DE /* OperatorMeanCurvatureFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OperatorMeanCurvatureFlow.h; sourceTree = "<group>"; };
+		D4AE42640D5356FB007E34DE /* OperatorReinitialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OperatorReinitialize.h; sourceTree = "<group>"; };
 		D4AE42690D5356FB007E34DE /* ConjugateGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConjugateGradient.h; sourceTree = "<group>"; };
 		D4AE426A0D5356FB007E34DE /* ConstantVectorField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConstantVectorField.h; sourceTree = "<group>"; };
 		D4AE426D0D5356FB007E34DE /* Function3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Function3D.h; sourceTree = "<group>"; };
@@ -185,6 +201,7 @@
 				D4AE42F30D535E1F007E34DE /* main.cpp */,
 				D4AE422B0D5356FB007E34DE /* Decimation */,
 				D4AE42510D5356FB007E34DE /* GUI */,
+				D4AE42590D5356FB007E34DE /* Levelset */,
 				D4AE42680D5356FB007E34DE /* Math */,
 				D4AE427B0D5356FB007E34DE /* Subdivision */,
 				D4AE42850D5356FB007E34DE /* Util */,
@@ -271,6 +288,26 @@
 				D4AE42540D5356FB007E34DE /* GUI.h */,
 			);
 			path = GUI;
+			sourceTree = "<group>";
+		};
+		D4AE42590D5356FB007E34DE /* Levelset */ = {
+			isa = PBXGroup;
+			children = (
+				D4AE425A0D5356FB007E34DE /* LevelSet.cpp */,
+				D4AE425B0D5356FB007E34DE /* LevelSet.h */,
+				D4AE425C0D5356FB007E34DE /* LevelSet_Test.cpp */,
+				D4AE425D0D5356FB007E34DE /* LevelSetGrid.cpp */,
+				D4AE425E0D5356FB007E34DE /* LevelSetGrid.h */,
+				D4AE425F0D5356FB007E34DE /* LevelSetOperator.cpp */,
+				D4AE42600D5356FB007E34DE /* LevelSetOperator.h */,
+				D4AE42610D5356FB007E34DE /* OperatorAdvect.h */,
+				D4AE42620D5356FB007E34DE /* OperatorDilateErode.h */,
+				D4AE42630D5356FB007E34DE /* OperatorMeanCurvatureFlow.h */,
+				D40B0CB30DD17E2A00882EFC /* OperatorReinitializeFastMarching.h */,
+				D4AE42640D5356FB007E34DE /* OperatorReinitialize.h */,
+				D45AE5980DCF0EFC00D27EFD /* OperatorMorph.h */,
+			);
+			path = Levelset;
 			sourceTree = "<group>";
 		};
 		D4AE42680D5356FB007E34DE /* Math */ = {
@@ -377,7 +414,7 @@
 /* Begin PBXProject section */
 		08FB7793FE84155DC02AAC07 /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = 1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "ModelingAnimation_Lab4" */;
+			buildConfigurationList = 1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "ModelingAnimation_Lab5" */;
 			compatibilityVersion = "Xcode 2.4";
 			hasScannedForEncodings = 1;
 			mainGroup = 08FB7794FE84155DC02AAC07 /* Modeling & Animation */;
@@ -409,6 +446,9 @@
 				D4AE429E0D5356FB007E34DE /* QuadricDecimationMesh.cpp in Sources */,
 				D4AE429F0D5356FB007E34DE /* SimpleDecimationMesh.cpp in Sources */,
 				D4AE42AA0D5356FB007E34DE /* GUI.cpp in Sources */,
+				D4AE42AD0D5356FB007E34DE /* LevelSet.cpp in Sources */,
+				D4AE42AF0D5356FB007E34DE /* LevelSetGrid.cpp in Sources */,
+				D4AE42B00D5356FB007E34DE /* LevelSetOperator.cpp in Sources */,
 				D4AE42B50D5356FB007E34DE /* TrilinearInterpolator.cpp in Sources */,
 				D4AE42B70D5356FB007E34DE /* LoopSubdivisionMesh.cpp in Sources */,
 				D4AE42BC0D5356FB007E34DE /* ColorMap.cpp in Sources */,

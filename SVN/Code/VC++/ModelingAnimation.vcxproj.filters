@@ -10,6 +10,9 @@
     <Filter Include="GUI">
       <UniqueIdentifier>{c100a913-49fd-4d44-8acc-c0b70c8f0aee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Levelset">
+      <UniqueIdentifier>{81d4b481-83fd-4bf6-8483-6341477c28c3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Math">
       <UniqueIdentifier>{f2a0245a-e6e9-4973-be93-f72a212e803b}</UniqueIdentifier>
     </Filter>
@@ -107,6 +110,30 @@
     </ClInclude>
     <ClInclude Include="..\gui\VectorCutPlane.h">
       <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\levelset\LevelSet.h">
+      <Filter>Levelset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\levelset\LevelSetGrid.h">
+      <Filter>Levelset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\levelset\LevelSetOperator.h">
+      <Filter>Levelset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\levelset\OperatorAdvect.h">
+      <Filter>Levelset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\levelset\OperatorDilateErode.h">
+      <Filter>Levelset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\levelset\OperatorMeanCurvatureFlow.h">
+      <Filter>Levelset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Levelset\OperatorMorph.h">
+      <Filter>Levelset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\levelset\OperatorReinitialize.h">
+      <Filter>Levelset</Filter>
     </ClInclude>
     <ClInclude Include="..\math\ConjugateGradient.h">
       <Filter>Math</Filter>
@@ -289,6 +316,15 @@
     </ClCompile>
     <ClCompile Include="..\gui\VectorCutPlane.cpp">
       <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\levelset\LevelSet.cpp">
+      <Filter>Levelset</Filter>
+    </ClCompile>
+    <ClCompile Include="..\levelset\LevelSetGrid.cpp">
+      <Filter>Levelset</Filter>
+    </ClCompile>
+    <ClCompile Include="..\levelset\LevelSetOperator.cpp">
+      <Filter>Levelset</Filter>
     </ClCompile>
     <ClCompile Include="..\math\TrilinearInterpolator.cpp">
       <Filter>Math</Filter>

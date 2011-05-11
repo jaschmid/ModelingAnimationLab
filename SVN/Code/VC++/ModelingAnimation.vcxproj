@@ -123,6 +123,14 @@
     <ClInclude Include="..\gui\GUI.h" />
     <ClInclude Include="..\gui\ScalarCutPlane.h" />
     <ClInclude Include="..\gui\VectorCutPlane.h" />
+    <ClInclude Include="..\levelset\LevelSet.h" />
+    <ClInclude Include="..\levelset\LevelSetGrid.h" />
+    <ClInclude Include="..\levelset\LevelSetOperator.h" />
+    <ClInclude Include="..\levelset\OperatorAdvect.h" />
+    <ClInclude Include="..\levelset\OperatorDilateErode.h" />
+    <ClInclude Include="..\levelset\OperatorMeanCurvatureFlow.h" />
+    <ClInclude Include="..\Levelset\OperatorMorph.h" />
+    <ClInclude Include="..\levelset\OperatorReinitialize.h" />
     <ClInclude Include="..\math\ConjugateGradient.h" />
     <ClInclude Include="..\math\ConstantVectorField.h" />
     <ClInclude Include="..\math\Function3D.h" />
@@ -185,6 +193,9 @@
     <ClCompile Include="..\gui\GUI.cpp" />
     <ClCompile Include="..\gui\ScalarCutPlane.cpp" />
     <ClCompile Include="..\gui\VectorCutPlane.cpp" />
+    <ClCompile Include="..\levelset\LevelSet.cpp" />
+    <ClCompile Include="..\levelset\LevelSetGrid.cpp" />
+    <ClCompile Include="..\levelset\LevelSetOperator.cpp" />
     <ClCompile Include="..\math\TrilinearInterpolator.cpp" />
     <ClCompile Include="..\subdivision\AdaptiveLoopSubdivisionMesh.cpp" />
     <ClCompile Include="..\subdivision\LoopSubdivisionMesh.cpp" />
