@@ -38,7 +38,9 @@ public :
   {
     // Compute and return a stable timestep
     // (Hint: Function3D::GetMaxValue())
-    return 1;
+	  Vector3<float> maxVector = mVectorField->GetMaxValue();
+
+	  return mLS->GetDx() / maxVector.Length();
   }
 
   virtual void Propagate(float time)
@@ -67,7 +69,28 @@ public :
     // the velocity field used for advection needs to be sampled in
     // world coordinates (x,y,z). You can use LevelSet::TransformGridToWorld()
     // for this task.
-    return 0;
+	  Vector3<float> world_location(i,j,k);
+	  mLS->TransformGridToWorld(world_location[0],world_location[1],world_location[2]);
+	  Vector3<float> velocity = mVectorField->GetValue(world_location[0],world_location[1],world_location[2]);
+	  
+	  float dx,dy,dz;
+
+	  if(velocity[0] < 0.0f)
+		  dx = mLS->DiffXp(i,j,k);
+	  else
+		  dx = mLS->DiffXm(i,j,k);
+
+	  if(velocity[1] < 0.0f)
+		  dy = mLS->DiffYp(i,j,k);
+	  else
+		  dy = mLS->DiffYm(i,j,k);
+
+	  if(velocity[2] < 0.0f)
+		  dz = mLS->DiffZp(i,j,k);
+	  else
+		  dz = mLS->DiffZm(i,j,k);
+
+	  return -(dx*velocity[0]+dy*velocity[1]+dz*velocity[2]);
   }
 
 };

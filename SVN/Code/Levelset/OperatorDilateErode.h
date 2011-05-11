@@ -37,11 +37,15 @@ public :
   virtual float ComputeTimestep()
   {
     // Compute and return a stable timestep
-    return 1;
+	  
+	  return mLS->GetDx() / fabs (mF);
   }
 
   virtual void Propagate(float time)
   {
+	  
+	std::cerr << "Volume pre dilate/erode = " << mLS->ComputeVolume() << std::endl;
+
     // Determine timestep for stability
     float dt = ComputeTimestep();
 
@@ -54,16 +58,20 @@ public :
       elapsed += dt;
 
       // Integrate level set function in time using Euler integration
-      IntegrateEuler(dt);
-      //IntegrateRungeKutta(dt);
+      //IntegrateEuler(dt);
+      IntegrateRungeKutta(dt);
     }
+
+	std::cerr << "Volume post dilate/erode = " << mLS->ComputeVolume() << std::endl;
   }
 
 
   virtual float Evaluate(unsigned int i, unsigned int j, unsigned int k)
   {
     // Compute the rate of change (dphi/dt)
-    return 0;
+	  float x2,y2,z2;
+	  LevelSetOperator::Godunov(i,j,k,mF,x2,y2,z2);
+	  return -mF*(x2+y2+z2);
   }
 
 

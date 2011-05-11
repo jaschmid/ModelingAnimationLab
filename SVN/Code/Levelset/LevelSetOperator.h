@@ -30,7 +30,11 @@ protected :
   void IntegrateEuler(float dt);
   void IntegrateRungeKutta(float dt);
 
+
 public :
+
+  void EulerStep(LevelSetGrid & gridOut,float dt);
+  static void GridLerp(const LevelSetGrid & grid1,const LevelSetGrid & grid2,float factor,LevelSetGrid & gridOut);
 
   LevelSetOperator(LevelSet * LS) : mLS(LS) { }
   virtual ~LevelSetOperator() {}

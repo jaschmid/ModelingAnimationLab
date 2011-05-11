@@ -56,8 +56,10 @@ void LevelSetOperator::Godunov(unsigned int i, unsigned int j, unsigned int k, f
 void LevelSetOperator::IntegrateEuler(float dt)
 {
   // Create grid used to store next time step
-  LevelSetGrid grid = GetGrid();
+  LevelSetGrid grid;
 
+  EulerStep(grid,dt);
+  /*
   // Iterate over grid and compute the grid values for the next timestep
   LevelSetGrid::Iterator iter = GetGrid().BeginNarrowBand();
   LevelSetGrid::Iterator iend = GetGrid().EndNarrowBand();
@@ -73,16 +75,97 @@ void LevelSetOperator::IntegrateEuler(float dt)
     grid.SetValue(i,j,k, GetGrid().GetValue(i,j,k) + ddt*dt);
 
     iter++;
-  }
+  }*/
 
   // Update the grid with the next time step
   GetGrid() = grid;
+
+  std::cerr << "Euler Integration Complete" << std::endl;
 }
 
+void LevelSetOperator::EulerStep(LevelSetGrid & gridOut,float dt)
+{
+// Iterate over grid and compute the grid values for the next timestep
+	gridOut = GetGrid();
+  LevelSetGrid::Iterator iter = GetGrid().BeginNarrowBand();
+  LevelSetGrid::Iterator iend = GetGrid().EndNarrowBand();
+  while (iter != iend) {
+    unsigned int i = iter.GetI();
+    unsigned int j = iter.GetJ();
+    unsigned int k = iter.GetK();
+
+    // Compute rate of change
+    float ddt = Evaluate(i,j,k);
+
+    // Compute the next time step and store it in the grid
+    gridOut.SetValue(i,j,k, GetGrid().GetValue(i,j,k) + ddt*dt);
+
+    iter++;
+  }
+
+}
+void LevelSetOperator::GridLerp(const LevelSetGrid & grid1,const LevelSetGrid & grid2,float factor,LevelSetGrid & gridOut)
+{
+// Iterate over grid and compute the grid values for the next timestep
+	gridOut = grid1;
+  LevelSetGrid::Iterator iter = grid1.BeginNarrowBand();
+  LevelSetGrid::Iterator iend = grid1.EndNarrowBand();
+  while (iter != iend) {
+    unsigned int i = iter.GetI();
+    unsigned int j = iter.GetJ();
+    unsigned int k = iter.GetK();
+	
+    // Compute the next time step and store it in the grid
+    gridOut.SetValue(i,j,k, grid1.GetValue(i,j,k)*factor + grid2.GetValue(i,j,k)*(1.0f-factor));
+
+    iter++;
+  }
+
+}
 
 void LevelSetOperator::IntegrateRungeKutta(float dt)
 {
-  // Advance the solution one time step (dt) using the Runge-Kutta scheme
-  // Hint: This scheme is a sequence of Euler steps..
+  // Create grid used to store next time step
+  const LevelSetGrid gridN0 = GetGrid();
+  LevelSetGrid gridN1;
+  LevelSetGrid gridN2;
+  LevelSetGrid gridNHalf;
+  LevelSetGrid gridNOneAndHalf;
+
+  std::cerr << "RK Integration Begin timestep:" << dt << std::endl;
+
+  EulerStep(gridN1,dt);
+
+  std::cerr << "RK Integration Euler Step 1" << std::endl;
+
+  //grid N1 = RK 1
+
+  GetGrid() = gridN1;
+  
+  EulerStep(gridN2,dt);
+  
+  std::cerr << "RK Integration Euler Step 2" << std::endl;
+
+  GridLerp(gridN0,gridN2,0.5f,GetGrid());
+  
+  GridLerp(gridN0,gridN2,0.75f,gridNHalf);
+
+  std::cerr << "RK Integration Lerp 1" << std::endl;
+
+  GetGrid() = gridNHalf;
+    
+  EulerStep(gridNOneAndHalf,dt);
+  
+  std::cerr << "RK Integration Euler Step 3" << std::endl;
+  
+  GridLerp(gridN0,gridNOneAndHalf,1.0f/3.0f,gridN1);
+
+  std::cerr << "RK Integration Lerp 2" << std::endl;
+
+  //grid N1 == RK 3
+
+  GetGrid() = gridN1;
+
+  std::cerr << "RK Integration Complete" << std::endl;*/
 }
 
