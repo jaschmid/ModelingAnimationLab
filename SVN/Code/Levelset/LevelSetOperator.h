@@ -17,6 +17,7 @@
 class LevelSetOperator
 {
 protected :
+
   LevelSet * mLS;
 
   //! Exposes access to the level set grid internally (used in derived classes)

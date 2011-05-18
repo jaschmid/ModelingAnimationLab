@@ -53,8 +53,8 @@ public :
         dt = time-elapsed;
       elapsed += dt;
 
-      IntegrateEuler(dt);
-      //IntegrateRungeKutta(dt);
+      //IntegrateEuler(dt);
+      IntegrateRungeKutta(dt);
     }
   }
 

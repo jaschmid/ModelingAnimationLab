@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D40615D00DC28529001EA9E1 /* Trackball.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D40615CE0DC28529001EA9E1 /* Trackball.cpp */; };
+		D41941F30DDB894300A26720 /* FluidVoxelCutPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D41941F20DDB894300A26720 /* FluidVoxelCutPlane.cpp */; };
 		D4368E790FA89A3900FF156F /* Cube.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4368E600FA89A3900FF156F /* Cube.cpp */; };
 		D4368E7A0FA89A3900FF156F /* HalfEdgeMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4368E630FA89A3900FF156F /* HalfEdgeMesh.cpp */; };
 		D4368E7B0FA89A3900FF156F /* Implicit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4368E650FA89A3900FF156F /* Implicit.cpp */; };
@@ -20,6 +21,7 @@
 		D4368E820FA89A3900FF156F /* Sphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4368E750FA89A3900FF156F /* Sphere.cpp */; };
 		D4368E830FA89A3900FF156F /* SphereFractal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4368E770FA89A3900FF156F /* SphereFractal.cpp */; };
 		D462C7E00D88838B00B01FCB /* IsoContourColorMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D462C7DF0D88838B00B01FCB /* IsoContourColorMap.cpp */; };
+		D474DE880DD9AE63009C6085 /* FluidSolver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D474DE860DD9AE63009C6085 /* FluidSolver.cpp */; };
 		D491A7580D8FB0E000469485 /* ColorMapFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D491A7560D8FB0E000469485 /* ColorMapFactory.cpp */; };
 		D492F07F0DDDEF82005AFACF /* GLObjectPlayback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D492F07D0DDDEF82005AFACF /* GLObjectPlayback.cpp */; };
 		D4A660320D5C910F007DE0D2 /* GLObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4A660310D5C910F007DE0D2 /* GLObject.cpp */; };
@@ -58,6 +60,8 @@
 		D40615CE0DC28529001EA9E1 /* Trackball.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Trackball.cpp; sourceTree = "<group>"; };
 		D40615CF0DC28529001EA9E1 /* Trackball.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trackball.h; sourceTree = "<group>"; };
 		D40B0CB30DD17E2A00882EFC /* OperatorReinitializeFastMarching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OperatorReinitializeFastMarching.h; sourceTree = "<group>"; };
+		D41941F10DDB894300A26720 /* FluidVoxelCutPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FluidVoxelCutPlane.h; sourceTree = "<group>"; };
+		D41941F20DDB894300A26720 /* FluidVoxelCutPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FluidVoxelCutPlane.cpp; sourceTree = "<group>"; };
 		D4368E5E0FA89A3900FF156F /* Bbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bbox.h; sourceTree = "<group>"; };
 		D4368E5F0FA89A3900FF156F /* CSG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSG.h; sourceTree = "<group>"; };
 		D4368E600FA89A3900FF156F /* Cube.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cube.cpp; sourceTree = "<group>"; };
@@ -87,6 +91,8 @@
 		D4368E780FA89A3900FF156F /* SphereFractal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SphereFractal.h; sourceTree = "<group>"; };
 		D45AE5980DCF0EFC00D27EFD /* OperatorMorph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OperatorMorph.h; sourceTree = "<group>"; };
 		D462C7DF0D88838B00B01FCB /* IsoContourColorMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IsoContourColorMap.cpp; sourceTree = "<group>"; };
+		D474DE860DD9AE63009C6085 /* FluidSolver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FluidSolver.cpp; sourceTree = "<group>"; };
+		D474DE870DD9AE63009C6085 /* FluidSolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FluidSolver.h; sourceTree = "<group>"; };
 		D491A7560D8FB0E000469485 /* ColorMapFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorMapFactory.cpp; sourceTree = "<group>"; };
 		D491A7570D8FB0E000469485 /* ColorMapFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMapFactory.h; sourceTree = "<group>"; };
 		D492F07D0DDDEF82005AFACF /* GLObjectPlayback.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLObjectPlayback.cpp; sourceTree = "<group>"; };
@@ -205,6 +211,7 @@
 				D4AE42680D5356FB007E34DE /* Math */,
 				D4AE427B0D5356FB007E34DE /* Subdivision */,
 				D4AE42850D5356FB007E34DE /* Util */,
+				D4AE42930D5356FB007E34DE /* Fluid */,
 				D4AE42250D5356C2007E34DE /* Products */,
 			);
 			name = "Modeling & Animation";
@@ -271,6 +278,8 @@
 			children = (
 				D4A660610D5C965F007DE0D2 /* GLAxis.h */,
 				D4A660620D5C965F007DE0D2 /* GLAxis.cpp */,
+				D41941F10DDB894300A26720 /* FluidVoxelCutPlane.h */,
+				D41941F20DDB894300A26720 /* FluidVoxelCutPlane.cpp */,
 				D4A660630D5C965F007DE0D2 /* GLGridPlane.cpp */,
 				D4A660640D5C965F007DE0D2 /* GLGridPlane.h */,
 				D4A660330D5C9343007DE0D2 /* VectorCutPlane.h */,
@@ -389,6 +398,15 @@
 			path = Util;
 			sourceTree = "<group>";
 		};
+		D4AE42930D5356FB007E34DE /* Fluid */ = {
+			isa = PBXGroup;
+			children = (
+				D474DE860DD9AE63009C6085 /* FluidSolver.cpp */,
+				D474DE870DD9AE63009C6085 /* FluidSolver.h */,
+			);
+			path = Fluid;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -414,9 +432,16 @@
 /* Begin PBXProject section */
 		08FB7793FE84155DC02AAC07 /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = 1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "ModelingAnimation_Lab5" */;
+			buildConfigurationList = 1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "ModelingAnimation" */;
 			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 08FB7794FE84155DC02AAC07 /* Modeling & Animation */;
 			productRefGroup = D4AE42250D5356C2007E34DE /* Products */;
 			projectDirPath = "";
@@ -475,6 +500,8 @@
 				D4F3DD360DB7774B00C4598D /* UniformCubicSpline.cpp in Sources */,
 				D4F3DE7E0DB7977500C4598D /* AdaptiveLoopSubdivisionMesh.cpp in Sources */,
 				D40615D00DC28529001EA9E1 /* Trackball.cpp in Sources */,
+				D474DE880DD9AE63009C6085 /* FluidSolver.cpp in Sources */,
+				D41941F30DDB894300A26720 /* FluidVoxelCutPlane.cpp in Sources */,
 				D492F07F0DDDEF82005AFACF /* GLObjectPlayback.cpp in Sources */,
 				D4368E790FA89A3900FF156F /* Cube.cpp in Sources */,
 				D4368E7A0FA89A3900FF156F /* HalfEdgeMesh.cpp in Sources */,
@@ -559,6 +586,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "Modeling & Animation";
+				SDKROOT = "";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};

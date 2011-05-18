@@ -206,6 +206,18 @@
 			</File>
 		</Filter>
 		<Filter
+			Name="Fluid"
+			>
+			<File
+				RelativePath="..\Fluid\FluidSolver.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\Fluid\FluidSolver.h"
+				>
+			</File>
+		</Filter>
+		<Filter
 			Name="Geometry"
 			>
 			<File
@@ -320,6 +332,14 @@
 		<Filter
 			Name="GUI"
 			>
+			<File
+				RelativePath="..\GUI\FluidVoxelCutPlane.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\GUI\FluidVoxelCutPlane.h"
+				>
+			</File>
 			<File
 				RelativePath="..\gui\FrameMain.cpp"
 				>

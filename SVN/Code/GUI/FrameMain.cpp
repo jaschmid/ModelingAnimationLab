@@ -45,6 +45,14 @@ FrameMain::FrameMain(wxWindow* parent) : BaseFrameMain(parent)
   mPanelSwitches[typeid(LevelSet).name()].push_back(mPanelLevelset);
   mPanelSwitches[typeid(LevelSet).name()].push_back(mPanelImplicit);
   //Lab5<-
+  //Lab6->
+  mPanelSwitches[typeid(Implicit).name()].push_back(mPanelFluid);
+  mPanelSwitches[typeid(LevelSet).name()].push_back(mPanelFluid);
+	mPanelSwitches[typeid(FluidVoxelCutPlane).name()].push_back(mPanelTransform);
+  mPanelSwitches[typeid(FluidVoxelCutPlane).name()].push_back(mPanelVisualization);
+  mFluidSolver = NULL;
+	mFluidPlaybackObject = new GLObjectPlayback("Play Simulation");
+  //Lab6<-
 
   // Add all available color maps
   std::list<std::string> maps = ColorMapFactory::GetColorMaps();
@@ -1453,3 +1461,233 @@ long int FrameMain::GetIterations()
 
 //Lab5<-
 
+//Lab6->
+
+void FrameMain::InitializeFluidSolver()
+{
+  if (mFluidSolver == NULL) {
+    mFluidSolver = new FluidSolver(0.1);
+    mFluidSolver->SetExternalForces(new ConstantVectorField(Vector3<float>(0, -9.82, 0)));
+  }
+}
+
+
+void FrameMain::FluidSetSolid( wxCommandEvent& event )
+{
+  InitializeFluidSolver();
+
+  std::list<GLObject *> objects = mGLViewer->GetSelectedObjects();
+  std::list<GLObject *>::iterator iter = objects.begin();
+  std::list<GLObject *>::iterator iend = objects.end();
+  while (iter != iend) {
+    Implicit * impl = dynamic_cast<Implicit *>(*iter);
+    if (impl != NULL)
+      mFluidSolver->AddSolid(impl);
+
+    iter++;
+  }
+}
+
+
+void FrameMain::FluidSetFluid( wxCommandEvent& event )
+{
+  InitializeFluidSolver();
+
+  std::list<GLObject *> objects = mGLViewer->GetSelectedObjects();
+  std::list<GLObject *>::iterator iter = objects.begin();
+  std::list<GLObject *>::iterator iend = objects.end();
+  while (iter != iend) {
+    LevelSet * LS = dynamic_cast<LevelSet *>(*iter);
+    if (LS != NULL)
+      mFluidSolver->AddFluid(LS);
+
+    iter++;
+  }
+}
+
+
+void FrameMain::FluidSolve( wxCommandEvent& event )
+{
+  if (mFluidSolver == NULL) {
+    std::cerr << "Error: Fluid solver not initialized - add solid or fluid" << std::endl;
+    return;
+  }
+
+  long int iterations;
+  if (!mFluidIterations->GetValue().ToLong(&iterations)) {
+    iterations = 1;
+    mFluidIterations->SetValue(_T("1"));
+  }
+
+  for (long int i = 0; i < iterations; i++) {
+
+    double time;
+    if (!mFluidTime->GetValue().ToDouble(&time)) {
+      time = 0;
+      mFluidTime->SetValue(_T("0"));
+    }
+
+    // If only one dt is requested
+    if (time == 0)
+      time = mFluidSolver->ComputeTimestep();
+
+    std::cerr << "Solving for fluid velocity field (time = " << time << ")..." << std::endl;
+    mFluidSolver->Solve(time);
+
+    // Update cut planes etc.
+    std::list<std::string>::iterator iterObject = mFluidSolverDependentObjects.begin();
+    std::list<std::string>::iterator iendObject = mFluidSolverDependentObjects.end();
+    while (iterObject != iendObject) {
+      Geometry * object = dynamic_cast<Geometry *>(mGLViewer->GetObject(*iterObject));
+      if (object != NULL)  object->Update();
+      iterObject++;
+    }
+
+    // Iterate the fluid levelsets and advect them
+    std::set<LevelSet *>::iterator iter = mFluidSolver->GetFluids().begin();
+    std::set<LevelSet *>::iterator iend = mFluidSolver->GetFluids().end();
+    while (iter != iend) {
+      std::cerr << "Advecting '" << (*iter)->GetName() << "'" << std::endl;
+      OperatorAdvect oper(*iter, mFluidSolver);
+      oper.Propagate(time);
+
+      std::cerr << "Reinitializing..." << std::endl;
+      OperatorReinitializeFastMarching operReinit(*iter);
+      operReinit.Propagate(1); // time doesn't matter
+
+      (*iter)->SetMeshSampling(GetMeshSampling());
+      (*iter)->Triangulate<SimpleMesh>();
+      UpdateDependentObjects((*iter));
+      mGLViewer->Render();
+
+      if (mFluidRecord->IsChecked()) {
+        SimpleMesh * mesh = dynamic_cast<SimpleMesh *>((*iter)->GetMesh());
+        if (mesh == NULL)
+          std::cerr << "Error: Levelset needs to be triangulated with SimpleMesh for recording" << std::endl;
+        else
+				{
+					// TODO: The mesh is being copied twice!!! Maybe some vector on Framemain can hold the meshes?
+          mFluidSequence.push_back(*mesh);
+					mFluidPlaybackObject->AddFrame(*mesh);
+				}
+
+        mFluidSlider->SetRange(0, mFluidSequence.size());
+        mFluidSlider->Enable(true);
+        mFluidSaveButton->Enable(true);
+      }
+
+      iter++;
+    }
+  }
+}
+
+
+void FrameMain::FluidVisualizeVelocities( wxCommandEvent& event )
+{
+if (mFluidSolver != NULL) {
+  VectorCutPlane * plane = new VectorCutPlane("Vector cut plane", 0.05, mFluidSolver);
+  AddUniqueObject(plane);
+
+  // Scale cut plane to fill the bounding box
+  const Bbox & b = mFluidSolver->GetBoundingBox();
+  float x = b.pMax[0] - b.pMin[0];
+  float y = b.pMax[1] - b.pMin[1];
+  float z = b.pMax[2] - b.pMin[2];
+  float scale = x;
+  if (scale < y)  scale = y;
+  if (scale < z)  scale = z;
+  plane->Scale(scale*0.5);
+
+  mFluidSolverDependentObjects.push_back(plane->GetName());
+}
+  mGLViewer->Render();
+
+}
+
+
+void FrameMain::FluidVisualizeVoxelsClassification( wxCommandEvent& event )
+{
+	if (mFluidSolver != NULL) {
+	FluidVoxelCutPlane* plane = new FluidVoxelCutPlane("Vector cut plane", mFluidSolver);
+	plane->SetOpacity(0.4);
+  AddUniqueObject(plane);
+
+  //// Scale cut plane to fill the bounding box
+  //const Bbox & b = mFluidSolver->GetBoundingBox();
+  //float x = b.pMax[0] - b.pMin[0];
+  //float y = b.pMax[1] - b.pMin[1];
+  //float z = b.pMax[2] - b.pMin[2];
+  //float scale = x;
+  //if (scale < y)  scale = y;
+  //if (scale < z)  scale = z;
+  //plane->Scale(scale*0.5);
+
+  mFluidSolverDependentObjects.push_back(plane->GetName());
+	}
+  mGLViewer->Render();
+}
+
+
+void FrameMain::PlaySimulation( wxCommandEvent& event )
+{
+	GLObject* obj = mGLViewer->RemoveObject("Play Simulation");
+
+	std::cout << "Fluid Playback: " << obj << std::endl;
+
+	// if it doesn't exist we want to play it
+  if ( NULL == obj )
+	{
+		std::cout << "Starting Playback" << std::endl;
+		mFluidPlaybackObject->Reset();
+		mGLViewer->AddObject( mFluidPlaybackObject );
+    mFluidPlaybackObject->SetFrameCapture(true);
+  }
+
+  mGLViewer->Render();
+
+}
+
+
+void FrameMain::SaveSimulationFrames( wxCommandEvent& event )
+{
+	wxString filename;
+	wxFileDialog * dialog = new wxFileDialog(this,_T("Save mesh sequence as"),_T("."),_T("fluid.obj"),_T("OBJ (*.obj)|*.obj"),wxFD_SAVE, wxDefaultPosition);
+	if (dialog->ShowModal() == wxID_OK) {
+    filename = dialog->GetPath();
+
+    std::vector<SimpleMesh>::iterator iter = mFluidSequence.begin();
+    std::vector<SimpleMesh>::iterator iend = mFluidSequence.end();
+    int i = 0;
+    while (iter != iend) {
+			std::string tmpfilename(filename.mb_str(wxConvUTF8));
+			std::stringstream s;
+			s.width(4);
+			s.fill('0');
+			s << i;
+			i++;
+			int pos = tmpfilename.rfind( ".", tmpfilename.length() );
+			tmpfilename.insert( pos, s.str());
+
+      std::ofstream out(tmpfilename.c_str());
+			(*iter).save(out);
+
+      iter++;
+    }
+	}
+}
+
+
+void FrameMain::FluidPlayback( wxScrollEvent& event )
+{
+  mGLViewer->RemoveObject("Fluid playback");
+
+  if (event.GetPosition() > 0) {
+    SimpleMesh & mesh = mFluidSequence.at(event.GetPosition()-1);
+    mesh.SetName("Fluid playback");
+    mGLViewer->AddObject(&mesh);
+  }
+
+  mGLViewer->Render();
+}
+
+//Lab6<-

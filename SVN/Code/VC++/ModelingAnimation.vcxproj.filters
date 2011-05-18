@@ -4,6 +4,9 @@
     <Filter Include="Decimation">
       <UniqueIdentifier>{53930336-7408-4cf7-8199-48f404cdf864}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fluid">
+      <UniqueIdentifier>{0ad6be28-9e6b-440f-99f6-646966f9253b}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Geometry">
       <UniqueIdentifier>{0c21d55d-b3b7-42aa-98ee-8d6a4d41152f}</UniqueIdentifier>
     </Filter>
@@ -35,6 +38,9 @@
     </ClInclude>
     <ClInclude Include="..\decimation\SimpleDecimationMesh.h">
       <Filter>Decimation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Fluid\FluidSolver.h">
+      <Filter>Fluid</Filter>
     </ClInclude>
     <ClInclude Include="..\geometry\Bbox.h">
       <Filter>Geometry</Filter>
@@ -83,6 +89,9 @@
     </ClInclude>
     <ClInclude Include="..\geometry\SphereFractal.h">
       <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GUI\FluidVoxelCutPlane.h">
+      <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\gui\FrameMain.h">
       <Filter>GUI</Filter>
@@ -260,6 +269,9 @@
     <ClCompile Include="..\decimation\SimpleDecimationMesh.cpp">
       <Filter>Decimation</Filter>
     </ClCompile>
+    <ClCompile Include="..\Fluid\FluidSolver.cpp">
+      <Filter>Fluid</Filter>
+    </ClCompile>
     <ClCompile Include="..\geometry\Cube.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
@@ -292,6 +304,9 @@
     </ClCompile>
     <ClCompile Include="..\geometry\SphereFractal.cpp">
       <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GUI\FluidVoxelCutPlane.cpp">
+      <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\gui\FrameMain.cpp">
       <Filter>GUI</Filter>

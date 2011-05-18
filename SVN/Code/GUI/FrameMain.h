@@ -60,6 +60,11 @@
 #include "Math/VortexVectorField.h"
 //Lab5<-
 
+//Lab6->
+#include "Fluid/FluidSolver.h"
+#include "FluidVoxelCutPlane.h"
+#include "Util/GLObjectPlayback.h"
+//Lab6<-
 
 
 /** Implementing BaseFrameMain */
@@ -180,6 +185,22 @@ protected :
   long int GetIterations();
   //Lab5<-
 
+  //Lab6->
+  FluidSolver * mFluidSolver;
+  std::list<std::string> mFluidSolverDependentObjects;
+  std::vector<SimpleMesh> mFluidSequence;
+	GLObjectPlayback* mFluidPlaybackObject;
+
+  void InitializeFluidSolver();
+  void FluidSetSolid( wxCommandEvent& event );
+  void FluidSetFluid( wxCommandEvent& event );
+  void FluidSolve( wxCommandEvent& event );
+  void FluidVisualizeVelocities( wxCommandEvent& event );
+	void FluidVisualizeVoxelsClassification( wxCommandEvent& event );
+	void PlaySimulation( wxCommandEvent& event );
+	void SaveSimulationFrames( wxCommandEvent& event );
+  void FluidPlayback( wxScrollEvent& event );
+  //Lab6<-
 
 };
 

@@ -98,6 +98,7 @@
     <ClInclude Include="..\decimation\DecimationMesh.h" />
     <ClInclude Include="..\decimation\QuadricDecimationMesh.h" />
     <ClInclude Include="..\decimation\SimpleDecimationMesh.h" />
+    <ClInclude Include="..\Fluid\FluidSolver.h" />
     <ClInclude Include="..\geometry\Bbox.h" />
     <ClInclude Include="..\geometry\CSG.h" />
     <ClInclude Include="..\geometry\Cube.h" />
@@ -114,6 +115,7 @@
     <ClInclude Include="..\geometry\SimpleMesh.h" />
     <ClInclude Include="..\geometry\Sphere.h" />
     <ClInclude Include="..\geometry\SphereFractal.h" />
+    <ClInclude Include="..\GUI\FluidVoxelCutPlane.h" />
     <ClInclude Include="..\gui\FrameMain.h" />
     <ClInclude Include="..\gui\GLAxis.h" />
     <ClInclude Include="..\gui\GLCamera.h" />
@@ -174,6 +176,7 @@
     <ClCompile Include="..\decimation\DecimationMesh.cpp" />
     <ClCompile Include="..\decimation\QuadricDecimationMesh.cpp" />
     <ClCompile Include="..\decimation\SimpleDecimationMesh.cpp" />
+    <ClCompile Include="..\Fluid\FluidSolver.cpp" />
     <ClCompile Include="..\geometry\Cube.cpp" />
     <ClCompile Include="..\geometry\HalfEdgeMesh.cpp" />
     <ClCompile Include="..\geometry\Implicit.cpp" />
@@ -185,6 +188,7 @@
     <ClCompile Include="..\geometry\SimpleMesh.cpp" />
     <ClCompile Include="..\geometry\Sphere.cpp" />
     <ClCompile Include="..\geometry\SphereFractal.cpp" />
+    <ClCompile Include="..\GUI\FluidVoxelCutPlane.cpp" />
     <ClCompile Include="..\gui\FrameMain.cpp" />
     <ClCompile Include="..\gui\GLAxis.cpp" />
     <ClCompile Include="..\gui\GLGridPlane.cpp" />

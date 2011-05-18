@@ -16,7 +16,8 @@ UTIL = Util/Util.cpp Util/ObjIO.cpp Util/ColorMap.cpp \
 
 GUI =	main.cpp GUI/GUI.cpp GUI/FrameMain.cpp GUI/GLViewer.cpp \
 			GUI/ScalarCutPlane.cpp GUI/VectorCutPlane.cpp \
-			GUI/GLAxis.cpp  GUI/GLGridPlane.cpp GUI/GLObject.cpp
+			GUI/GLAxis.cpp  GUI/GLGridPlane.cpp GUI/GLObject.cpp \
+			GUI/FluidVoxelCutPlane.cpp
 
 MESH = Geometry/HalfEdgeMesh.cpp Decimation/DecimationMesh.cpp Decimation/SimpleDecimationMesh.cpp\
 Decimation/QuadricDecimationMesh.cpp Util/MarchingCubes.cpp Geometry/SimpleMesh.cpp Geometry/Mesh.cpp \
@@ -27,13 +28,16 @@ IMPLICITS =  Geometry/Implicit.cpp Geometry/Quadric.cpp Geometry/Sphere.cpp Geom
 
 LEVELSET = Levelset/LevelSetGrid.cpp Levelset/LevelSet.cpp Levelset/LevelSetOperator.cpp
 
+FLUIDSOLVER = Fluid/FluidSolver.cpp
+
 SUBDIVISION = Subdivision/LoopSubdivisionMesh.cpp \
 							Subdivision/AdaptiveLoopSubdivisionMesh.cpp \
 							Subdivision/UniformCubicSplineSubdivisionCurve.cpp \
 							Subdivision/UniformCubicSpline.cpp
 
 
-SOURCE =  $(UTIL) $(GUI) $(MESH) $(IMPLICITS) $(LEVELSET) $(SUBDIVISION)
+SOURCE =  $(UTIL) $(GUI) $(MESH) $(IMPLICITS) $(LEVELSET)\
+$(FLUIDSOLVER) $(SUBDIVISION)
 
 OBJ = $(SOURCE:.cpp=.o)
 
@@ -70,6 +74,9 @@ clean:
 	rm -fr Decimation/*.o
 	rm -fr Decimation/*~
 	rm -fr Decimation/*.d
+	rm -fr Fluid/*.o
+	rm -fr Fluid/*~
+	rm -fr Fluid/*.d
 	rm -fr Geometry/*.o
 	rm -fr Geometry/*~
 	rm -fr Geometry/*.d

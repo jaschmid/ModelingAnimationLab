@@ -12,6 +12,7 @@
 #ifndef __operatoradvect_h__
 #define __operatoradvect_h__
 
+#include "Util/Stopwatch.h"
 #include "Levelset/LevelSetOperator.h"
 #include "Math/Function3D.h"
 #include "Math/Matrix4x4.h"
@@ -45,7 +46,10 @@ public :
 
   virtual void Propagate(float time)
   {
-    // Determine timestep for stability
+    
+	 Stopwatch watch;
+	 watch.start();
+	// Determine timestep for stability
     float dt = ComputeTimestep();
 
     // Propagate level set with stable timestep dt
@@ -56,9 +60,13 @@ public :
         dt = time-elapsed;
       elapsed += dt;
 
-      IntegrateEuler(dt);
-      //IntegrateRungeKutta(dt);
+      //IntegrateEuler(dt);
+      IntegrateRungeKutta(dt);
     }
+
+	
+	watch.stop();
+	std::cerr << "Time for dilate/erode = " << watch.read() << std::endl;
   }
 
   virtual float Evaluate(unsigned int i, unsigned int j, unsigned int k)

@@ -366,6 +366,7 @@ float LevelSet::Diff2ZXpm(int i, int j, int k) const
 
 float LevelSet::WENO(float v1, float v2, float v3, float v4, float v5) const
 {
+	float wFluxP1 = (2.0f * v1 - 7.0f* v2 + 11.0f* v3) / 6.0f;
   return 0;
 }
 

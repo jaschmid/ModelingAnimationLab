@@ -12,6 +12,7 @@
 #ifndef __operatordilateerode_h__
 #define __operatordilateerode_h__
 
+#include "Util/Stopwatch.h"
 #include "Levelset/LevelSetOperator.h"
 
 /*! \brief A level set operator that does erosion or dilation.
@@ -43,7 +44,9 @@ public :
 
   virtual void Propagate(float time)
   {
-	  
+	 
+	 Stopwatch watch;
+	 watch.start();
 	std::cerr << "Volume pre dilate/erode = " << mLS->ComputeVolume() << std::endl;
 
     // Determine timestep for stability
@@ -63,6 +66,9 @@ public :
     }
 
 	std::cerr << "Volume post dilate/erode = " << mLS->ComputeVolume() << std::endl;
+
+	watch.stop();
+	std::cerr << "Time for dilate/erode = " << watch.read() << std::endl;
   }
 
 
