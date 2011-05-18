@@ -141,7 +141,7 @@ void LevelSetOperator::IntegrateRungeKutta(float dt)
   //grid N1 = RK 1
 
   GetGrid() = gridN1;
-  /*
+  
   EulerStep(gridN2,dt);
   
   std::cerr << "RK Integration Euler Step 2" << std::endl;
@@ -164,7 +164,7 @@ void LevelSetOperator::IntegrateRungeKutta(float dt)
 
   //grid N1 == RK 3
 
-  GetGrid() = gridN1;*/
+  GetGrid() = gridN1;
 
   std::cerr << "RK Integration Complete" << std::endl;
 }

@@ -44,12 +44,21 @@ public :
 
 protected :
 
+	Vector3<float> SampleVelocity(float i,float j, float k) const;
+	float GetDivergence(int i,int j, int k) const;
+	Vector3<float> GetGradient(int i,int j, int k) const;
+	
+	void CalculateCurl();
+	void ApplyVorticity(float dt,float strength);
+
   std::set<Implicit *> mSolids;
   std::set<LevelSet *> mFluids;
 
   Bbox mBox;
   float mDx;
   float mInitialVolume, mCurrentVolume;
+
+  Volume<Vector4<float> > mCurls;
 
   Volume<Vector3<float> > mVelocityField;
   Volume<float> mVoxels;
